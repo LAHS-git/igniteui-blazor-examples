@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/animation/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"options horizontal\">\n        <button @onclick=\"onAnimationToggle\">Animate Chart</button>\n    </div>\n\n    <div class=\"container vertical\">\n        @if (Data != null)\n        {\n            <IgbDoughnutChart Height=\"100%\" Width=\"100%\">\n                <IgbRingSeries DataSource=\"Data\"\n                            LabelMemberPath=\"Summary\"\n                            ValueMemberPath=\"MarketShare\"\n                            LegendLabelMemberPath=\"Category\"\n                            LabelsPosition=LabelsPosition.InsideEnd\n                            StartAngle=\"@StartAngle\"\n                            LabelExtent=\"@LabelExtent\"\n                            RadiusFactor=\"@RadiusFactor\">\n                </IgbRingSeries>\n            </IgbDoughnutChart>\n        }\n    </div>\n</div>\n\n@code {\n\n    private List<DataItem> Data;\n    private double StartAngle = 0;\n    private double RadiusFactor = 0.1;\n    private double LabelExtent = 0.7;\n    private Boolean isAnimating = false;\n\n    private void onAnimationToggle()\n    {\n        if (!this.isAnimating)\n        {\n            this.StartAngle = 0;\n            this.RadiusFactor = 0.1;\n            this.isAnimating = true;\n\n            Task.Delay(16).ContinueWith((t) => OnTimerTick());\n        }\n        else\n        {\n            this.isAnimating = false;\n        }\n    }\n\n    protected override void OnInitialized()\n    {\n\n        var dataItems = new List<DataItem>();\n        dataItems.Add(new DataItem() { MarketShare = 30, Category = \"Google\", });\n        dataItems.Add(new DataItem() { MarketShare = 25, Category = \"Apple\", });\n        dataItems.Add(new DataItem() { MarketShare = 20, Category = \"Microsoft\", });\n        dataItems.Add(new DataItem() { MarketShare = 15, Category = \"Samsung\", });\n        dataItems.Add(new DataItem() { MarketShare = 10, Category = \"Other\", });\n\n        Data = dataItems;\n        this.onAnimationToggle();\n    }\n\n    private void OnTimerTick()\n    {\n        if (this.isAnimating)\n        {\n            if (this.RadiusFactor < 1.0)\n                this.RadiusFactor += 0.0025;\n\n            if (this.StartAngle < 360)\n                this.StartAngle++;\n\n            if (this.RadiusFactor >= 1.0 &&\n                this.StartAngle >= 360)\n            {\n                this.isAnimating = false;\n            }\n\n            Task.Delay(16).ContinueWith((t) => OnTimerTick());\n            this.StateHasChanged();\n        }\n    }\n\n    public class DataItem\n    {\n        public string Category { get; set; }\n        public double MarketShare { get; set; }\n        public string Summary { get { return Category + \" \" + MarketShare + \"%\"; } }\n    }\n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/animation/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbItemLegendModule),\n                typeof(IgbDoughnutChartModule),\n                typeof(IgbRingSeriesModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/animation/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

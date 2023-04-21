@@ -1,0 +1,31 @@
+@page "/samples/gauges/bullet-graph/scale"
+@page "/samples/gauges/bullet-graph-scale"
+@page         "/gauges/bullet-graph/scale"
+@page         "/gauges/bullet-graph-scale"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="container vertical">
+        <IgbBulletGraph Height="80px" Width="100%"
+                     MinimumValue="0" Value="70" Interval="10"
+                     MaximumValue="100" TargetValue="90"
+                     IsScaleInverted="false"
+                     ScaleBackgroundBrush="DodgerBlue"
+                     ScaleBackgroundOutline="Red"
+                     ScaleBackgroundThickness="2"
+                     ScaleStartExtent="0.05"
+                     ScaleEndExtent="0.95">
+        </IgbBulletGraph>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbBulletGraphModule.Register(IgniteUIBlazor);
+
+    }
+
+}

@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/menus/nav-drawer/add-mini/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div id=\"nav-drawer-container\" style=\"display: flex;\">\n        <IgbNavDrawer @ref=\"@NavDrawerRef\" Open=\"true\" style=\"position: relative\">\n            <IgbNavDrawerHeaderItem>\n                Sample Drawer\n            </IgbNavDrawerHeaderItem>\n\n            <IgbNavDrawerItem>\n                <IgbIcon @ref=\"@HomeIcon\" slot=\"icon\" Collection=\"material\" IconName=\"home\" />\n                <span slot=\"content\">Home</span>\n            </IgbNavDrawerItem>\n\n            <IgbNavDrawerItem>\n                <IgbIcon @ref=\"@SearchIcon\" slot=\"icon\" Collection=\"material\" IconName=\"search\" />\n                <span slot=\"content\">Search</span>\n            </IgbNavDrawerItem>\n\n            <div slot=\"mini\">\n                <IgbNavDrawerItem>\n                    <IgbIcon slot=\"icon\" Collection=\"material\" IconName=\"home\" />\n                </IgbNavDrawerItem>\n\n                <IgbNavDrawerItem>\n                    <IgbIcon slot=\"icon\" Collection=\"material\" IconName=\"search\" />\n                </IgbNavDrawerItem>\n            </div>\n        </IgbNavDrawer>\n\n        <div id=\"content\" style=\"width: 100%\">\n            <IgbButton id=\"toggleBtn\" style=\"margin-left: 50px;\" @onclick=\"OnButtonClick\">Toggle</IgbButton>\n        </div>\n    </div>\n</div>\n\n@code {\n    \n\n    public IgbIcon HomeIcon { get; set; }\n    public IgbIcon SearchIcon { get; set; }\n\n    public IgbNavDrawer NavDrawerRef { get; set; }\n\n    protected override void OnAfterRender(bool firstRender)\n    {\n        if (this.NavDrawerRef != null && firstRender)\n        {\n            this.NavDrawerRef.EnsureReady().ContinueWith(new Action<Task>((e) =>\n            {\n                this.NavDrawerRef.Toggle();\n            }));\n        }\n\n        if (this.HomeIcon != null && firstRender)\n        {\n            this.HomeIcon.EnsureReady().ContinueWith(new Action<Task>((e) =>\n            {\n                this.HomeIcon.RegisterIcon(\"home\",\n                    \"https://unpkg.com/material-design-icons@3.0.1/action/svg/production/ic_home_24px.svg\",\n                    \"material\");\n            }));\n        }\n\n        if (this.SearchIcon != null && firstRender)\n        {\n            this.SearchIcon.EnsureReady().ContinueWith(new Action<Task>((e) =>\n            {\n                this.SearchIcon.RegisterIcon(\"search\",\n                    \"https://unpkg.com/material-design-icons@3.0.1/action/svg/production/ic_search_24px.svg\",\n                    \"material\");\n            }));\n        }\n    }\n\n    public void OnButtonClick()\n    {\n        this.NavDrawerRef.Toggle();\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/menus/nav-drawer/add-mini/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbNavDrawerModule),\n                typeof(IgbNavDrawerHeaderItemModule),\n                typeof(IgbNavDrawerItemModule),\n                typeof(IgbIconModule),\n                typeof(IgbButtonModule)\n   );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/menus/nav-drawer/add-mini/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

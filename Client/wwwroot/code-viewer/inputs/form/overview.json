@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/form/overview/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <IgbForm id=\"form\">\n        <div>Subscribe</div>\n        <IgbInput Required=\"true\" DisplayType=InputType.Text Label=\"Your Name\"></IgbInput>\n        <IgbInput Required=\"true\" DisplayType=InputType.Email Label=\"Your E-mail\"></IgbInput>\n        <IgbCheckbox>I accept the license agreement</IgbCheckbox>\n        <br />\n        <IgbButton DisplayType=\"ButtonBaseType.Reset\">Reset</IgbButton>\n        <IgbButton DisplayType=\"ButtonBaseType.Submit\">Submit</IgbButton>\n    </IgbForm>\n</div>\n\n@code {\n    \n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/form/overview/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbFormModule),\n                typeof(IgbInputModule),\n                typeof(IgbCheckboxModule),\n                typeof(IgbButtonModule)\n   );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/form/overview/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

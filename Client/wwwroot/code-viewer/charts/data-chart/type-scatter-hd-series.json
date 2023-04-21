@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/type-scatter-hd-series/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"container vertical\">\n\n        <div class=\"options vertical\">\n            <span class=\"legend-title\">Stars Distribution in Milky Way Galaxy</span>\n        </div>\n\n        @if (Data != null)\n        {\n            <IgbDataChart Height=\"100%\" Width=\"100%\"\n                              IsHorizontalZoomEnabled=\"true\"\n                              IsVerticalZoomEnabled=\"true\">\n                <IgbNumericXAxis Name=\"xAxis\"\n                              AbbreviateLargeNumbers=\"true\"\n                              TitleBottomMargin=\"10\"\n                              Title=\"Plane of Rotation (in Light Years)\">\n                </IgbNumericXAxis>\n                <IgbNumericYAxis Name=\"yAxis\"\n                              AbbreviateLargeNumbers=\"true\"\n                              TitleLeftMargin=\"10\"\n                              Title=\"Vertical Plane (in Light Years)\">\n                </IgbNumericYAxis>\n                <IgbHighDensityScatterSeries XAxisName=\"xAxis\"\n                                          YAxisName=\"yAxis\"\n                                          Title=\"Distribution\"\n                                          DataSource=\"Data\"\n                                          XMemberPath=\"X\"\n                                          YMemberPath=\"Y\"\n                                          ShowDefaultTooltip=\"true\"\n                                          MouseOverEnabled=\"true\"\n                                          ProgressiveLoad=\"true\"\n                                          HeatMinimumColor=\"Black\"\n                                          HeatMaximumColor=\"Yellow\"\n                                          HeatMaximum=\"1\"\n                                          HeatMinimum=\"5\"\n                                          Resolution=\"3\">\n                </IgbHighDensityScatterSeries>\n            </IgbDataChart>\n        }\n    </div>\n</div>\n\n@code {\n\n    private List<SampleDensityPoint> Data;\n\n    protected override void OnInitialized()\n    {\n\n        Data = SampleDensityData.Create();\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/type-scatter-hd-series/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbDataChartScatterCoreModule),\n                typeof(IgbDataChartScatterModule),\n                typeof(IgbDataChartInteractivityModule),\n                typeof(IgbNumberAbbreviatorModule),\n                typeof(IgbHighDensityScatterSeriesModule),\n                typeof(IgbNumericYAxisModule),\n                typeof(IgbNumericXAxisModule)\n);\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/type-scatter-hd-series/Services/SampleDensityData.cs",
+    "content": "﻿using System;\nusing System.Collections.Generic;\n\nnamespace Infragistics.Samples\n{\n    public class SampleDensityData\n    {\n        public static Random random = new Random();\n\n        public static List<SampleDensityPoint> Create()\n        {\n            var amount = 25000;\n            var data = new List<SampleDensityPoint>();\n            generate(data, amount / 2, 0, 0, 75000, 20000);\n            generate(data, amount / 4, 0, 0, 100000, 25000);\n            generate(data, amount / 8, 0, 0, 150000, 30000);\n            generate(data, amount / 8, 0, 0, 200000, 75000);\n\n            return data;\n        }\n\n        public static void generate(\n            List<SampleDensityPoint> data, int count,\n            int centerX, int centerY, int spreadX, int spreadY) {\n\n            for (var i = 0; i <= count; i++)\n            {\n                var rangeX = random.NextDouble() * spreadX;\n                var rangeY = random.NextDouble() * spreadY;\n                var prop = random.NextDouble();\n                var flip = 1;\n\n                if (prop < .25) {\n                    rangeX *= flip;\n                    rangeY *= flip;\n                }\n                else if (prop >= .25 && prop < .5) {\n                    rangeX *= -flip;\n                    rangeY *= flip;\n                }\n                else if (prop >= .5 && prop < .75) {\n                    rangeX *= flip;\n                    rangeY *= -flip;\n                }\n                else {\n                    rangeX *= -flip;\n                    rangeY *= -flip;\n                }\n\n                var dispersionX = random.NextDouble() + 0.12;\n                var dispersionY = random.NextDouble() + 0.12;\n                var x = Math.Round(centerX + (rangeX * dispersionX));\n                var y = Math.Round(centerY + (rangeY * dispersionY));\n\n                data.Add(new SampleDensityPoint { X = x, Y = y });\n            }\n        }\n    }\n\n    public class SampleDensityPoint\n    {\n        public double X { get; set; }\n        public double Y { get; set; }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/type-scatter-hd-series/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

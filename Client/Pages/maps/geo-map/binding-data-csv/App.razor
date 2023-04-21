@@ -1,0 +1,78 @@
+@page "/samples/maps/geo-map/binding-data-csv"
+@page "/samples/maps/geo-map-binding-data-csv"
+@page         "/maps/geo-map/binding-data-csv"
+@page         "/maps/geo-map-binding-data-csv"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+@inject HttpClient Http
+
+<div class="container vertical">
+    <div class="container vertical">
+        <IgbGeographicMap @ref="MapRef" Height="100%" Width="100%" Zoomable="true">
+            <IgbGeographicHighDensityScatterSeries DataSource="Data"
+                    LatitudeMemberPath="Lat"
+                    LongitudeMemberPath="Lon"
+                    HeatMaximumColor="Red"
+                    HeatMinimumColor="Black"
+                    HeatMinimum="0"
+                    HeatMaximum="5"
+                    PointExtent="1"
+                    MouseOverEnabled="true" />
+        </IgbGeographicMap>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbGeographicMapModule.Register(IgniteUIBlazor);
+        IgbDataChartInteractivityModule.Register(IgniteUIBlazor);
+
+    }
+
+    private List<WorldPlaceCsv> Data;
+    public IgbGeographicMap MapRef;
+
+    protected override async Task OnInitializedAsync()
+    {
+        string url = "https://static.infragistics.com/xplatform/data/UsaCitiesPopulation.csv";
+        string csv = await Http.GetStringAsync(url);
+        var csvLines = csv.Split(Environment.NewLine);
+        var dataItems = new List<WorldPlaceCsv>();
+
+        for (int i = 1; i < csvLines.Length - 1; i++)
+        {
+            var columns = csvLines[i].Split(",");
+            var location = new WorldPlaceCsv() {
+                Lat =  double.Parse(columns[1]),
+                Lon = double.Parse(columns[2]),
+                Name = columns[0],
+                Pop = double.Parse(columns[3])
+            };
+
+            dataItems.Add(location);
+        }
+
+        this.Data = dataItems;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (MapRef != null && !firstRender)
+        {
+            var geoRegion = new Rect(-130, 15, new Size(65, 35));
+            MapRef.ZoomToGeographic(geoRegion);
+        }
+    }
+
+    public class WorldPlaceCsv {
+        public string Name { get; set; }
+        public double Lat { get; set; }
+        public double Lon { get; set; }
+        public double Pop { get; set; }
+        public string Country { get; set; }
+        public bool Cap { get; set; }
+    }
+}

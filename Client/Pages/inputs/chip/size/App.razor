@@ -1,0 +1,28 @@
+@page "/samples/inputs/chip/size"
+@page "/samples/inputs/chip-size"
+@page         "/inputs/chip/size"
+@page         "/inputs/chip-size"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container sample center" style="flex-direction: row; gap: 8px; align-items: baseline;">
+    <IgbChip @ref=ChipRef Size="SizableComponentSize.Small" Selectable="true"> small
+    </IgbChip>
+
+    <IgbChip Size="SizableComponentSize.Medium" Selectable="true"> medium
+    </IgbChip>
+
+    <IgbChip Size="SizableComponentSize.Large" Selectable="true"> large
+    </IgbChip>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbChipModule.Register(IgniteUIBlazor);
+
+    }
+    private IgbChip ChipRef { get; set;}
+
+}

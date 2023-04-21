@@ -1,0 +1,45 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/marker-templates/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"options vertical\">\n        <span class=\"legend-title\">Percentage Change in Energy Generation in 2019</span>\n        <div class=\"legend\">\n            <IgbLegend @ref=\"Legend\" Orientation=\"LegendOrientation.Horizontal\" />\n        </div>\n    </div>\n\n    <div class=\"container vertical\">\n             <IgbCategoryChart Height=\"100%\" Width=\"100%\"\n                           Legend=\"Legend\"\n                           DataSource=\"Data\"\n                           ChartType=\"CategoryChartType.Column\"\n                           Thickness=\"2\"\n                           IsHorizontalZoomEnabled=\"false\"\n                           IsVerticalZoomEnabled=\"false\"\n                           IsSeriesHighlightingEnabled=\"true\"\n                           YAxisMinimumValue=\"-20\" YAxisMaximumValue=\"30\" YAxisInterval=\"10\"\n                           XAxisMajorStrokeThickness=\"1\" XAxisMajorStroke=\"LightGray\"\n                           SeriesAddedScript=\"onCategoryChatMarkerStylingSeries\">\n                @* note custom marker template is implemented in CategoryChatMarkerStyling.js *@\n            </IgbCategoryChart>\n    </div>\n</div>\n\n@code {\n    \n\n    private IgbLegend _Legend;\n    private IgbLegend Legend\n    {\n        get { return _Legend; }\n        set { _Legend = value; StateHasChanged(); }\n    }\n\n    private List<EnergyChangeInfo> Data = new EnergyChangeData();\n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/marker-templates/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbLegendModule),\n                typeof(IgbInputModule),\n                typeof(IgbPropertyEditorPanelModule),\n                typeof(IgbCategoryChartModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/marker-templates/Services/EnergyChangeData.cs",
+    "content": "﻿using System.Collections.Generic;\n\nnamespace Infragistics.Samples\n{\n    public class EnergyChangeInfo\n    {\n        public string Location { get; set; }\n        public double Solar { get; set; }\n        public double Coal { get; set; }\n        public double Hydro { get; set; }\n        public double Wind { get; set; }\n        public double Nuclear { get; set; }\n    }\n\n    public class EnergyChangeData : List<EnergyChangeInfo>\n    {\n        public EnergyChangeData()\n        {\n            Add(new EnergyChangeInfo { Location = \"World\", Solar = 23, Coal = -1, Hydro = 1, Wind = 12, Nuclear = 3 });\n            Add(new EnergyChangeInfo { Location = \"China\", Solar = 26, Coal = 2, Hydro = 5, Wind = 10, Nuclear = 18 });\n            Add(new EnergyChangeInfo { Location = \"U.S.\", Solar = 15, Coal = -15, Hydro = -7, Wind = 10, Nuclear = 1 });\n            Add(new EnergyChangeInfo { Location = \"EU\", Solar = 11, Coal = -12, Hydro = -2, Wind = 14, Nuclear = -1 });\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/marker-templates/wwwroot/CategoryChatMarkerStyling.js",
+    "content": "﻿function renderCircle(ctx, x, y, r, fill, outline) {\r\n    ctx.strokeStyle = outline;\r\n    ctx.fillStyle = fill;\r\n    ctx.beginPath();\r\n    ctx.arc(x, y, r, 0, 2 * Math.PI);\r\n    ctx.stroke();\r\n    ctx.fill();\r\n}\r\n\r\nfunction onCategoryChatMarkerStylingTemplate() {\r\n\r\n    return {\r\n        measure: function (measureInfo) {\r\n            const context = measureInfo.context;\r\n            const height = context.measureText(\"M\").width;\r\n            const width = context.measureText(\"0.00\").width;\r\n            measureInfo.width = width;\r\n            measureInfo.height = height + 12;\r\n        },\r\n        render: function (renderInfo) {\r\n\r\n            let ctx = renderInfo.context;\r\n            let x = renderInfo.xPosition;\r\n            let y = renderInfo.yPosition;\r\n\r\n            if (renderInfo.isHitTestRender) {\r\n                ctx.fillStyle = renderInfo.data.actualItemBrush.fill;\r\n\r\n                let width = renderInfo.availableWidth;\r\n                let height = renderInfo.availableHeight;\r\n\r\n                ctx.fillRect(x - (width / 2), y - (height), renderInfo.availableWidth, renderInfo.availableHeight);\r\n                return;\r\n            }\r\n\r\n\r\n            const dataItem = renderInfo.data.item;\r\n            if (dataItem === null) return;\r\n\r\n            const series = renderInfo.data.series;\r\n            const dataPath = series.valueColumn.propertyName;\r\n\r\n           // console.log(\"onCategoryChatMarkerStylingTemplate render\");\r\n\r\n            var dataValue = 0;\r\n            switch (dataPath) {\r\n                case \"Solar\":   dataValue = dataItem.Solar; break;\r\n                case \"Coal\":    dataValue = dataItem.Coal; break;\r\n                case \"Hydro\":   dataValue = dataItem.Hydro; break;\r\n                case \"Wind\":    dataValue = dataItem.Wind; break;\r\n                case \"Nuclear\": dataValue = dataItem.Nuclear; break;\r\n            }\r\n            ctx.font = '8pt Verdana';\r\n            ctx.textBaseline = 'top';\r\n            ctx.fillStyle = \"black\";\r\n\r\n            let xOffset = 20;\r\n            let yOffset = 10;\r\n            if (dataValue < 0) {\r\n                ctx.fillText(dataValue + \"%\", x - (xOffset / 2), y + (yOffset ));\r\n            }\r\n            else {\r\n                ctx.fillText(dataValue + \"%\", x - (xOffset / 2), y - (yOffset * 2));\r\n            }\r\n\r\n            renderCircle(ctx, x, y, 6, \"white\", \"black\")\r\n        }\r\n    }\r\n}\r\n\r\nigRegisterScript(\"onCategoryChatMarkerStylingTemplate\", onCategoryChatMarkerStylingTemplate, true);\r\n\r\nfunction onCategoryChatMarkerStylingSeries(o, e) {\r\n\r\n    if (e.series) {\r\n        e.series.markerTemplate = onCategoryChatMarkerStylingTemplate();\r\n    }\r\n}\r\nigRegisterScript(\"onCategoryChatMarkerStylingSeries\", onCategoryChatMarkerStylingSeries, false);\r\n",
+    "isMain": true,
+    "fileExtension": "js",
+    "fileHeader": "js"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/marker-templates/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

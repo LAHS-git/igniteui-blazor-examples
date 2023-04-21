@@ -1,0 +1,44 @@
+@page "/samples/charts/financial-chart/titles"
+@page "/samples/charts/financial-chart-titles"
+@page         "/charts/financial-chart/titles"
+@page         "/charts/financial-chart-titles"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+
+    <div class="container vertical">
+
+        @if (Data != null)
+        {
+            <IgbFinancialChart Width="100%"
+                Height="100%"
+                ChartType=FinancialChartType.Line
+                Thickness=2
+                DataSource="Data"
+                ZoomSliderType="FinancialChartZoomSliderType.None"
+                ChartTitle="Amazon Stock Prices"
+                Subtitle="Between 2013 and 2017"
+                YAxisTitle="Closing Prices ($)"
+                XAxisTitle="Time Range (1-Day Interval)"
+                />
+        }
+
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbFinancialChartModule.Register(IgniteUIBlazor);
+
+    }
+
+    protected StockPrice[] Data;
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.Data = await StocksHistory.GetAmazonStock();
+    }
+}

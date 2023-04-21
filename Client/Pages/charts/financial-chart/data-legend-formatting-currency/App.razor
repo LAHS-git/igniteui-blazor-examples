@@ -1,0 +1,79 @@
+@page "/samples/charts/financial-chart/data-legend-formatting-currency"
+@page "/samples/charts/financial-chart-data-legend-formatting-currency"
+@page         "/charts/financial-chart/data-legend-formatting-currency"
+@page         "/charts/financial-chart-data-legend-formatting-currency"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="legend">
+        <IgbDataLegend
+        Name="Legend"
+        @ref="legend"
+        IncludedColumns="@(new string[] { "Close", "Change", "Value" })"
+        ExcludedColumns="@(new string[] { "High", "Low", "Open", "Volume" })"
+        LabelDisplayMode="DataLegendLabelMode.Hidden"
+        ValueFormatMode="DataLegendValueMode.Currency"
+        ValueFormatCulture="en-GB">
+        </IgbDataLegend>
+
+    </div>
+
+    <div class="container vertical fill">
+        <IgbFinancialChart
+        Name="chart"
+        @ref="chart"
+        ChartType="FinancialChartType.Candle"
+        DataSource="MultipleStocks"
+        DataToolTipValueFormatMode="DataLegendValueMode.Currency"
+        DataToolTipValueFormatCulture="en-GB"
+        DataToolTipLabelDisplayMode="DataLegendLabelMode.Hidden"
+        DataToolTipIncludedColumns="@(new string[] { "Close", "Change", "Value" })"
+        DataToolTipHeaderFormatTime="DataLegendHeaderTimeMode.None"
+        ZoomSliderType="FinancialChartZoomSliderType.None">
+        </IgbFinancialChart>
+
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbFinancialChartModule.Register(IgniteUIBlazor);
+        IgbDataChartInteractivityModule.Register(IgniteUIBlazor);
+        IgbDataLegendModule.Register(IgniteUIBlazor);
+
+    }
+
+    private Action BindElements { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var legend = this.legend;
+        var chart = this.chart;
+
+        this.BindElements = () => {
+            legend.Target = this.chart;
+        };
+        this.BindElements();
+
+    }
+
+    private IgbDataLegend legend;
+    private IgbFinancialChart chart;
+
+    private MultipleStocks _multipleStocks = null;
+    public MultipleStocks MultipleStocks
+    {
+        get
+        {
+            if (_multipleStocks == null)
+            {
+                MultipleStocks.Fetch().ContinueWith((t) => {_multipleStocks = t.Result;  StateHasChanged(); });
+            }
+            return _multipleStocks;
+        }
+    }
+
+}

@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/data-tooltip-formatting-decimals/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"legend-title\">\n        Highest Grossing Movie Franchises\n    </div>\n\n    <div class=\"container vertical fill\">\n        <IgbCategoryChart\n        Name=\"chart\"\n        @ref=\"chart\"\n        ChartType=\"CategoryChartType.Column\"\n        DataSource=\"HighestGrossingMovies\"\n        ToolTipType=\"ToolTipType.Data\"\n        DataToolTipUnitsText=\"B\"\n        DataToolTipValueFormatMode=\"DataLegendValueMode.Decimal\"\n        DataToolTipValueFormatMinFractions=\"2\"\n        XAxisInterval=\"1\"\n        YAxisTitle=\"Billions of U.S. Dollars\"\n        YAxisTitleLeftMargin=\"10\"\n        YAxisTitleRightMargin=\"5\"\n        YAxisLabelLeftMargin=\"0\"\n        IsCategoryHighlightingEnabled=\"true\"\n        CrosshairsDisplayMode=\"CrosshairsDisplayMode.None\"\n        HighlightingMode=\"SeriesHighlightingMode.FadeOthersSpecific\"\n        HighlightingBehavior=\"SeriesHighlightingBehavior.NearestItemsAndSeries\">\n        </IgbCategoryChart>\n\n    </div>\n</div>\n\n@code {\n    \n\n    protected override async Task OnAfterRenderAsync(bool firstRender)\n    {\n        var chart = this.chart;\n\n    }\n\n    private IgbCategoryChart chart;\n\n    private HighestGrossingMovies _highestGrossingMovies = null;\n    public HighestGrossingMovies HighestGrossingMovies\n    {\n        get\n        {\n            if (_highestGrossingMovies == null)\n            {\n                _highestGrossingMovies = new HighestGrossingMovies();\n            }\n            return _highestGrossingMovies;\n        }\n    }\n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/data-tooltip-formatting-decimals/HighestGrossingMovies.cs",
+    "content": "using System;\nusing System.Collections.Generic;\npublic class HighestGrossingMoviesItem\n{\n    public string Franchise { get; set; }\n    public double TotalRevenue { get; set; }\n    public double HighestGrossing { get; set; }\n}\n\npublic class HighestGrossingMovies\n    : List<HighestGrossingMoviesItem>\n{\n    public HighestGrossingMovies()\n    {\n        this.Add(new HighestGrossingMoviesItem()\n        {\n            Franchise = @\"Marvel Universe\",\n            TotalRevenue = 22.55,\n            HighestGrossing = 2.8\n        });\n        this.Add(new HighestGrossingMoviesItem()\n        {\n            Franchise = @\"Star Wars\",\n            TotalRevenue = 10.32,\n            HighestGrossing = 2.07\n        });\n        this.Add(new HighestGrossingMoviesItem()\n        {\n            Franchise = @\"Harry Potter\",\n            TotalRevenue = 9.19,\n            HighestGrossing = 1.34\n        });\n        this.Add(new HighestGrossingMoviesItem()\n        {\n            Franchise = @\"Avengers\",\n            TotalRevenue = 7.76,\n            HighestGrossing = 2.8\n        });\n        this.Add(new HighestGrossingMoviesItem()\n        {\n            Franchise = @\"Spider Man\",\n            TotalRevenue = 7.22,\n            HighestGrossing = 1.28\n        });\n        this.Add(new HighestGrossingMoviesItem()\n        {\n            Franchise = @\"James Bond\",\n            TotalRevenue = 7.12,\n            HighestGrossing = 1.11\n        });\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/data-tooltip-formatting-decimals/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbLegendModule),\n                typeof(IgbCategoryChartModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/data-tooltip-formatting-decimals/wwwroot/index.css",
+    "content": "/*\r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

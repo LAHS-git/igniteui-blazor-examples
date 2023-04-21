@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/series-marker-template/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"container vertical\">\n        @if (Data != null)\n        {\n            <IgbDataChart Height=\"100%\" Width=\"100%\">\n                <IgbCategoryXAxis Name=\"xAxis\" DataSource=\"Data\" Label=\"Label\" Interval=\"1\"  />\n                <IgbNumericYAxis Name=\"yAxis\" MinimumValue=\"20\" MaximumValue=\"120\" />\n\n                <!-- The onDataChartSeriesMarkerTemplate script is implemented in the wwwroot/DataChartSeriesMarkerTemplate.js file-->\n                <IgbColumnSeries XAxisName=\"xAxis\" YAxisName=\"yAxis\" DataSource=\"Data\"\n                              ValueMemberPath=\"Value\" MarkerTemplateScript=\"onDataChartSeriesMarkerTemplate\" />\n            </IgbDataChart>\n        }\n    </div>\n</div>\n\n@code {\n\n    private List<MarkerTemplateDataPoint> Data;\n\n    protected override void OnInitialized()\n    {\n\n        // initializing data\n        var data = new List<MarkerTemplateDataPoint>();\n        var values = new int[] { 80, 50, 75, 100, 80, 40, 80, 75, 80, 85, 50, 85, 50, 75, 100, 80, 40, 80, 75, 80, 85, 50, 85, 50, 75, 100 };\n\n        for (int i = 0; i < values.Length; i++)\n        {\n            data.Add(new MarkerTemplateDataPoint() { Label = i.ToString(), Value = values[i] });\n        }\n\n        this.Data = data;\n    }\n\n    public class MarkerTemplateDataPoint\n    {\n        public string Label { get; set; }\n        public int Value { get; set; }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/series-marker-template/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbDataChartCoreModule),\n                typeof(IgbDataChartCategoryCoreModule),\n                typeof(IgbDataChartCategoryModule),\n                typeof(IgbDataChartInteractivityModule),\n                typeof(IgbLineSeriesModule)\n);\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/series-marker-template/wwwroot/DataChartSeriesMarkerTemplate.js",
+    "content": "﻿function onDataChartSeriesMarkerTemplate(o, e) {\r\n\r\n    var desiredSize = 8;\r\n    let style = { outline: \"#9FB328\", fill: \"white\", text: \"black\" };\r\n    let size = 12;\r\n\r\n    return {\r\n       \r\n        measure: function (measureInfo) {\r\n            const data = measureInfo.data;\r\n            const context = measureInfo.context;\r\n            let value = \"0.00\";\r\n            let item = data.item;\r\n            if (item != null) {\r\n                value = item.Value.toString();\r\n            }\r\n            const height = context.measureText(\"M\").width;\r\n            const width = context.measureText(value).width;\r\n            measureInfo.width = width;\r\n            measureInfo.height = height + size;\r\n        },\r\n        render: function (renderInfo) {\r\n            const item = renderInfo.data.item;\r\n            const value = item.Value.toString();\r\n\r\n            const ctx = renderInfo.context;\r\n            let x = renderInfo.xPosition;\r\n            let y = renderInfo.yPosition;\r\n\r\n            let halfHeight = renderInfo.availableHeight / 2.0;\r\n\r\n            if (renderInfo.isHitTestRender) {\r\n                ctx.fillStyle = renderInfo.data.actualItemBrush.fill;\r\n\r\n                let width = renderInfo.availableWidth;\r\n                let height = renderInfo.availableHeight;\r\n\r\n                ctx.fillRect(x - (width / 2), y - (height / 2), renderInfo.availableWidth, renderInfo.availableHeight);\r\n                return;\r\n            }\r\n\r\n            ctx.beginPath();\r\n            ctx.fillStyle = style.outline;\r\n\r\n            let xOffset = 14;\r\n            let yOffset = 10;\r\n\r\n            if (renderInfo.data.item.Value >= 100) {\r\n                xOffset = 20;\r\n            }\r\n\r\n            let width = renderInfo.availableWidth + xOffset;\r\n            let height = halfHeight + yOffset;\r\n\r\n            ctx.fillRect(x - (width / 2), y - (height / 2), width, height);\r\n            ctx.closePath();\r\n\r\n            ctx.font = '8pt Verdana';\r\n            ctx.textBaseline = 'top';\r\n            ctx.fillStyle = style.fill;\r\n            ctx.fillText(value, x - (xOffset / 2), y - (yOffset / 2));\r\n        }\r\n    }\r\n}\r\n\r\nigRegisterScript(\"onDataChartSeriesMarkerTemplate\", onDataChartSeriesMarkerTemplate, true);",
+    "isMain": true,
+    "fileExtension": "js",
+    "fileHeader": "js"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/series-marker-template/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

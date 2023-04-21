@@ -1,0 +1,20 @@
+@page "/samples/layouts/avatar/size"
+@page "/samples/layouts/avatar-size"
+@page         "/layouts/avatar/size"
+@page         "/layouts/avatar-size"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <IgbAvatar Initials="AZ" Size=SizableComponentSize.Large />
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbAvatarModule.Register(IgniteUIBlazor);
+
+    }
+
+}

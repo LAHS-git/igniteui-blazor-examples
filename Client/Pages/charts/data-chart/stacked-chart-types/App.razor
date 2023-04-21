@@ -1,0 +1,218 @@
+@page "/samples/charts/data-chart/stacked-chart-types"
+@page "/samples/charts/data-chart-stacked-chart-types"
+@page         "/charts/data-chart/stacked-chart-types"
+@page         "/charts/data-chart-stacked-chart-types"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container sample">
+
+     <div class="options vertical" >
+          <span class="legend-title">Energy Production By Source </span>
+          <div class="legend">
+             <IgbLegend @ref="Legend" Orientation="LegendOrientation.Horizontal" />
+         </div>
+     </div>
+
+     <div class="overlay-right" style="margin-right: 1rem">
+         <label class="options-label">Type of Stacked Series </label>
+         <select value=@SeriesType @onchange="OnSeriesTypeChanged">
+             <option>Stacked Column</option>
+             <option>Stacked 100 Column</option>
+             <option>Stacked Area</option>
+             <option>Stacked 100 Area</option>
+             <option>Stacked Line</option>
+             <option>Stacked 100 Line</option>
+             <option>Stacked Spline</option>
+             <option>Stacked 100 Spline</option>
+             <option>Stacked Bar</option>
+             <option>Stacked 100 Bar</option>
+         </select>
+     </div>
+
+    <div class="container vertical">
+        @if (Data != null)
+        {
+        <IgbDataChart Height="100%" Width="100%"
+                   IsHorizontalZoomEnabled="false"
+                   IsVerticalZoomEnabled="false"
+                   PlotAreaMarginRight="20"
+                   Legend="Legend"
+                   @ref="Chart">
+
+            @if (SeriesType == "Stacked Bar" || SeriesType == "Stacked 100 Bar")
+            {
+                <IgbNumericXAxis  Name="xAxis2" MinimumValue="0" />
+                <IgbCategoryYAxis Name="yAxis2" Label="Country" DataSource="Data" Title="Countries"/>
+            }
+            else
+            {
+                <IgbCategoryXAxis Name="xAxis" Label="Country" DataSource="Data" Title="Countries" />
+                <IgbNumericYAxis  Name="yAxis" MinimumValue="0" />
+            }
+
+            @if (SeriesType == "Stacked Bar")
+            {
+                <IgbStackedBarSeries XAxisName="xAxis2" YAxisName="yAxis2" DataSource="Data" ShowDefaultTooltip="false" >
+                    @foreach (var column in this.DataColumns)
+                    {
+                        <IgbStackedFragmentSeries ValueMemberPath="@column" Title="@column" />
+                    }
+                </IgbStackedBarSeries>
+            }
+
+            @if (SeriesType == "Stacked 100 Bar")
+            {
+                <IgbStacked100BarSeries XAxisName="xAxis2" YAxisName="yAxis2" DataSource="Data" ShowDefaultTooltip="false" >
+                    @foreach (var column in this.DataColumns)
+                    {
+                        <IgbStackedFragmentSeries ValueMemberPath="@column" Title="@column" />
+                    }
+                </IgbStacked100BarSeries>
+            }
+
+            @if (SeriesType == "Stacked Column")
+            {
+                <IgbStackedColumnSeries XAxisName="xAxis" YAxisName="yAxis" DataSource="Data" ShowDefaultTooltip="false" >
+                    @foreach (var column in this.DataColumns)
+                    {
+                        <IgbStackedFragmentSeries ValueMemberPath="@column" Title="@column" />
+                    }
+                </IgbStackedColumnSeries>
+            }
+
+            @if (SeriesType == "Stacked 100 Column")
+            {
+                <IgbStacked100ColumnSeries XAxisName="xAxis" YAxisName="yAxis" DataSource="Data" ShowDefaultTooltip="false" >
+                    @foreach (var column in this.DataColumns)
+                    {
+                        <IgbStackedFragmentSeries ValueMemberPath="@column" Title="@column" />
+                    }
+                </IgbStacked100ColumnSeries>
+            }
+
+            @if (SeriesType == "Stacked Area")
+            {
+                <IgbStackedAreaSeries XAxisName="xAxis" YAxisName="yAxis" DataSource="Data" ShowDefaultTooltip="false" >
+                    @foreach (var column in this.DataColumns)
+                    {
+                        <IgbStackedFragmentSeries ValueMemberPath="@column" Title="@column" />
+                    }
+                </IgbStackedAreaSeries>
+            }
+
+            @if (SeriesType == "Stacked 100 Area")
+            {
+                <IgbStacked100AreaSeries XAxisName="xAxis" YAxisName="yAxis" DataSource="Data" ShowDefaultTooltip="false" >
+                    @foreach (var column in this.DataColumns)
+                    {
+                        <IgbStackedFragmentSeries ValueMemberPath="@column" Title="@column" />
+                    }
+                </IgbStacked100AreaSeries>
+            }
+
+            @if (SeriesType == "Stacked Line")
+            {
+                <IgbStackedLineSeries XAxisName="xAxis" YAxisName="yAxis" DataSource="Data" ShowDefaultTooltip="false" >
+                    @foreach (var column in this.DataColumns)
+                    {
+                        <IgbStackedFragmentSeries ValueMemberPath="@column" Title="@column" />
+                    }
+                </IgbStackedLineSeries>
+            }
+
+            @if (SeriesType == "Stacked 100 Line")
+            {
+                <IgbStacked100LineSeries XAxisName="xAxis" YAxisName="yAxis" DataSource="Data" ShowDefaultTooltip="false" >
+                    @foreach (var column in this.DataColumns)
+                    {
+                        <IgbStackedFragmentSeries ValueMemberPath="@column" Title="@column" />
+                    }
+                </IgbStacked100LineSeries>
+            }
+
+            @if (SeriesType == "Stacked Spline")
+            {
+                <IgbStackedSplineSeries XAxisName="xAxis" YAxisName="yAxis" DataSource="Data" ShowDefaultTooltip="false" >
+                    @foreach (var column in this.DataColumns)
+                    {
+                        <IgbStackedFragmentSeries ValueMemberPath="@column" Title="@column" />
+                    }
+                </IgbStackedSplineSeries>
+            }
+
+            @if (SeriesType == "Stacked 100 Spline")
+            {
+                <IgbStacked100SplineSeries XAxisName="xAxis" YAxisName="yAxis" DataSource="Data" ShowDefaultTooltip="false" >
+                    @foreach (var column in this.DataColumns)
+                    {
+                        <IgbStackedFragmentSeries ValueMemberPath="@column" Title="@column" />
+                    }
+                </IgbStacked100SplineSeries>
+            }
+        </IgbDataChart>
+        }
+        </div>
+</div>
+
+@code {
+
+    private List<SampleStackedItem> Data;
+    private string[] DataColumns = new string[] { "Coal", "Hydro", "Nuclear", "Solar", "Oil"};
+    private IgbDataChart _chart;
+    private IgbDataChart Chart
+    {
+        get { return _chart; }
+        set { _chart = value; StateHasChanged(); }
+    }
+
+    private IgbLegend _legend;
+    private IgbLegend Legend
+    {
+        get { return _legend; }
+        set { _legend = value; StateHasChanged(); }
+    }
+
+    private string _seriesType = "Stacked Column";
+    private string SeriesType
+    {
+        get { return _seriesType; }
+        set { _seriesType = value; StateHasChanged(); }
+    }
+
+    protected override void OnInitialized()
+    {
+        IgbLegendModule.Register(IgniteUIBlazor);
+        IgbDataChartCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartCategoryModule.Register(IgniteUIBlazor);
+        IgbDataChartCategoryCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartInteractivityModule.Register(IgniteUIBlazor);
+        IgbDataChartStackedModule.Register(IgniteUIBlazor);
+        IgbStackedFragmentSeriesModule.Register(IgniteUIBlazor);
+
+        Data = SampleStackedData.Create();
+    }
+
+    public void OnSeriesTypeChanged(ChangeEventArgs e)
+    {
+        var selectedSeries = e.Value.ToString();
+        SeriesType = selectedSeries;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (this.Chart != null && !firstRender)
+        {
+            ////  System.Console.WriteLine("OnAfterRender " + this.Chart.ActualSeries.Count);
+            //  var stackedSeries = this.Chart.ActualSeries[0] as StackedSeriesBase;
+            //  var stackedFragments = stackedSeries.ActualSeries;
+            ////  System.Console.WriteLine("OnAfterRender " + stackedFragments.Count);
+            //  for (int i = 0; i < stackedFragments.Count; i++)
+            //  {
+            //    //  System.Console.WriteLine("Title " + i + " " + DataColumns[i]);
+            //      stackedFragments[i].Title = DataColumns[i];
+            //  }
+        }
+    }
+}

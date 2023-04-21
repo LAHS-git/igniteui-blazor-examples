@@ -1,0 +1,21 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/date-time-input/input-format-display-format/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <IgbDateTimeInput @ref=\"DateTimeInputRef\" InputFormat=\"dd-MM-yy\" DisplayFormat=\"medium\">\n        <IgbIcon IconName=\"clear\" Collection=\"myIcons\" slot=\"prefix\" @onclick=\"OnClear\"></IgbIcon>\n    </IgbDateTimeInput>\n    <IgbIcon @ref=\"RegisterIconRef\"/>\n</div>\n\n@code {\n    \n    IgbDateTimeInput? DateTimeInputRef;\n    IgbIcon? RegisterIconRef;\n\n    protected async override Task OnAfterRenderAsync(bool firstRender)\n    {\n        if (firstRender && RegisterIconRef != null)\n        {\n            await RegisterIconRef.EnsureReady();\n            var clearIcon = \"<svg xmlns=\\\"http://www.w3.org/2000/svg\\\" width=\\\"24\\\" height=\\\"24\\\" viewBox=\\\"0 0 24 24\\\"><path d=\\\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\\\"/></svg>\";\n            await RegisterIconRef.RegisterIconFromTextAsync(\"clear\", clearIcon, \"myIcons\");\n        }\n    }\n    public async Task OnClear()\n    {\n        await DateTimeInputRef?.ClearAsync();\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/date-time-input/input-format-display-format/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing Microsoft.AspNetCore.Components.Web;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\nusing BlazorClientApp;\n\nvar builder = WebAssemblyHostBuilder.CreateDefault(args);\nbuilder.RootComponents.Add<App>(\"app\");\nbuilder.RootComponents.Add<HeadOutlet>(\"head::after\");\n\nbuilder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n\nbuilder.Services.AddIgniteUIBlazor(\n    typeof(IgbIconModule),\n    typeof(IgbDateTimeInputModule),\n    typeof(IgbRadioGroupModule),\n    typeof(IgbRadioModule),\n    typeof(IgbRatingModule),\n    typeof(IgbAccordionModule),\n    typeof(IgbExpansionPanelModule),\n    typeof(IgbCheckboxModule),\n    typeof(IgbSliderModule),\n    typeof(IgbRangeSliderModule)\n);\n\nawait builder.Build().RunAsync();",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  }
+]
+}

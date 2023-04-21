@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/grids/list/styling/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <style>\n        igc-list-header {\n            font-size: 1.25rem;\n            font-weight: 700;\n            color: #3f51b5;\n        }\n\n        igc-list-item::part(title) {\n            font-size: 1.125rem;\n            color: #3f51b5;\n        }\n\n        igc-list-item::part(subtitle) {\n            color: #0099ff;\n        }\n\n        igc-list-item::part(end) {\n            --igc-secondary-500: 230,48%,47%;\n        }\n    </style>\n\n    <IgbList>\n        <IgbListHeader>Contacts</IgbListHeader>\n        <IgbListItem>\n            <IgbAvatar slot=\"start\" src=\"https://static.infragistics.com/xplatform/images/avatars/8.jpg\" Shape=\"@AvatarShape.Circle\" />\n            <span slot=\"title\">Terrance Orta</span>\n            <span slot=\"subtitle\">770-504-2217</span>\n            <IgbButton slot=\"end\" Variant=\"@ButtonVariant.Contained\">Text</IgbButton>\n            <IgbButton slot=\"end\" Variant=\"@ButtonVariant.Contained\">Call</IgbButton>\n        </IgbListItem>\n        <IgbListItem>\n            <IgbAvatar slot=\"start\" src=\"https://static.infragistics.com/xplatform/images/avatars/17.jpg\" Shape=\"@AvatarShape.Circle\"/>\n            <span slot=\"title\">Richard Mahoney</span>\n            <span slot=\"subtitle\">423-676-2869</span>\n            <IgbButton slot=\"end\" Variant=\"@ButtonVariant.Contained\">Text</IgbButton>\n            <IgbButton slot=\"end\" Variant=\"@ButtonVariant.Contained\">Call</IgbButton>\n        </IgbListItem>\n        <IgbListItem>\n            <IgbAvatar slot=\"start\" src=\"https://static.infragistics.com/xplatform/images/avatars/9.jpg\" Shape=\"@AvatarShape.Circle\"/>\n            <span slot=\"title\">Donna Price</span>\n            <span slot=\"subtitle\">859-496-2817</span>\n            <IgbButton slot=\"end\" Variant=\"@ButtonVariant.Contained\">Text</IgbButton>\n            <IgbButton slot=\"end\" Variant=\"@ButtonVariant.Contained\">Call</IgbButton>\n        </IgbListItem>\n    </IgbList>\n</div>\n\n@code {\n    \n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/grids/list/styling/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbAvatarModule),\n                typeof(IgbButtonModule),\n                typeof(IgbListModule)\n    );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/grids/list/styling/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

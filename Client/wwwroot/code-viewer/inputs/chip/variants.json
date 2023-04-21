@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/chip/variants/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container sample center\" style=\"flex-direction: row; gap: 8px\">\n    <IgbChip Variant=\"ChipVariant.Primary\" Selectable=\"true\" Removable=\"true\"> Primary\n    </IgbChip>\n\n    <IgbChip Variant=\"ChipVariant.Info\" Selectable=\"true\" Removable=\"true\"> Info\n    </IgbChip>\n\n    <IgbChip Variant=\"ChipVariant.Success\" Selectable=\"true\" Removable=\"true\"> Success\n    </IgbChip>\n\n    <IgbChip Variant=\"ChipVariant.Warning\" Selectable=\"true\" Removable=\"true\"> Warning\n    </IgbChip>\n\n    <IgbChip Variant=\"ChipVariant.Danger\" Selectable=\"true\" Removable=\"true\"> Danger\n    </IgbChip>\n</div>\n\n@code {\n    \n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/chip/variants/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(typeof(IgbChipModule));\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/chip/variants/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

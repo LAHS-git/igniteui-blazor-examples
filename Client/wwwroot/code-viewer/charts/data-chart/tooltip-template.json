@@ -1,0 +1,45 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/tooltip-template/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n        @if (Data != null)\n        {\n          <IgbDataChart Height=\"100%\" Width=\"100%\" Subtitle=\"Energy Source of Biggest Countries\"\n                     IsHorizontalZoomEnabled=\"false\" IsVerticalZoomEnabled=\"false\"\n                     SeriesMouseEnterScript=\"onSeriesMouseEnter\">\n              @*note the onSeriesMouseEnter\" function is implemented .JS file in wwwroot folder*@\n\n              <IgbCategoryXAxis Name=\"xAxis\" DataSource=\"Data\" Label=\"Country\"></IgbCategoryXAxis>\n              <IgbNumericYAxis  Name=\"yAxis\"></IgbNumericYAxis>\n\n              <IgbColumnSeries Title=\"Coal\" XAxisName=\"xAxis\" YAxisName=\"yAxis\" ValueMemberPath=\"Coal\"\n                            DataSource=\"Data\" ShowDefaultTooltip=\"false\"/>\n              <IgbColumnSeries Title=\"Hydro\" XAxisName=\"xAxis\" YAxisName=\"yAxis\" ValueMemberPath=\"Hydro\"\n                            DataSource=\"Data\" ShowDefaultTooltip=\"false\"/>\n              <IgbColumnSeries Title=\"Nuclear\" XAxisName=\"xAxis\" YAxisName=\"yAxis\" ValueMemberPath=\"Nuclear\"\n                            DataSource=\"Data\" ShowDefaultTooltip=\"false\"/>\n              <IgbColumnSeries Title=\"Gas\" XAxisName=\"xAxis\" YAxisName=\"yAxis\" ValueMemberPath=\"Gas\"\n                            DataSource=\"Data\" ShowDefaultTooltip=\"false\"/>\n              <IgbColumnSeries Title=\"Oil\" XAxisName=\"xAxis\" YAxisName=\"yAxis\" ValueMemberPath=\"Oil\"\n                            DataSource=\"Data\" ShowDefaultTooltip=\"false\"/>\n          </IgbDataChart>\n\n        }\n</div>\n\n@code {\n\n    private List<EnergyProductionData.Energy> Data;\n\n    protected override void OnInitialized()\n    {\n\n        this.Data = EnergyProductionData.Generate();\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/tooltip-template/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbDataChartCoreModule),\n                typeof(IgbDataChartCategoryModule),\n                typeof(IgbDataChartInteractivityModule),\n                typeof(IgbColumnSeriesModule)\n);\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/tooltip-template/Services/EnergyProductionData.cs",
+    "content": "using System;\nusing System.Collections.Generic;\n\nnamespace Infragistics.Samples\n{\n    public static class EnergyProductionData\n    {\n        public class Energy\n        {\n            public string Country { get; set; }\n            public double Coal { get; set; }\n            public double Oil { get; set; }\n            public double Gas { get; set; }\n            public double Nuclear { get; set; }\n            public double Hydro { get; set; }\n        }\n\n        public static List<Energy> Generate()\n        {\n            var data = new List<Energy>() {\n                new Energy { Country = \"Canada\", Coal = 400, Oil = 100, Gas = 175, Nuclear = 225, Hydro = 350 },\n                new Energy { Country = \"China\", Coal = 925, Oil = 200, Gas = 350, Nuclear = 400, Hydro = 625 },\n                new Energy { Country = \"Russia\", Coal = 550, Oil = 200, Gas = 250, Nuclear = 475, Hydro = 425 },\n                new Energy { Country = \"Australia\", Coal = 450, Oil = 100, Gas = 150, Nuclear = 175, Hydro = 350 },\n                new Energy { Country = \"United States\", Coal = 800, Oil = 250, Gas = 475, Nuclear = 575, Hydro = 750 },\n                new Energy { Country = \"France\", Coal = 375, Oil = 150, Gas = 350, Nuclear = 275, Hydro = 325 }\n            };\n            return data;\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/tooltip-template/wwwroot/DataChartTooltipStyles.js",
+    "content": "﻿function onSeriesMouseEnter(o, e) {\r\n    if (e.series.tooltipTemplate === null ||\r\n        e.series.tooltipTemplate === undefined) {\r\n        e.series.tooltipTemplate = createDataChartTooltip;\r\n        console.log(\"onSeriesMouseEnter\");\r\n    }\r\n}\r\nigRegisterScript(\"onSeriesMouseEnter\", onSeriesMouseEnter, false);\r\n\r\nfunction createDataChartTooltip(context) {\r\n    if (!context) return null;\r\n\r\n    var dataItem = context.item;\r\n    if (!dataItem) return null;\r\n\r\n    var dataSeries = context.series;\r\n    if (!dataSeries) return null;\r\n\r\n    var tooltip = document.createElement(\"div\");\r\n    tooltip.className = \"ui-tooltip-content\";\r\n\r\n    var title = document.createElement(\"div\");\r\n    title.innerHTML = dataItem.Country + \" Production\";\r\n    title.className = \"tooltipTitle\";\r\n    tooltip.appendChild(title);\r\n\r\n    var line1 = createDataChartTooltipLine(dataSeries, \"Coal\", dataItem.Coal);\r\n    var line2 = createDataChartTooltipLine(dataSeries, \"Hydro\", dataItem.Hydro);\r\n    var line3 = createDataChartTooltipLine(dataSeries, \"Nuclear\", dataItem.Nuclear);\r\n    var line4 = createDataChartTooltipLine(dataSeries, \"Gas\", dataItem.Gas);\r\n    var line5 = createDataChartTooltipLine(dataSeries, \"Oil\", dataItem.Oil);\r\n\r\n    tooltip.appendChild(line1);\r\n    tooltip.appendChild(line2);\r\n    tooltip.appendChild(line3);\r\n    tooltip.appendChild(line4);\r\n    tooltip.appendChild(line5);\r\n\r\n    return tooltip;\r\n}\r\n\r\nfunction createDataChartTooltipLine(dataSeries, dataName, dataValue) {\r\n\r\n    var label = document.createElement(\"label\");\r\n    label.innerHTML = dataName + \":\";\r\n    label.className = \"tooltipLbl\";\r\n    label.style.width = \"4rem\";\r\n\r\n    var value = document.createElement(\"label\");\r\n    value.innerHTML = dataValue;\r\n    value.className = \"tooltipVal\";\r\n\r\n    var line = document.createElement(\"div\");\r\n    line.className = \"tooltipHorizontal\";\r\n\r\n    // applying conditional styling based on mapping of the current series\r\n    var isMatching = dataSeries.valueMemberPath == dataName;\r\n    if (isMatching)\r\n        line.style.color = dataSeries.actualBrush;\r\n    else\r\n        line.style.color = \"black\";\r\n\r\n    line.appendChild(label);\r\n    line.appendChild(value);\r\n    return line;\r\n}\r\n",
+    "isMain": true,
+    "fileExtension": "js",
+    "fileHeader": "js"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/tooltip-template/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

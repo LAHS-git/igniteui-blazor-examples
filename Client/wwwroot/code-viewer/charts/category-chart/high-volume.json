@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/high-volume/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"options horizontal\">\n        <label class=\"options-label\">Data Points: </label>\n        <label class=\"options-value\">@DataInfo</label>\n        <input class=\"options-slider\" type=\"range\" min=\"10000\" max=\"1000000\" step=\"10000\"\n               value=\"@DataPoints\" @onchange=\"OnDataPointsChanged\" />\n        <button @onclick=\"OnDataGenerateClick\">Generate Data</button>\n    </div>\n    <div class=\"container vertical\">\n        <IgbCategoryChart @ref=\"chart\"\n            Height=\"100%\" Width=\"100%\"\n            DataSourceScript=\"getHighVolumeData\"\n            YAxisLabelLocation=\"YAxisLabelLocation.OutsideRight\"\n            YAxisTitle=\"Value of Data Points\"\n            XAxisTitle=\"Index of Data Points\"\n            ToolTipType=\"ToolTipType.Default\"\n            XAxisEnhancedIntervalPreferMoreCategoryLabels=\"false\"\n            ShouldAutoExpandMarginForInitialLabels=\"false\"\n            CrosshairsDisplayMode=\"CrosshairsDisplayMode.None\"\n            SeriesAdded=\"OnSeriesAdded\">\n        </IgbCategoryChart>\n    </div>\n</div>\n\n@code {\n    private IgbCategoryChart chart;\n    private int DataPoints = 1000000;\n    private string DataInfo;\n\n    protected override void OnInitialized()\n    {\n\n        this.DataInfo = ToShortString(this.DataPoints);\n    }\n\n    protected override async Task OnAfterRenderAsync(bool firstRender)\n    {\n        if (firstRender)\n        {\n            await IgniteUIBlazor.JsRuntime.InvokeVoidAsync(\"setHighVolumeDataCount\", this.DataPoints);\n        }\n    }\n\n    private void OnSeriesAdded(IgbChartSeriesEventArgs e)\n    {\n        ((IgbCategoryChart)e.Parent).MarkerTypes.Clear();\n        ((IgbCategoryChart)e.Parent).MarkerTypes.Add(MarkerType.None);\n    }\n\n    private void OnDataPointsChanged(ChangeEventArgs args)\n    {\n        this.DataPoints = int.Parse(args.Value.ToString());\n        this.DataInfo = ToShortString(this.DataPoints);\n    }\n\n    private void OnDataGenerateClick()\n    {\n        Task.Delay(1).ContinueWith((t) => GenerateData());\n    }\n\n    private async Task GenerateData()\n    {\n        await IgniteUIBlazor.JsRuntime.InvokeVoidAsync(\"setHighVolumeDataCount\", this.DataPoints);\n    }\n\n    public static string ToShortString(double largeValue)\n    {\n        double roundValue;\n\n        if (largeValue >= 1000000)\n        {\n            roundValue = Math.Round(largeValue / 100000) / 10;\n            return roundValue + \"m\";\n        }\n        if (largeValue >= 1000)\n        {\n            roundValue = Math.Round(largeValue / 100) / 10;\n            return roundValue + \"k\";\n        }\n\n        roundValue = Math.Round(largeValue);\n        return roundValue + \"\";\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/high-volume/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbLegendModule),\n                typeof(IgbInputModule),\n                typeof(IgbPropertyEditorPanelModule),\n                typeof(IgbCategoryChartModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/high-volume/wwwroot/CategoryChartHighVolume.js",
+    "content": "\r\nvar __highVolumeDataCount = 1000000;\r\nvar __highVolumeData = [];\r\nfunction setHighVolumeDataCount(dataCount) {\r\n    __highVolumeDataCount = dataCount;\r\n    __highVoluenData = generateHighVolumeData();\r\n    var chart = document.querySelectorAll(\"igc-category-chart\");\r\n    if (chart && chart.length > 0) {\r\n        for (var  i = 0; i < chart.length; i++) {\r\n            if (chart[i].dataSource === __highVolumeData) {\r\n                chart[i].notifyClearItems(__highVolumeData);\r\n            }\r\n        }       \r\n    }\r\n}\r\n\r\nfunction generateHighVolumeData() {\r\n    var dataCount = __highVolumeDataCount;\r\n    var curr = 100.0;\r\n    var data = __highVolumeData;\r\n    var index = \"\";\r\n    __highVolumeData.length = dataCount;\r\n    for (var i = 0; i <= dataCount; i++) {\r\n        curr += Math.random() * 4.0 - 2.0;\r\n        index = toStringWithCommas(i); \r\n        data[i] = { Label: index, Value: curr };\r\n    }\r\n    return data;\r\n}\r\n\r\nfunction toStringWithCommas(num) {\r\n    return num.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\");\r\n}\r\n\r\nfunction getHighVolumeData() {\r\n    return __highVolumeData;\r\n}\r\n\r\nigRegisterScript(\"getHighVolumeData\", getHighVolumeData, true);\r\n",
+    "isMain": true,
+    "fileExtension": "js",
+    "fileHeader": "js"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/high-volume/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

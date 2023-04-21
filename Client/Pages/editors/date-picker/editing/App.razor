@@ -1,0 +1,27 @@
+@page "/samples/editors/date-picker/editing"
+@page "/samples/editors/date-picker-editing"
+@page         "/editors/date-picker/editing"
+@page         "/editors/date-picker-editing"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="container vertical">
+        <IgbDatePicker @ref="DatePicker" Height="60px" Width="220px"
+                    Value="@SelectedDate"
+                    AllowTextInput="true"/>
+    </div>
+</div>
+
+@code {
+
+    public DateTime SelectedDate { get; set; }
+    public IgbDatePicker DatePicker { get; set; }
+    protected override void OnInitialized()
+    {
+        IgbDatePickerModule.Register(IgniteUIBlazor);
+
+        this.SelectedDate = DateTime.Today;
+    }
+}

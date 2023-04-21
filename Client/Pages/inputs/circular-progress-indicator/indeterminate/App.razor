@@ -1,0 +1,27 @@
+@page "/samples/inputs/circular-progress-indicator/indeterminate"
+@page "/samples/inputs/circular-progress-indicator-indeterminate"
+@page         "/inputs/circular-progress-indicator/indeterminate"
+@page         "/inputs/circular-progress-indicator-indeterminate"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="root">
+
+    <style>
+        #circularProgress {
+            --diameter: 50px;
+        }
+    </style>
+
+    <IgbCircularProgress id="circularProgress" Indeterminate=true />
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbCircularProgressModule.Register(IgniteUIBlazor);
+
+    }
+
+}

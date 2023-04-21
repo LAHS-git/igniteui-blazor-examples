@@ -1,0 +1,20 @@
+@page "/samples/inputs/linear-progress-indicator/simple"
+@page "/samples/inputs/linear-progress-indicator-simple"
+@page         "/inputs/linear-progress-indicator/simple"
+@page         "/inputs/linear-progress-indicator-simple"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="root">
+    <IgbLinearProgress Value=100/>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbLinearProgressModule.Register(IgniteUIBlazor);
+
+    }
+
+}

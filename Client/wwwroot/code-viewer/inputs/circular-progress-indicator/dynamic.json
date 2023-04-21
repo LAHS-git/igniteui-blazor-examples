@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/circular-progress-indicator/dynamic/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<style>\n#sampleContent {\nwidth: 300px;\ndisplay: flex;\nalign-items: center;\nmargin-top: 30px;\n}\n\n#circularProgress {\nmargin-right: 50px;\nmargin-left: 20px;\n--diameter: 100px;\n--stroke-thickness: 5px;\n}\n</style>\n\n<div id=\"sampleContent\">\n    <IgbCircularProgress @ref=\"CircularProgressRef\" id=\"circularProgress\" Max=100 Value=@ProgressValue>\n        <IgbCircularGradient slot=\"gradient\" Offset=\"0%\"   Color=\"#ff9a40\"/>\n        <IgbCircularGradient slot=\"gradient\" Offset=\"50%\"  Color=\"#1eccd4\"/>\n        <IgbCircularGradient slot=\"gradient\" Offset=\"100%\" Color=\"#ff0079\"/>\n    </IgbCircularProgress>\n    <div class=\"buttonContainer\">\n        <IgbIconButton @ref=\"RemoveIconRef\" @onclick=\"OnRemoveIconClick\" IconName=\"remove\" Collection=\"material\" />\n        <IgbIconButton @ref=\"AddIconRef\" @onclick=\"OnAddIconClick\" IconName=\"add\" Collection=\"material\" />\n    </div>\n</div>\n\n@code {\n\n    private IgbCircularProgress CircularProgressRef { get; set; }\n    private double ProgressValue { get; set; }\n\n    private IgbIconButton AddIconRef { get; set; }\n    private IgbIconButton RemoveIconRef { get; set; }\n\n    protected override void OnInitialized()\n    {\n\n        this.ProgressValue = 0;\n    }\n\n    protected override async Task OnAfterRenderAsync(bool firstRender)\n    {\n        if(firstRender && this.AddIconRef != null && this.RemoveIconRef != null)\n        {\n            await this.AddIconRef.EnsureReady();\n            await this.RemoveIconRef.EnsureReady();\n\n            string addIcon = \"<svg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 0 24 24' width='24'><path d='M0 0h24v24H0z' fill='none'/><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/></svg>\";\n            string removeIcon = \"<svg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 0 24 24' width='24'><path d='M0 0h24v24H0z' fill='none'/><path d='M19 13H5v-2h14v2z'/></svg>\";\n\n            await this.AddIconRef.RegisterIconFromTextAsync(\"add\", addIcon, \"material\");\n            await this.RemoveIconRef.RegisterIconFromTextAsync(\"remove\", removeIcon, \"material\");\n        }\n    }\n\n    private void OnAddIconClick(MouseEventArgs args)\n    {\n        this.ProgressValue = this.ProgressValue + 10;\n    }\n\n    private void OnRemoveIconClick(MouseEventArgs args)\n    {\n        if(this.ProgressValue > 0)\n        {\n            this.ProgressValue = this.ProgressValue - 10;\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/circular-progress-indicator/dynamic/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(typeof(IgbCircularProgressModule));\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/circular-progress-indicator/dynamic/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

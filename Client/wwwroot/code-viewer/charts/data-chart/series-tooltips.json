@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/series-tooltips/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"options horizontal\">\n        <span class=\"options-label\">Tooltip Type: </span>\n        <select @onchange=\"OnChartTooltipTypeChanged\">\n            <option>Default</option>\n            <option>Item</option>\n            <option>Category</option>\n        </select>\n    </div>\n\n    <div class=\"container vertical\">\n        @if (Data != null)\n        {\n            <IgbDataChart Height=\"100%\" Width=\"100%\" IsVerticalZoomEnabled=\"true\"\n                       IsHorizontalZoomEnabled=\"true\" @ref=\"Chart\">\n                <IgbCategoryXAxis Name=\"xAxis\" DataSource=\"Data\" Label=\"Country\" />\n                <IgbNumericYAxis Name=\"yAxis\" MinimumValue=\"0\" AbbreviateLargeNumbers=\"true\" />\n\n                <IgbColumnSeries Title=\"Coal\" XAxisName=\"xAxis\" YAxisName=\"yAxis\" ValueMemberPath=\"Coal\"\n                              DataSource=\"Data\" IsTransitionInEnabled=\"true\" ShowDefaultTooltip=\"true\"/>\n                <IgbColumnSeries Title=\"Hydro\" XAxisName=\"xAxis\" YAxisName=\"yAxis\" ValueMemberPath=\"Hydro\"\n                              DataSource=\"Data\" IsTransitionInEnabled=\"true\" ShowDefaultTooltip=\"true\"/>\n                <IgbColumnSeries Title=\"Nuclear\" XAxisName=\"xAxis\" YAxisName=\"yAxis\" ValueMemberPath=\"Nuclear\"\n                              DataSource=\"Data\" IsTransitionInEnabled=\"true\" ShowDefaultTooltip=\"true\"/>\n                <IgbColumnSeries Title=\"Gas\" XAxisName=\"xAxis\" YAxisName=\"yAxis\" ValueMemberPath=\"Gas\"\n                              DataSource=\"Data\" IsTransitionInEnabled=\"true\" ShowDefaultTooltip=\"true\"/>\n                <IgbColumnSeries Title=\"Oil\" XAxisName=\"xAxis\" YAxisName=\"yAxis\" ValueMemberPath=\"Oil\"\n                              DataSource=\"Data\" IsTransitionInEnabled=\"true\" ShowDefaultTooltip=\"true\"/>\n            </IgbDataChart>\n        }\n    </div>\n</div>\n\n@code {\n\n    private List<EnergyProductionData.Energy> Data;\n    private IgbDataChart Chart;\n\n    private IgbCategoryToolTipLayer CategoryTooltip = new IgbCategoryToolTipLayer();\n    private IgbItemToolTipLayer ItemTooltip = new IgbItemToolTipLayer();\n\n    protected override void OnInitialized()\n    {\n\n        this.Data = EnergyProductionData.Generate();\n    }\n\n    private void OnChartTooltipTypeChanged(ChangeEventArgs e)\n    {\n        switch (e.Value)\n        {\n            case \"Default\":\n                {\n                    this.Chart.Series.Remove(this.ItemTooltip);\n                    this.Chart.Series.Remove(this.CategoryTooltip);\n                    break;\n                }\n            case \"Item\":\n                {\n                    this.Chart.Series.Add(this.ItemTooltip);\n                    this.Chart.Series.Remove(this.CategoryTooltip);\n                    break;\n                }\n            case \"Category\":\n                {\n                    this.Chart.Series.Remove(this.ItemTooltip);\n                    this.Chart.Series.Add(this.CategoryTooltip);\n                    break;\n                }\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/series-tooltips/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbDataChartCoreModule),\n                typeof(IgbDataChartCategoryCoreModule),\n                typeof(IgbDataChartCategoryModule),\n                typeof(IgbDataChartInteractivityModule),\n                typeof(IgbColumnSeriesModule),\n                typeof(IgbItemToolTipLayerModule),\n                typeof(IgbCategoryToolTipLayerModule)\n);\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/series-tooltips/Services/EnergyProductionData.cs",
+    "content": "using System;\nusing System.Collections.Generic;\n\nnamespace Infragistics.Samples\n{\n    public static class EnergyProductionData\n    {\n        public class Energy\n        {\n            public string Country { get; set; }\n            public double Coal { get; set; }\n            public double Oil { get; set; }\n            public double Gas { get; set; }\n            public double Nuclear { get; set; }\n            public double Hydro { get; set; }\n        }\n\n        public static List<Energy> Generate()\n        {\n            var data = new List<Energy>() {\n                new Energy { Country = \"Canada\", Coal = 400, Oil = 100, Gas = 175, Nuclear = 225, Hydro = 350 },\n                new Energy { Country = \"China\", Coal = 925, Oil = 200, Gas = 350, Nuclear = 400, Hydro = 625 },\n                new Energy { Country = \"Russia\", Coal = 550, Oil = 200, Gas = 250, Nuclear = 475, Hydro = 425 },\n                new Energy { Country = \"Australia\", Coal = 450, Oil = 100, Gas = 150, Nuclear = 175, Hydro = 350 },\n                new Energy { Country = \"United States\", Coal = 800, Oil = 250, Gas = 475, Nuclear = 575, Hydro = 750 },\n                new Energy { Country = \"France\", Coal = 375, Oil = 150, Gas = 350, Nuclear = 275, Hydro = 325 }\n            };\n            return data;\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/series-tooltips/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

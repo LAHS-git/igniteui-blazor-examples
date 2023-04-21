@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/layouts/dock-manager/embedding-frames/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"container vertical\">\n        <IgbDockManager @ref=\"dockManager\" Layout=\"Layout\" height=\"100%\" width=\"100%\">\n            <div slot=\"content1\" class=\"container vertical\">\n                <iframe src=\"https://infragistics.com/webcomponents-demos/charts/doughnut-chart-overview\"\n                        class=\"container vertical\" seamless frameBorder=\"0\" >\n                </iframe>\n            </div>\n            <div slot=\"content2\" class=\"container vertical\">\n                <iframe src=\"https://infragistics.com/webcomponents-demos/gauges/radial-gauge-needle\"\n                        class=\"container vertical\" seamless frameBorder=\"0\" >\n                </iframe>\n            </div>\n            <div slot=\"content3\" class=\"container vertical\">\n                <iframe src=\"https://infragistics.com/webcomponents-demos/maps/geo-map-binding-data-csv\"\n                        class=\"container vertical\" seamless frameBorder=\"0\" >\n                </iframe>\n            </div>\n        </IgbDockManager>\n    </div>\n</div>\n\n@code {\n\n    public IgbDockManager dockManager { get; set; }\n    public IgbDockManagerLayout Layout { get; set; }\n\n    protected override void OnInitialized()\n    {\n\n        Layout = new IgbDockManagerLayout();\n        Layout.RootPane = new IgbSplitPane();\n        Layout.RootPane.PaneType = DockManagerPaneType.SplitPane;\n        Layout.RootPane.Orientation = SplitPaneOrientation.Horizontal;\n        var splitPane1 = new IgbSplitPane\n        {\n            PaneType = DockManagerPaneType.SplitPane,\n            Orientation = SplitPaneOrientation.Horizontal,\n            Size = 300\n        };\n        var contentPane1 = new IgbContentPane\n        {\n            PaneType = DockManagerPaneType.ContentPane,\n            Header = \"EMBEDDED RADIAL GAUGE\",\n            ContentId = \"content1\",\n        };\n        var contentPane2 = new IgbContentPane\n        {\n            PaneType = DockManagerPaneType.ContentPane,\n            Header = \"EMBEDDED DOUGHNUT CHART\",\n            ContentId = \"content2\",\n        };\n        var contentPane3 = new IgbContentPane\n        {\n            PaneType = DockManagerPaneType.ContentPane,\n            Header = \"EMBEDDED GEOGRAPHIC MAP\",\n            ContentId = \"content3\",\n        };\n        Layout.RootPane.Panes.Add(splitPane1);\n        splitPane1.Panes.Add(contentPane1);\n        splitPane1.Panes.Add(contentPane2);\n        splitPane1.Panes.Add(contentPane3);\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/layouts/dock-manager/embedding-frames/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(typeof(IgbDockManagerModule));\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/layouts/dock-manager/embedding-frames/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

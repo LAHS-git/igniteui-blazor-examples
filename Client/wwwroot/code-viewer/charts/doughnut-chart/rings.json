@@ -1,0 +1,45 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/rings/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"legend-title\">\n        Hierarchical Chart\n    </div>\n\n    <div class=\"container vertical fill\">\n        <IgbDoughnutChart\n        Name=\"chart\"\n        @ref=\"chart\"\n        AllowSliceExplosion=\"false\"\n        AllowSliceSelection=\"false\">\n            <IgbRingSeries\n            Name=\"series1\"\n            @ref=\"series1\"\n            LabelMemberPath=\"Label\"\n            ValueMemberPath=\"Value\"\n            LabelsPosition=\"LabelsPosition.Center\"\n            RadiusFactor=\"0.9\"\n            Outlines=\"white\"\n            Brushes=\"#3cbdc9 #9fb328 #f96232 #8a58d6\"\n            DataSource=\"CalendarSeasons\">\n            </IgbRingSeries>\n\n            <IgbRingSeries\n            Name=\"series2\"\n            @ref=\"series2\"\n            LabelMemberPath=\"Label\"\n            ValueMemberPath=\"Value\"\n            LabelsPosition=\"LabelsPosition.Center\"\n            RadiusFactor=\"0.9\"\n            Outlines=\"white\"\n            Brushes=\"#3cbdc9 #3cbdc9 #3cbdc9 #9fb328 #9fb328 #9fb328 #f96232 #f96232 #f96232 #8a58d6 #8a58d6 #8a58d6\"\n            DataSource=\"CalendarMonths\">\n            </IgbRingSeries>\n\n        </IgbDoughnutChart>\n\n    </div>\n</div>\n\n@code {\n    \n\n    protected override async Task OnAfterRenderAsync(bool firstRender)\n    {\n        var chart = this.chart;\n        var series1 = this.series1;\n        var series2 = this.series2;\n\n    }\n\n    private IgbDoughnutChart chart;\n    private IgbRingSeries series1;\n    private IgbRingSeries series2;\n\n    private CalendarSeasons _calendarSeasons = null;\n    public CalendarSeasons CalendarSeasons\n    {\n        get\n        {\n            if (_calendarSeasons == null)\n            {\n                _calendarSeasons = new CalendarSeasons();\n            }\n            return _calendarSeasons;\n        }\n    }\n\n    private CalendarMonths _calendarMonths = null;\n    public CalendarMonths CalendarMonths\n    {\n        get\n        {\n            if (_calendarMonths == null)\n            {\n                _calendarMonths = new CalendarMonths();\n            }\n            return _calendarMonths;\n        }\n    }\n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/rings/CalendarMonths.cs",
+    "content": "using System;\nusing System.Collections.Generic;\npublic class CalendarMonthsItem\n{\n    public double Value { get; set; }\n    public string Label { get; set; }\n}\n\npublic class CalendarMonths\n    : List<CalendarMonthsItem>\n{\n    public CalendarMonths()\n    {\n        this.Add(new CalendarMonthsItem()\n        {\n            Value = 1,\n            Label = @\"December\"\n        });\n        this.Add(new CalendarMonthsItem()\n        {\n            Value = 1,\n            Label = @\"January\"\n        });\n        this.Add(new CalendarMonthsItem()\n        {\n            Value = 1,\n            Label = @\"February\"\n        });\n        this.Add(new CalendarMonthsItem()\n        {\n            Value = 1,\n            Label = @\"March\"\n        });\n        this.Add(new CalendarMonthsItem()\n        {\n            Value = 1,\n            Label = @\"April\"\n        });\n        this.Add(new CalendarMonthsItem()\n        {\n            Value = 1,\n            Label = @\"May\"\n        });\n        this.Add(new CalendarMonthsItem()\n        {\n            Value = 1,\n            Label = @\"June\"\n        });\n        this.Add(new CalendarMonthsItem()\n        {\n            Value = 1,\n            Label = @\"July\"\n        });\n        this.Add(new CalendarMonthsItem()\n        {\n            Value = 1,\n            Label = @\"August\"\n        });\n        this.Add(new CalendarMonthsItem()\n        {\n            Value = 1,\n            Label = @\"September\"\n        });\n        this.Add(new CalendarMonthsItem()\n        {\n            Value = 1,\n            Label = @\"October\"\n        });\n        this.Add(new CalendarMonthsItem()\n        {\n            Value = 1,\n            Label = @\"November\"\n        });\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA SOURCE"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/rings/CalendarSeasons.cs",
+    "content": "using System;\nusing System.Collections.Generic;\npublic class CalendarSeasonsItem\n{\n    public double Value { get; set; }\n    public string Label { get; set; }\n}\n\npublic class CalendarSeasons\n    : List<CalendarSeasonsItem>\n{\n    public CalendarSeasons()\n    {\n        this.Add(new CalendarSeasonsItem()\n        {\n            Value = 4,\n            Label = @\"Winter\"\n        });\n        this.Add(new CalendarSeasonsItem()\n        {\n            Value = 4,\n            Label = @\"Spring\"\n        });\n        this.Add(new CalendarSeasonsItem()\n        {\n            Value = 4,\n            Label = @\"Summer\"\n        });\n        this.Add(new CalendarSeasonsItem()\n        {\n            Value = 4,\n            Label = @\"Fall\"\n        });\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA SOURCE"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/rings/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbLegendModule),\n                typeof(IgbDoughnutChartModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/rings/wwwroot/index.css",
+    "content": "/*\r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

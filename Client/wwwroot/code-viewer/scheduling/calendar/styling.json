@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/scheduling/calendar/styling/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <style>\n        igc-calendar::part(date-inner selected),\n        igc-calendar::part(month-inner selected),\n        igc-calendar::part(year-inner selected),\n        igc-calendar::part(month-inner selected):focus,\n        igc-calendar::part(year-inner selected):focus {\n            background: #446418;\n            border-color: #446418;\n        }\n\n        igc-calendar::part(date-inner selected):hover,\n        igc-calendar::part(month-inner selected):hover,\n        igc-calendar::part(year-inner selected):hover {\n            background: #7d9b5d;\n            border-color: #7d9b5d;\n        }\n\n        igc-calendar::part(label),\n        igc-calendar::part(navigation-button),\n        igc-calendar::part(months-navigation):hover,\n        igc-calendar::part(months-navigation):focus,\n        igc-calendar::part(years-navigation):hover,\n        igc-calendar::part(years-navigation):focus {\n            color: #7d9b5d;\n        }\n\n        igc-calendar::part(navigation-button):hover,\n        igc-calendar::part(navigation-button):focus {\n            color: #446418;\n        }\n    </style>\n    <div>\n        <IgbCalendar />\n    </div>\n</div>\n\n@code {\n    \n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/scheduling/calendar/styling/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbInputModule),\n                typeof(IgbPropertyEditorPanelModule),\n                typeof(IgbCalendarModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/scheduling/calendar/styling/wwwroot/CalendarStyling.css",
+    "content": "igc-calendar::part(date-inner selected),\r\nigc-calendar::part(month-inner selected),\r\nigc-calendar::part(year-inner selected),\r\nigc-calendar::part(month-inner selected):focus,\r\nigc-calendar::part(year-inner selected):focus {\r\n    background: #446418;\r\n    border-color: #446418;\r\n}\r\n\r\nigc-calendar::part(date-inner selected):hover,\r\nigc-calendar::part(month-inner selected):hover,\r\nigc-calendar::part(year-inner selected):hover {\r\n    background: #7d9b5d;\r\n    border-color: #7d9b5d;\r\n}\r\n\r\nigc-calendar::part(label),\r\nigc-calendar::part(navigation-button),\r\nigc-calendar::part(months-navigation):hover,\r\nigc-calendar::part(months-navigation):focus,\r\nigc-calendar::part(years-navigation):hover,\r\nigc-calendar::part(years-navigation):focus {\r\n    color: #7d9b5d;\r\n}\r\n\r\nigc-calendar::part(navigation-button):hover,\r\nigc-calendar::part(navigation-button):focus {\r\n    color: #446418;\r\n}\r\n",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/scheduling/calendar/styling/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

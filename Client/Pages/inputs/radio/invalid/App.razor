@@ -1,0 +1,21 @@
+@page "/samples/inputs/radio/invalid"
+@page "/samples/inputs/radio-invalid"
+@page         "/inputs/radio/invalid"
+@page         "/inputs/radio-invalid"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical" style="width: 25rem; height: 1.5rem; border: 1px solid gainsboro">
+    <IgbRadio Invalid="true">Invalid</IgbRadio>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbRadioGroupModule.Register(IgniteUIBlazor);
+        IgbRadioModule.Register(IgniteUIBlazor);
+
+    }
+
+}

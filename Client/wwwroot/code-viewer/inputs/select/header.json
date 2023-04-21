@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/select/header/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container sample center\">\n    <IgbSelect>\n        <IgbSelectHeader>Tasks</IgbSelectHeader>\n        <IgbSelectItem Value=\"spec\" Selected>Specification</IgbSelectItem>\n        <IgbSelectItem Value=\"implement\">Implementation</IgbSelectItem>\n        <IgbSelectItem Value=\"test\" Disabled>Testing</IgbSelectItem>\n        <IgbSelectItem Value=\"docs\">Documentation</IgbSelectItem>\n    </IgbSelect>\n</div>\n\n@code { }",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/select/header/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\n\n// required for registering IgniteUIBlazor\nusing IgniteUI.Blazor.Controls;\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n\n            // registering Infragistics Blazor\n            builder.Services.AddIgniteUIBlazor(typeof(IgbSelectModule));\n\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/select/header/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

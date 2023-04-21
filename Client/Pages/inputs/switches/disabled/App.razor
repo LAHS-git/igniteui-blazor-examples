@@ -1,0 +1,20 @@
+@page "/samples/inputs/switches/disabled"
+@page "/samples/inputs/switches-disabled"
+@page         "/inputs/switches/disabled"
+@page         "/inputs/switches-disabled"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <IgbSwitch Disabled="true">Label</IgbSwitch>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbSwitchModule.Register(IgniteUIBlazor);
+
+    }
+
+}

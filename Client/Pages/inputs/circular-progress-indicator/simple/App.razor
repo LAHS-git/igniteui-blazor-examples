@@ -1,0 +1,28 @@
+@page "/samples/inputs/circular-progress-indicator/simple"
+@page "/samples/inputs/circular-progress-indicator-simple"
+@page         "/inputs/circular-progress-indicator/simple"
+@page         "/inputs/circular-progress-indicator-simple"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="root">
+
+    <style>
+        #circularProgress {
+            margin: 20px;
+            --diameter: 50px;
+        }
+    </style>
+
+    <IgbCircularProgress id="circularProgress" Value=100/>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbCircularProgressModule.Register(IgniteUIBlazor);
+
+    }
+
+}

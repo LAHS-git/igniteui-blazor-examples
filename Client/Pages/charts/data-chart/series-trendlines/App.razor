@@ -1,0 +1,60 @@
+@page "/samples/charts/data-chart/series-trendlines"
+@page "/samples/charts/data-chart-series-trendlines"
+@page         "/charts/data-chart/series-trendlines"
+@page         "/charts/data-chart-series-trendlines"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="options horizontal">
+        <span class="options-item">Trendline Type:</span>
+        <select @bind="ChartTrendlineType">
+            <option>@TrendLineType.None</option>
+            <option>@TrendLineType.CubicFit</option>
+            <option>@TrendLineType.CumulativeAverage</option>
+            <option>@TrendLineType.ExponentialAverage</option>
+            <option>@TrendLineType.ExponentialFit</option>
+            <option>@TrendLineType.LinearFit</option>
+            <option>@TrendLineType.LogarithmicFit</option>
+            <option>@TrendLineType.ModifiedAverage</option>
+            <option>@TrendLineType.PowerLawFit</option>
+            <option>@TrendLineType.QuadraticFit</option>
+            <option>@TrendLineType.QuarticFit</option>
+            <option>@TrendLineType.QuinticFit</option>
+            <option>@TrendLineType.SimpleAverage</option>
+            <option>@TrendLineType.WeightedAverage</option>
+        </select>
+    </div>
+
+    <div class="container vertical">
+        <IgbDataChart Height="100%" Width="100%"
+                   IsHorizontalZoomEnabled="true"
+                   IsVerticalZoomEnabled="true">
+            <IgbCategoryXAxis Name="xAxis" Label="Label" DataSource="Data" />
+            <IgbNumericYAxis Name="yAxis" />
+
+            <IgbFinancialPriceSeries XAxisName="xAxis" YAxisName="yAxis" DataSource="Data" HighMemberPath="High" LowMemberPath="Low"
+                                  CloseMemberPath="Close" OpenMemberPath="Open" VolumeMemberPath="Volume"
+                                  TrendLineType="ChartTrendlineType" />
+
+        </IgbDataChart>
+    </div>
+</div>
+
+@code {
+
+    private List<SampleFinancialItem> Data;
+    private TrendLineType ChartTrendlineType = TrendLineType.CubicFit;
+
+    protected override void OnInitialized()
+    {
+        IgbDataChartCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartCategoryModule.Register(IgniteUIBlazor);
+        IgbDataChartInteractivityModule.Register(IgniteUIBlazor);
+        IgbFinancialPriceSeriesModule.Register(IgniteUIBlazor);
+        IgbDataChartCategoryTrendLineModule.Register(IgniteUIBlazor);
+
+        this.Data = SampleFinancialData.Create();
+    }
+}

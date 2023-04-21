@@ -1,0 +1,98 @@
+@page "/samples/charts/data-chart/series-highlighting"
+@page "/samples/charts/data-chart-series-highlighting"
+@page         "/charts/data-chart/series-highlighting"
+@page         "/charts/data-chart-series-highlighting"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="options horizontal">
+        <label class="options-label">Enable Highlighting: </label>
+        <label class="options-item">
+            <input type="checkbox" @bind="SeriesHighlightEnabled" /> Series
+        </label>
+        <label class="options-item">
+            <input type="checkbox" @onchange="OnItemHighlightCheckboxChanged"/>Item
+        </label>
+        <label class="options-item">
+            <input type="checkbox" @onchange="OnCategoryHighlightCheckboxChanged" />Category
+        </label>
+    </div>
+
+    <div class="container vertical">
+        <IgbDataChart Height="100%" Width="100%" IsVerticalZoomEnabled="true"
+                   IsHorizontalZoomEnabled="true" @ref="Chart">
+            <IgbCategoryXAxis Name="xAxis" DataSource="Data" Label="Country" />
+            <IgbNumericYAxis Name="yAxis" MinimumValue="0" AbbreviateLargeNumbers="true" />
+
+            <IgbColumnSeries Title="Coal" XAxisName="xAxis" YAxisName="yAxis" ValueMemberPath="Coal"
+                          DataSource="Data" IsTransitionInEnabled="true"
+                          IsHighlightingEnabled="SeriesHighlightEnabled"/>
+            <IgbColumnSeries Title="Hydro" XAxisName="xAxis" YAxisName="yAxis" ValueMemberPath="Hydro"
+                          DataSource="Data" IsTransitionInEnabled="true"
+                          IsHighlightingEnabled="SeriesHighlightEnabled"/>
+            <IgbColumnSeries Title="Nuclear" XAxisName="xAxis" YAxisName="yAxis" ValueMemberPath="Nuclear"
+                          DataSource="Data" IsTransitionInEnabled="true"
+                          IsHighlightingEnabled="SeriesHighlightEnabled"/>
+            <IgbColumnSeries Title="Gas" XAxisName="xAxis" YAxisName="yAxis" ValueMemberPath="Gas"
+                          DataSource="Data" IsTransitionInEnabled="true"
+                          IsHighlightingEnabled="SeriesHighlightEnabled"/>
+            <IgbColumnSeries Title="Oil" XAxisName="xAxis" YAxisName="yAxis" ValueMemberPath="Oil"
+                          DataSource="Data" IsTransitionInEnabled="true"
+                          IsHighlightingEnabled="SeriesHighlightEnabled"/>
+        </IgbDataChart>
+    </div>
+</div>
+
+@code {
+
+    private List<EnergyProductionData.Energy> Data;
+    private bool SeriesHighlightEnabled = true;
+
+    private IgbCategoryItemHighlightLayer ItemHighlightLayer;
+    private IgbCategoryHighlightLayer CategoryHighlightLayer;
+    private IgbDataChart Chart;
+
+    protected override void OnInitialized()
+    {
+        IgbDataChartCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartCategoryCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartCategoryModule.Register(IgniteUIBlazor);
+        IgbDataChartInteractivityModule.Register(IgniteUIBlazor);
+        IgbColumnSeriesModule.Register(IgniteUIBlazor);
+        IgbCategoryHighlightLayerModule.Register(IgniteUIBlazor);
+        IgbCategoryItemHighlightLayerModule.Register(IgniteUIBlazor);
+
+        this.Data = EnergyProductionData.Generate();
+
+        this.ItemHighlightLayer = new IgbCategoryItemHighlightLayer();
+        this.CategoryHighlightLayer = new IgbCategoryHighlightLayer();
+    }
+
+    private void OnCategoryHighlightCheckboxChanged(ChangeEventArgs e)
+    {
+        bool val = (bool)e.Value;
+        if (val)
+        {
+            this.Chart.ActualSeries.Add(this.CategoryHighlightLayer);
+        }
+        else
+        {
+            this.Chart.ActualSeries.Remove(this.CategoryHighlightLayer);
+        }
+    }
+
+    private void OnItemHighlightCheckboxChanged(ChangeEventArgs e)
+    {
+        bool val = (bool)e.Value;
+        if (val)
+        {
+            this.Chart.ActualSeries.Add(this.ItemHighlightLayer);
+        }
+        else
+        {
+            this.Chart.ActualSeries.Remove(this.ItemHighlightLayer);
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/notifications/snackbar/action-text/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container sample vertical\">\n    <div class=\"button-container\">\n        <IgbButton onclick=\"snackbar1.show()\">Show Snackbar</IgbButton>\n        <IgbButton onclick=\"snackbar1.hide()\">Hide Snackbar</IgbButton>\n\n        <IgbSnackbar @ref=\"ToggleSnackbarRef\" id=\"snackbar1\" KeepOpen=\"true\" ActionText=\"Close\" Action=OnActionClick> @SnackbarDisplayText </IgbSnackbar>\n    </div>\n</div>\n\n@code {\n    \n    public string SnackbarDisplayText { get; set; } = \"Hello there!\";\n\n    private IgbSnackbar snackbar1;\n    public IgbSnackbar ToggleSnackbarRef\n    {\n        get { return snackbar1; }\n        set {\n            snackbar1 = value;\n            StateHasChanged();\n        }\n    }\n\n    private void OnActionClick(IgbVoidEventArgs e)\n    {\n        this.ToggleSnackbarRef.Hide();\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/notifications/snackbar/action-text/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbCheckboxModule),\n                typeof(IgbButtonModule),\n                typeof(IgbSnackbarModule)\n   );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/notifications/snackbar/action-text/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

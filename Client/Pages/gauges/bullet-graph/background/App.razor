@@ -1,0 +1,30 @@
+@page "/samples/gauges/bullet-graph/background"
+@page "/samples/gauges/bullet-graph-background"
+@page         "/gauges/bullet-graph/background"
+@page         "/gauges/bullet-graph-background"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="container vertical">
+        <IgbBulletGraph Height="80px" Width="100%"
+                     MinimumValue="0" Value="70" Interval="10"
+                     MaximumValue="100" TargetValue="90"
+                     BackingBrush="#BDDCFC"
+                     BackingOutline="DodgerBlue"
+                     BackingStrokeThickness="4"
+                     BackingInnerExtent="0"
+                     BackingOuterExtent="1">
+        </IgbBulletGraph>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbBulletGraphModule.Register(IgniteUIBlazor);
+
+    }
+
+}

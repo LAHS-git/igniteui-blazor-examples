@@ -1,0 +1,24 @@
+@page "/samples/scheduling/calendar/overview"
+@page "/samples/scheduling/calendar-overview"
+@page         "/scheduling/calendar/overview"
+@page         "/scheduling/calendar-overview"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div style="width: 25rem; border: 1px solid gainsboro;">
+        <IgbCalendar />
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbInputModule.Register(IgniteUIBlazor);
+        IgbPropertyEditorPanelModule.Register(IgniteUIBlazor);
+        IgbCalendarModule.Register(IgniteUIBlazor);
+
+    }
+
+}

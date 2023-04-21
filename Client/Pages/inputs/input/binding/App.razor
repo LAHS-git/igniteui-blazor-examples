@@ -1,0 +1,25 @@
+@page "/samples/inputs/input/binding"
+@page "/samples/inputs/input-binding"
+@page         "/inputs/input/binding"
+@page         "/inputs/input-binding"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container sample center">
+    <h1>Greetings, @userName</h1>
+    <IgbInput @bind-value="userName" Label="Input Name" Placeholder="eg. John Doe">
+        <span slot="prefix">User</span>
+    </IgbInput>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbInputModule.Register(IgniteUIBlazor);
+
+    }
+
+    string userName = "Bradley";
+
+}

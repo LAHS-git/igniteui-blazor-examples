@@ -1,0 +1,34 @@
+@page "/samples/inputs/chip/styling"
+@page "/samples/inputs/chip-styling"
+@page         "/inputs/chip/styling"
+@page         "/inputs/chip-styling"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<style>
+igc-chip::part(base) {
+background: #011627;
+color: #ECAA53;
+}
+
+igc-chip::part(suffix) {
+color: #B7B6C2;
+}
+</style>
+
+<div class="container sample vertical">
+    <IgbChip Size="SizableComponentSize.Medium" Selectable=true Removable=true> Chip
+    </IgbChip>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbChipModule.Register(IgniteUIBlazor);
+
+    }
+
+    private IgbIcon RegisterIconRef { get; set; }
+
+}

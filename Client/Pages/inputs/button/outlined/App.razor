@@ -1,0 +1,20 @@
+@page "/samples/inputs/button/outlined"
+@page "/samples/inputs/button-outlined"
+@page         "/inputs/button/outlined"
+@page         "/inputs/button-outlined"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <IgbButton style="margin:5px" Variant="ButtonVariant.Outlined">Outlined</IgbButton>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbButtonModule.Register(IgniteUIBlazor);
+
+    }
+
+}

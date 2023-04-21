@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/button/size/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<style>\n.buttonContainer {\ndisplay: flex;\njustify-content: space-evenly;\nmargin-top: 20px;\n}\n\n#radioGroup {\ndisplay: flex;\nmargin: 0 auto;\nwidth: 15%;\n}\n</style>\n\n<div class=\"container vertical\">\n    <IgbRadioGroup id=\"radioGroup\" Alignment=\"RadioGroupAlignment.Horizontal\" >\n        <IgbRadio Value=\"small\" LabelPosition=\"RadioLabelPosition.After\" @onclick=\"OnSmallClick\">Small</IgbRadio>\n        <IgbRadio Value=\"medium\" LabelPosition=\"RadioLabelPosition.After\" @onclick=\"OnMediumClick\">Medium</IgbRadio>\n        <IgbRadio Value=\"large\" LabelPosition=\"RadioLabelPosition.After\" Checked=\"true\" @onclick=\"OnLargeClick\">Large</IgbRadio>\n    </IgbRadioGroup>\n\n    <div class=\"buttonContainer\">\n        <IgbButton Size=\"@SizableComponentSize\" Variant=\"ButtonVariant.Flat\">Flat</IgbButton>\n        <IgbButton Size=\"@SizableComponentSize\" Variant=\"ButtonVariant.Contained\">Contained</IgbButton>\n        <IgbButton Size=\"@SizableComponentSize\" Variant=\"ButtonVariant.Outlined\">Outlined</IgbButton>\n        <IgbButton Size=\"@SizableComponentSize\" Variant=\"ButtonVariant.Fab\">Like</IgbButton>\n    </div>\n</div>\n\n@code {\n    \n\n    private SizableComponentSize SizableComponentSize = SizableComponentSize.Large;\n\n    public void OnSmallClick(EventArgs e)\n    {\n        SizableComponentSize = SizableComponentSize.Small;\n    }\n\n    public void OnMediumClick(EventArgs e)\n    {\n        SizableComponentSize = SizableComponentSize.Medium;\n    }\n\n    public void OnLargeClick(EventArgs e)\n    {\n        SizableComponentSize = SizableComponentSize.Large;\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/button/size/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(typeof(IgbButtonModule));\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/button/size/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

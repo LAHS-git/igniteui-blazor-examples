@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/sparkline/display-types/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n\n        @if (Data != null)\n        {\n            <label class=\"legend-title\">Sparkline with Line Display Type</label>\n            <div class=\"container\" style=\"padding: 0.5rem;\">\n                <IgbSparkline Height=\"100%\" Width=\"100%\" DataSource=\"Data\"\n                           DisplayType=\"SparklineDisplayType.Line\"\n                           ValueMemberPath=\"Value\"\n                           LabelMemberPath=\"Angle\">\n                </IgbSparkline>\n            </div>\n\n            <label class=\"legend-title\">Sparkline with Area Display Type</label>\n            <div class=\"container\" style=\"padding: 0.5rem;\">\n                <IgbSparkline Height=\"100%\"  Width=\"100%\" DataSource=\"Data\"\n                           DisplayType=\"SparklineDisplayType.Area\"\n                           ValueMemberPath=\"Value\"\n                           LabelMemberPath=\"Angle\">\n                </IgbSparkline>\n            </div>\n\n            <label class=\"legend-title\">Sparkline with Column Display Type</label>\n            <div class=\"container\" style=\"padding: 0.5rem;\">\n               <IgbSparkline Height=\"100%\" Width=\"100%\" DataSource=\"Data\"\n                           DisplayType=\"SparklineDisplayType.Column\"\n                           ValueMemberPath=\"Value\"\n                           LabelMemberPath=\"Angle\">\n                </IgbSparkline>\n            </div>\n\n            <label class=\"legend-title\">Sparkline with Win/Loss Display Type</label>\n            <div class=\"container\" style=\"padding: 0.5rem;\">\n                <IgbSparkline Height=\"100%\" Width=\"100%\" DataSource=\"Data\"\n                           DisplayType=\"SparklineDisplayType.WinLoss\"\n                           ValueMemberPath=\"Value\"\n                           LabelMemberPath=\"Angle\">\n                </IgbSparkline>\n            </div>\n        }\n\n</div>\n\n@code {\n\n    private List<SparklineItem> Data;\n\n    protected override void OnInitialized()\n    {\n\n        this.Data = SparklineData.Generate();\n    }\n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/sparkline/display-types/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(typeof(IgbSparklineModule));\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/sparkline/display-types/Services/SparklineData.cs",
+    "content": "﻿using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Threading.Tasks;\n\nnamespace Infragistics.Samples\n{\n    public class SparklineItem\n    {\n        public double Index { get; set; }\n        public double Value { get; set; }\n        public double Angle { get; set; }\n        public double Expanse { get; set; }\n        public double Income { get; set; }\n    }\n\n    public static class SparklineData\n    {\n        public static List<SparklineItem> Generate()\n        {\n            var SparklineItems = new List<SparklineItem>();\n            var index = 0;\n            var min = 1000.0;\n            var max = -1000.0;\n\n            for (var angle = 0; angle <= 360 * 4.0; angle += 5)\n            {\n                var v1 = Math.Sin(angle * Math.PI / 180);\n                var v2 = Math.Sin(3 * angle * Math.PI / 180) / 3;\n                var revenue = v1 + v2;\n                var expanse = revenue < 0 ? revenue : 0;\n                var income = revenue > 0 ? revenue : 0;\n\n                SparklineItems.Add(new SparklineItem()\n                {\n                    Index = index++,\n                    Angle = angle,\n                    // Value = v1 + v2\n                    Value = revenue,\n                    Expanse = expanse,\n                    Income = income\n                });\n                min = Math.Min(min, v1 + v2);\n                max = Math.Max(max, v1 + v2);\n            }\n\n            return SparklineItems;\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/sparkline/display-types/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

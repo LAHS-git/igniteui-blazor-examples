@@ -1,0 +1,20 @@
+@page "/samples/inputs/switches/overview"
+@page "/samples/inputs/switches-overview"
+@page         "/inputs/switches/overview"
+@page         "/inputs/switches-overview"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <IgbSwitch>Switch</IgbSwitch>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbSwitchModule.Register(IgniteUIBlazor);
+
+    }
+
+}

@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/notifications/toast/properties/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <style>\n        .buttonContainer {\n            display: flex;\n            justify-content: space-evenly;\n            margin-top: 20px;\n        }\n    </style>\n\n    <div class=\"buttonContainer\">\n        <IgbButton @onclick=@OnToggleToastButtonClick Variant=\"ButtonVariant.Contained\">Toggle Toast</IgbButton>\n        <IgbButton @onclick=@OnToggleKeepOpenButtonClick Variant=\"ButtonVariant.Contained\">Toggle KeepOpen Property</IgbButton>\n        <IgbButton @onclick=@OnDisplayTimeButtonClick Variant=\"ButtonVariant.Contained\">Set DisplayTime to 8000</IgbButton>\n    </div>\n\n    <IgbToast @ref=ToastRef>Toast Message</IgbToast>\n\n</div>\n\n@code {\n    \n\n    public IgbToast ToastRef { get; set; }\n\n    public void OnToggleToastButtonClick(MouseEventArgs args)\n    {\n        if(this.ToastRef != null)\n        {\n            this.ToastRef.Toggle();\n        }\n    }\n\n    public void OnToggleKeepOpenButtonClick(MouseEventArgs args)\n    {\n        if(this.ToastRef != null)\n        {\n            this.ToastRef.KeepOpen = !this.ToastRef.KeepOpen;\n        }\n    }\n\n    public void OnDisplayTimeButtonClick(MouseEventArgs args)\n    {\n        if(this.ToastRef != null)\n        {\n            this.ToastRef.DisplayTime = 8000;\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/notifications/toast/properties/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbButtonModule),\n                typeof(IgbToastModule)\n   );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/notifications/toast/properties/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

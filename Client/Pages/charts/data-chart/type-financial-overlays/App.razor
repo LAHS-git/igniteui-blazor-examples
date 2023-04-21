@@ -1,0 +1,73 @@
+@page "/samples/charts/data-chart/type-financial-overlays"
+@page "/samples/charts/data-chart-type-financial-overlays"
+@page         "/charts/data-chart/type-financial-overlays"
+@page         "/charts/data-chart-type-financial-overlays"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="container vertical">
+
+        <IgbDataChart Height="100%" Width="100%"
+                   Subtitle="Stock Prices with Bollinger Bands Overlay"
+                   SubtitleTopMargin="10"
+                   IsHorizontalZoomEnabled="true"
+                   IsVerticalZoomEnabled="true">
+
+            <IgbCategoryXAxis Name="xAxis" Label="Label" DataSource="Data" />
+            <IgbNumericYAxis Name="yAxis" Title="Amount (in USD)" TitleRightMargin="10"
+                          LabelRightMargin="10"
+                          LabelHorizontalAlignment="HorizontalAlignment.Left"
+                          LabelLocation="AxisLabelsLocation.OutsideRight" />
+
+            <IgbBollingerBandsOverlay XAxisName="xAxis"
+                                   YAxisName="yAxis"
+                                   DataSource="Data"
+                                   OpenMemberPath="Open"
+                                   CloseMemberPath="Close"
+                                   HighMemberPath="High"
+                                   LowMemberPath="Low"
+                                   VolumeMemberPath="Volume"
+                                   ShowDefaultTooltip="true"
+                                   IsTransitionInEnabled="true"
+                                   AreaFillOpacity="0.2"
+                                   Thickness="1"
+                                   Brush="rgba(75, 75, 75, 0.8)"
+                                   Outline="rgba(75, 75, 75, 0.8)"
+                                   Title="Overlay" />
+
+            <IgbFinancialPriceSeries XAxisName="xAxis"
+                                  YAxisName="yAxis"
+                                  DataSource="Data"
+                                  OpenMemberPath="Open"
+                                  CloseMemberPath="Close"
+                                  HighMemberPath="High"
+                                  LowMemberPath="Low"
+                                  VolumeMemberPath="Volume"
+                                  ShowDefaultTooltip="true"
+                                  IsTransitionInEnabled="true"
+                                  Brush="rgba(2, 199, 74, 1.0)"
+                                  Outline="rgba(2, 199, 74, 1.0)"
+                                  Title="Price" />
+        </IgbDataChart>
+
+    </div>
+</div>
+
+@code {
+
+    private List<SampleFinancialItem> Data;
+
+    protected override void OnInitialized()
+    {
+        IgbDataChartCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartCategoryModule.Register(IgniteUIBlazor);
+        IgbDataChartInteractivityModule.Register(IgniteUIBlazor);
+        IgbFinancialPriceSeriesModule.Register(IgniteUIBlazor);
+        IgbBollingerBandsOverlayModule.Register(IgniteUIBlazor);
+        IgbPriceChannelOverlayModule.Register(IgniteUIBlazor);
+
+        Data = SampleFinancialData.Create();
+    }
+}

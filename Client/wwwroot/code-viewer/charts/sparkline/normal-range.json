@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/sparkline/normal-range/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"options vertical\">\n        <IgbPropertyEditorPanel\n\n        DescriptionType=\"Sparkline\"\n        IsHorizontal=\"true\"\n        IsWrappingEnabled=\"true\"\n        Name=\"propertyEditorPanel1\"\n        @ref=\"propertyEditorPanel1\">\n            <IgbPropertyEditorPropertyDescription\n            PropertyPath=\"NormalRangeVisibility\"\n            Name=\"NormalRangeVisibilityEditor\"\n            @ref=\"normalRangeVisibilityEditor\"\n            Label=\"Normal Range Visibility\"\n            ShouldOverrideDefaultEditor=\"true\"\n            ValueType=\"PropertyEditorValueType.EnumValue\"\n            DropDownNames=\"@(new string[] { \"Visible\", \"Collapsed\" })\"\n            DropDownValues=\"@(new string[] { \"Visible\", \"Collapsed\" })\"\n            PrimitiveValue=\"@(\"Visible\")\">\n            </IgbPropertyEditorPropertyDescription>\n\n            <IgbPropertyEditorPropertyDescription\n            PropertyPath=\"NormalRangeMinimum\"\n            Name=\"NormalRangeMinimumEditor\"\n            @ref=\"normalRangeMinimumEditor\"\n            Label=\"Normal Range Minimum\"\n            ShouldOverrideDefaultEditor=\"true\"\n            ValueType=\"PropertyEditorValueType.EnumValue\"\n            DropDownNames=\"@(new string[] { \"0\", \"10\", \"15\", \"20\", \"25\", \"30\" })\"\n            DropDownValues=\"@(new string[] { \"0\", \"10\", \"15\", \"20\", \"25\", \"30\" })\"\n            PrimitiveValue=\"25\">\n            </IgbPropertyEditorPropertyDescription>\n\n            <IgbPropertyEditorPropertyDescription\n            PropertyPath=\"NormalRangeMaximum\"\n            Name=\"NormalRangeMaximumEditor\"\n            @ref=\"normalRangeMaximumEditor\"\n            Label=\"Normal Range Maximum\"\n            ShouldOverrideDefaultEditor=\"true\"\n            ValueType=\"PropertyEditorValueType.EnumValue\"\n            DropDownNames=\"@(new string[] { \"0\", \"10\", \"15\", \"20\", \"25\", \"30\" })\"\n            DropDownValues=\"@(new string[] { \"0\", \"10\", \"15\", \"20\", \"25\", \"30\" })\"\n            PrimitiveValue=\"25\">\n            </IgbPropertyEditorPropertyDescription>\n\n        </IgbPropertyEditorPanel>\n\n    </div>\n\n    <div class=\"container vertical fill\">\n        <IgbSparkline\n        Name=\"chart\"\n        @ref=\"chart\"\n        DataSource=\"SparklineMixedData\"\n        DisplayType=\"SparklineDisplayType.Area\"\n        LabelMemberPath=\"Label\"\n        ValueMemberPath=\"Value\"\n        NormalRangeVisibility=\"Visibility.Visible\"\n        NormalRangeMinimum=\"15\"\n        NormalRangeMaximum=\"25\">\n        </IgbSparkline>\n\n    </div>\n</div>\n\n@code {\n    \n\n    private Action BindElements { get; set; }\n\n    protected override async Task OnAfterRenderAsync(bool firstRender)\n    {\n        var propertyEditorPanel1 = this.propertyEditorPanel1;\n        var normalRangeVisibilityEditor = this.normalRangeVisibilityEditor;\n        var normalRangeMinimumEditor = this.normalRangeMinimumEditor;\n        var normalRangeMaximumEditor = this.normalRangeMaximumEditor;\n        var chart = this.chart;\n\n        this.BindElements = () => {\n            propertyEditorPanel1.Target = this.chart;\n        };\n        this.BindElements();\n\n    }\n\n    private IgbPropertyEditorPanel propertyEditorPanel1;\n    private IgbPropertyEditorPropertyDescription normalRangeVisibilityEditor;\n    private IgbPropertyEditorPropertyDescription normalRangeMinimumEditor;\n    private IgbPropertyEditorPropertyDescription normalRangeMaximumEditor;\n    private IgbSparkline chart;\n\n    private SparklineMixedData _sparklineMixedData = null;\n    public SparklineMixedData SparklineMixedData\n    {\n        get\n        {\n            if (_sparklineMixedData == null)\n            {\n                _sparklineMixedData = new SparklineMixedData();\n            }\n            return _sparklineMixedData;\n        }\n    }\n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/sparkline/normal-range/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbInputModule),\n                typeof(IgbPropertyEditorPanelModule),\n                typeof(IgbSparklineModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/sparkline/normal-range/SparklineMixedData.cs",
+    "content": "using System;\nusing System.Collections.Generic;\npublic class SparklineMixedDataItem\n{\n    public string Label { get; set; }\n    public double Value { get; set; }\n}\n\npublic class SparklineMixedData\n    : List<SparklineMixedDataItem>\n{\n    public SparklineMixedData()\n    {\n        this.Add(new SparklineMixedDataItem()\n        {\n            Label = @\"A\",\n            Value = 30\n        });\n        this.Add(new SparklineMixedDataItem()\n        {\n            Label = @\"B\",\n            Value = -10\n        });\n        this.Add(new SparklineMixedDataItem()\n        {\n            Label = @\"C\",\n            Value = 40\n        });\n        this.Add(new SparklineMixedDataItem()\n        {\n            Label = @\"D\",\n            Value = -20\n        });\n        this.Add(new SparklineMixedDataItem()\n        {\n            Label = @\"E\",\n            Value = 30\n        });\n        this.Add(new SparklineMixedDataItem()\n        {\n            Label = @\"F\",\n            Value = 40\n        });\n        this.Add(new SparklineMixedDataItem()\n        {\n            Label = @\"G\",\n            Value = -10\n        });\n        this.Add(new SparklineMixedDataItem()\n        {\n            Label = @\"H\",\n            Value = 30\n        });\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/sparkline/normal-range/wwwroot/index.css",
+    "content": "/*\r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

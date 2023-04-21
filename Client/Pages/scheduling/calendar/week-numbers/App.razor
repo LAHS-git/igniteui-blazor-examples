@@ -1,0 +1,24 @@
+@page "/samples/scheduling/calendar/week-numbers"
+@page "/samples/scheduling/calendar-week-numbers"
+@page         "/scheduling/calendar/week-numbers"
+@page         "/scheduling/calendar-week-numbers"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div style="width: 400px; border: 1px solid gainsboro;">
+        <IgbCalendar ShowWeekNumbers="true"></IgbCalendar>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbInputModule.Register(IgniteUIBlazor);
+        IgbPropertyEditorPanelModule.Register(IgniteUIBlazor);
+        IgbCalendarModule.Register(IgniteUIBlazor);
+
+    }
+
+}

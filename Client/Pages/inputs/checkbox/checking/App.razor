@@ -1,0 +1,20 @@
+@page "/samples/inputs/checkbox/checking"
+@page "/samples/inputs/checkbox-checking"
+@page         "/inputs/checkbox/checking"
+@page         "/inputs/checkbox-checking"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <IgbCheckbox Checked=true>Label</IgbCheckbox>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbCheckboxModule.Register(IgniteUIBlazor);
+
+    }
+
+}

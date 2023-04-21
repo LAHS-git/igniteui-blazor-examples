@@ -1,0 +1,106 @@
+@page "/samples/charts/data-chart/legend-interactions"
+@page "/samples/charts/data-chart-legend-interactions"
+@page         "/charts/data-chart/legend-interactions"
+@page         "/charts/data-chart-legend-interactions"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="options horizontal">
+        <label class="options-label">Highlight Mode:</label>
+        <select @bind="@HighlightingMode" style="width: 7rem; margin-right: 1rem;"
+                title="Chart will brighten or fade series depending on this setting" >
+            <option>@SeriesHighlightingMode.Auto</option>
+            <option>@SeriesHighlightingMode.Brighten</option>
+            <option>@SeriesHighlightingMode.BrightenSpecific</option>
+            <option>@SeriesHighlightingMode.FadeOthers</option>
+            <option>@SeriesHighlightingMode.FadeOthersSpecific</option>
+            <option>@SeriesHighlightingMode.None</option>
+        </select>
+
+        <label class="options-label">Highlight Behavior:</label>
+        <select @bind="@HighlightingBehavior" style="width: 7rem; margin-right: 1rem;"
+                title="Chart will highlight series when you hover over data points" >
+            <option>@SeriesHighlightingBehavior.Auto</option>
+            <option>@SeriesHighlightingBehavior.DirectlyOver</option>
+            <option>@SeriesHighlightingBehavior.NearestItems</option>
+            <option>@SeriesHighlightingBehavior.NearestItemsAndSeries</option>
+            <option>@SeriesHighlightingBehavior.NearestItemsRetainMainShapes</option>
+        </select>
+
+        <label class="options-label">Legend Highlight:</label>
+        <select @bind="@HighlightingLegend" style="width: 7rem; margin-right: 1rem;"
+                title="Chart will highlight series when you hover over legend items">
+            <option>@LegendHighlightingMode.Auto</option>
+            <option>@LegendHighlightingMode.MatchSeries</option>
+            <option>@LegendHighlightingMode.None</option>
+        </select>
+    </div>
+
+    <div class="legend">
+         <IgbLegend @ref="Legend" Orientation="LegendOrientation.Horizontal" />
+    </div>
+
+    <div class="container vertical">
+        <IgbDataChart Height="100%" Width="100%"
+                   IsVerticalZoomEnabled="true"
+                   IsHorizontalZoomEnabled="true" @ref="Chart"
+                   HighlightingBehavior="@HighlightingBehavior"
+                   HighlightingMode="@HighlightingMode"
+                   LegendHighlightingMode="@HighlightingLegend"
+                   Legend="@Legend">
+
+            <IgbCategoryXAxis Name="xAxis" DataSource="Data" Label="Year" />
+            <IgbNumericYAxis  Name="yAxis" MinimumValue="0" Title="TWh" TitleLeftMargin="10" />
+
+            <IgbAreaSeries Title="Europe" XAxisName="xAxis" YAxisName="yAxis"
+                        ValueMemberPath="Europe"
+                        DataSource="Data"
+                        ShowDefaultTooltip="true"
+                        IsTransitionInEnabled="true"
+                        IsHighlightingEnabled="true"/>
+
+            <IgbAreaSeries Title="China" XAxisName="xAxis" YAxisName="yAxis"
+                        ValueMemberPath="China"
+                        DataSource="Data"
+                        ShowDefaultTooltip="true"
+                        IsTransitionInEnabled="true"
+                        IsHighlightingEnabled="true"/>
+
+            <IgbAreaSeries Title="USA" XAxisName="xAxis" YAxisName="yAxis"
+                        ValueMemberPath="USA"
+                        DataSource="Data"
+                        ShowDefaultTooltip="true"
+                        IsTransitionInEnabled="true"
+                        IsHighlightingEnabled="true"/>
+        </IgbDataChart>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbDataChartCoreModule.Register(IgniteUIBlazor);
+        IgbLegendModule.Register(IgniteUIBlazor);
+        IgbDataChartCategoryModule.Register(IgniteUIBlazor);
+        IgbDataChartInteractivityModule.Register(IgniteUIBlazor);
+        IgbColumnSeriesModule.Register(IgniteUIBlazor);
+        IgbNumberAbbreviatorModule.Register(IgniteUIBlazor);
+
+    }
+
+    private List<EnergyRenewableInfo> Data = new EnergyRenewableData();
+    private LegendHighlightingMode HighlightingLegend = LegendHighlightingMode.MatchSeries;
+    private SeriesHighlightingMode HighlightingMode = SeriesHighlightingMode.FadeOthers;
+    private SeriesHighlightingBehavior HighlightingBehavior = SeriesHighlightingBehavior.DirectlyOver;
+    private IgbDataChart Chart;
+
+    private IgbLegend _Legend;
+    private IgbLegend Legend
+    {
+        get { return _Legend; }
+        set { _Legend = value; StateHasChanged(); }
+    }
+
+}

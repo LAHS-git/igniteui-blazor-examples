@@ -1,0 +1,19 @@
+@page "/samples/inputs/combo/overview"
+@page "/samples/inputs/combo-overview"
+@page         "/inputs/combo/overview"
+@page         "/inputs/combo-overview"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container sample center">
+    <IgbCombo Data="Data" ValueKey="Id" DisplayKey="Name"></IgbCombo>
+</div>
+
+@code {
+    private List<City> Data;
+
+    protected override void OnInitialized() {
+        this.Data = SampleData.Cities;
+    }
+}

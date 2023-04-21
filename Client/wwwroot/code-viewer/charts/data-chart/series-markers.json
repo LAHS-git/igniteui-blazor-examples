@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/series-markers/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"options horizontal\">\n        <span class=\"options-label\"> Marker Type: </span>\n        <select @bind=\"ChartMarkerType\">\n            <option>@MarkerType.Automatic</option>\n            <option>@MarkerType.Circle</option>\n            <option>@MarkerType.Triangle</option>\n            <option>@MarkerType.Pyramid</option>\n            <option>@MarkerType.Square</option>\n            <option>@MarkerType.Diamond</option>\n            <option>@MarkerType.Pentagon</option>\n            <option>@MarkerType.Hexagon</option>\n            <option>@MarkerType.Tetragram</option>\n            <option>@MarkerType.Pentagram</option>\n            <option>@MarkerType.Hexagram</option>\n            <option>@MarkerType.None</option>\n        </select>\n    </div>\n    <div class=\"container vertical\">\n        @if (Data != null)\n        {\n            <IgbDataChart Height=\"100%\" Width=\"100%\"\n                       IsHorizontalZoomEnabled=\"true\"\n                       IsVerticalZoomEnabled=\"true\">\n                <IgbCategoryXAxis Name=\"xAxis\" DataSource=\"Data\" Label=\"Year\" />\n                <IgbNumericYAxis Name=\"yAxis\" MinimumValue=\"0\" />\n\n                <IgbLineSeries XAxisName=\"xAxis\" YAxisName=\"yAxis\" DataSource=\"Data\" ValueMemberPath=\"USA\" MarkerType=\"ChartMarkerType\" />\n                <IgbLineSeries XAxisName=\"xAxis\" YAxisName=\"yAxis\" DataSource=\"Data\" ValueMemberPath=\"CHN\" MarkerType=\"ChartMarkerType\" />\n                <IgbLineSeries XAxisName=\"xAxis\" YAxisName=\"yAxis\" DataSource=\"Data\" ValueMemberPath=\"RUS\" MarkerType=\"ChartMarkerType\" />\n            </IgbDataChart>\n        }\n    </div>\n</div>\n\n@code {\n\n    private List<OlympicMedals> Data;\n    private MarkerType ChartMarkerType = MarkerType.Automatic;\n\n    protected override void OnInitialized()\n    {\n\n        this.Data = this.GenerateData();\n    }\n\n    private List<OlympicMedals> GenerateData() {\n\n        var olympicMedals = new List<OlympicMedals>();\n        olympicMedals.Add(new OlympicMedals() { Year = \"1996\", USA = 148, CHN = 110, RUS = 95 });\n        olympicMedals.Add(new OlympicMedals() { Year = \"2000\", USA = 142, CHN = 115, RUS = 91 });\n        olympicMedals.Add(new OlympicMedals() { Year = \"2004\", USA = 134, CHN = 121, RUS = 86 });\n        olympicMedals.Add(new OlympicMedals() { Year = \"2008\", USA = 131, CHN = 129, RUS = 65 });\n        olympicMedals.Add(new OlympicMedals() { Year = \"2012\", USA = 135, CHN = 115, RUS = 77 });\n        olympicMedals.Add(new OlympicMedals() { Year = \"2016\", USA = 146, CHN = 112, RUS = 88 });\n\n        return olympicMedals;\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/series-markers/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbDataChartCoreModule),\n                typeof(IgbDataChartCategoryCoreModule),\n                typeof(IgbDataChartCategoryModule),\n                typeof(IgbDataChartInteractivityModule),\n                typeof(IgbLineSeriesModule)\n);\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/series-markers/Services/OlympicMedals.cs",
+    "content": "﻿using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Threading.Tasks;\n\nnamespace Infragistics.Samples\n{\n    public class OlympicMedals\n    {\n        public int USA { get; set; }\n        public int CHN { get; set; }\n        public int RUS { get; set; }\n        public string Year { get; set; }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/series-markers/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

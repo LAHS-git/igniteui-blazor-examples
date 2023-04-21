@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/highlighting/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"options horizontal\">\n        <label class=\"options-label\">Enable Highlighting: </label>\n        <label class=\"options-item\">\n            <input type=\"checkbox\"\n                   checked=\"@IsSeriesHighlighting\"\n                   @onchange=\"OnSeriesHighlightingChanged\" /> Series\n        </label>\n        <label class=\"options-item\">\n            <input type=\"checkbox\"\n                   checked=\"@IsItemHighlighting\"\n                   @onchange=\"OnItemHighlightingChanged\" />Item\n        </label>\n        <label class=\"options-item\">\n            <input type=\"checkbox\"\n                   checked=\"@IsCategoryHighlighting\"\n                   @onchange=\"OnCategoryHighlightingChanged\" />Category\n        </label>\n    </div>\n    <div class=\"container vertical\">\n        @if (Data != null)\n        {\n            <IgbCategoryChart Height=\"100%\" Width=\"100%\"\n                           DataSource=\"@Data\"\n                           IsCategoryHighlightingEnabled=\"@IsCategoryHighlighting\"\n                           IsItemHighlightingEnabled=\"@IsItemHighlighting\"\n                           IsSeriesHighlightingEnabled=\"@IsSeriesHighlighting\"\n                           IsTransitionInEnabled=\"true\"\n                           YAxisMinimumValue=\"0\"\n                           XAxisInterval=\"1\">\n            </IgbCategoryChart>\n        }\n    </div>\n</div>\n\n@code {\n\n    private bool IsSeriesHighlighting = false;\n    private bool IsItemHighlighting = true;\n    private bool IsCategoryHighlighting = false;\n\n    private List<OlympicMedals> Data;\n\n    protected override void OnInitialized()\n    {\n\n        this.Data = new List<OlympicMedals>();\n        this.Data.Add(new OlympicMedals() { Year = \"1996\", USA = 148, CHN = 110, RUS = 95 });\n        this.Data.Add(new OlympicMedals() { Year = \"2000\", USA = 142, CHN = 115, RUS = 91 });\n        this.Data.Add(new OlympicMedals() { Year = \"2004\", USA = 134, CHN = 121, RUS = 86 });\n        this.Data.Add(new OlympicMedals() { Year = \"2008\", USA = 131, CHN = 129, RUS = 65 });\n        this.Data.Add(new OlympicMedals() { Year = \"2012\", USA = 135, CHN = 115, RUS = 77 });\n        this.Data.Add(new OlympicMedals() { Year = \"2016\", USA = 146, CHN = 112, RUS = 88 });\n    }\n\n    private void OnSeriesHighlightingChanged(ChangeEventArgs args)\n    {\n        bool value = args.Value != null ? (bool)args.Value : false;\n        this.IsSeriesHighlighting = value;\n    }\n\n    private void OnItemHighlightingChanged(ChangeEventArgs args)\n    {\n        bool value = args.Value != null ? (bool)args.Value : false;\n        this.IsItemHighlighting = value;\n    }\n\n    private void OnCategoryHighlightingChanged(ChangeEventArgs args)\n    {\n        bool value = args.Value != null ? (bool)args.Value : false;\n        this.IsCategoryHighlighting = value;\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/highlighting/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbLegendModule),\n                typeof(IgbInputModule),\n                typeof(IgbPropertyEditorPanelModule),\n                typeof(IgbCategoryChartModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/highlighting/Services/OlympicMedals.cs",
+    "content": "﻿using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Threading.Tasks;\n\nnamespace Infragistics.Samples\n{\n    public class OlympicMedals\n    {\n        public int USA { get; set; }\n        public int CHN { get; set; }\n        public int RUS { get; set; }\n        public string Year { get; set; }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/highlighting/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

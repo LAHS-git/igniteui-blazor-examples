@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/series-value-overlay/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"container vertical\">\n        @if (Data != null)\n        {\n        <IgbDataChart Height=\"100%\" Width=\"100%\" IsHorizontalZoomEnabled=\"true\" IsVerticalZoomEnabled=\"true\">\n            <IgbCategoryXAxis Name=\"xAxis\" DataSource=\"Data\" Label=\"Label\" />\n            <IgbNumericYAxis Name=\"yAxis\" MinimumValue=\"0\" MaximumValue=\"10\" />\n\n            <IgbColumnSeries XAxisName=\"xAxis\" YAxisName=\"yAxis\" DataSource=\"Data\" ValueMemberPath=\"Value\" />\n\n            <IgbValueOverlay AxisName=\"yAxis\" Value=\"2.0\" Thickness=\"5\" />\n            <IgbValueOverlay AxisName=\"yAxis\" Value=\"3.6\" Thickness=\"5\" />\n            <IgbValueOverlay AxisName=\"yAxis\" Value=\"5.8\" Thickness=\"5\" />\n            <IgbValueOverlay AxisName=\"yAxis\" Value=\"1.0\" Thickness=\"5\" />\n            <IgbValueOverlay AxisName=\"yAxis\" Value=\"8.0\" Thickness=\"5\" />\n            <IgbValueOverlay AxisName=\"yAxis\" Value=\"7.0\" Thickness=\"5\" />\n            <IgbValueOverlay AxisName=\"yAxis\" Value=\"5.0\" Thickness=\"5\" />\n\n        </IgbDataChart>\n\n        }\n    </div>\n</div>\n\n@code {\n\n    private List<OverlayDataItem> Data;\n\n    protected override void OnInitialized()\n    {\n\n        var data = new List<OverlayDataItem>() {\n            new OverlayDataItem() { Label = \"1\", Value = 1.0 },\n            new OverlayDataItem() { Label = \"2\", Value = 2.0 },\n            new OverlayDataItem() { Label = \"3\", Value = 6.0 },\n            new OverlayDataItem() { Label = \"4\", Value = 8.0 },\n            new OverlayDataItem() { Label = \"5\", Value = 2.0 },\n            new OverlayDataItem() { Label = \"6\", Value = 6.0 },\n            new OverlayDataItem() { Label = \"7\", Value = 4.0 },\n            new OverlayDataItem() { Label = \"8\", Value = 2.0 },\n            new OverlayDataItem() { Label = \"9\", Value = 1.0 }\n        };\n\n        this.Data = data;\n    }\n\n    public class OverlayDataItem {\n        public string Label { get; set; }\n        public double Value { get; set; }\n    }\n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/series-value-overlay/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbDataChartCoreModule),\n                typeof(IgbDataChartCategoryCoreModule),\n                typeof(IgbDataChartCategoryModule),\n                typeof(IgbDataChartInteractivityModule),\n                typeof(IgbColumnSeriesModule),\n                typeof(IgbValueOverlayModule)\n);\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/series-value-overlay/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

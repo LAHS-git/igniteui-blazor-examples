@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/notifications/dialog/closing-variations/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <IgbSwitch Change=\"OnKeepOpenOnEscapeSwitchChange\" LabelPosition=CheckboxBaseLabelPosition.Before>KeepOpenOnEscape</IgbSwitch>\n    <IgbSwitch Change=\"OnCloseOnOutsideClickSwitchChange\" LabelPosition=CheckboxBaseLabelPosition.Before>CloseOnOutsideClick</IgbSwitch>\n\n    <IgbButton onclick=\"dialog.show()\" Variant=@ButtonVariant.Contained>Show Dialog</IgbButton>\n    <IgbDialog id=\"dialog\" KeepOpenOnEscape=\"@KeepOpenOnEscape\" CloseOnOutsideClick=\"@CloseOnOutsideClick\" Title=\"Confirmation\">\n        <p>Are you sure you want to delete the Annual_Report_2016.pdf and Annual_Report_2017.pdf files?</p>\n        <IgbButton slot=\"footer\" onclick=\"dialog.hide()\" Variant=@ButtonVariant.Flat>Cancel</IgbButton>\n        <IgbButton slot=\"footer\" onclick=\"dialog.hide()\" Variant=@ButtonVariant.Flat>OK</IgbButton>\n    </IgbDialog>\n</div>\n\n@code {\n    \n    public bool KeepOpenOnEscape { get; set; }\n    public bool CloseOnOutsideClick { get; set; }\n\n    public void OnKeepOpenOnEscapeSwitchChange(IgbComponentBoolValueChangedEventArgs args)\n    {\n        KeepOpenOnEscape = args.Detail;\n    }\n\n    public void OnCloseOnOutsideClickSwitchChange(IgbComponentBoolValueChangedEventArgs args)\n    {\n        CloseOnOutsideClick = args.Detail;\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/notifications/dialog/closing-variations/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\n\n// required for registering IgniteUIBlazor\nusing IgniteUI.Blazor.Controls;\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n\n            // registering Infragistics Blazor\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbButtonModule),\n                typeof(IgbDialogModule),\n                typeof(IgbSwitchModule)\n   );\n\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/notifications/dialog/closing-variations/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

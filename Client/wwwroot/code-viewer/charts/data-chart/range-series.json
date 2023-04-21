@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/range-series/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n\n    <div class=\"options vertical\">\n\n        <span class=\"legend-title\">Legend: </span>\n        <div class=\"legend\">\n            <IgbLegend @ref=\"Legend\" Orientation=\"LegendOrientation.Horizontal\" />\n        </div>\n\n        <div class=\"overlay-right\" >\n            <div class=\"options horizontal\" >\n                <label class=\"options-label\">Range Series: </label>\n                <select value=@SeriesType @onchange=\"OnSeriesTypeChanged\">\n                    <option>Area</option>\n                    <option>Column</option>\n                </select>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"container vertical\">\n        @if (Data != null)\n        {\n        <IgbDataChart Height=\"100%\" Width=\"100%\"\n                   ChartTitle=\"Annual Temperature Changes\"\n                   IsHorizontalZoomEnabled=\"false\"\n                   IsVerticalZoomEnabled=\"false\"\n                   Legend=\"Legend\"\n                   @ref=\"Chart\">\n\n            <IgbCategoryXAxis Name=\"xAxis\"\n                           Label=\"Year\"\n                           Gap=\"0.5\"\n                           DataSource=\"Data\" />\n            <IgbNumericYAxis Name=\"yAxis\"\n                          MinimumValue=\"20\"\n                          Title=\"Temperature (�C)\" />\n\n            @if (SeriesType == \"Area\")\n            {\n                <IgbRangeAreaSeries HighMemberPath=\"High\"\n                                 LowMemberPath=\"Low\"\n                                 XAxisName=\"xAxis\"\n                                 YAxisName=\"yAxis\"\n                                 Thickness=\"0\"\n                                 DataSource=\"Data\"\n                                 Title=\"Weather Forecast\">\n\n                </IgbRangeAreaSeries>\n            }\n            @if (SeriesType == \"Column\")\n            {\n                <IgbRangeColumnSeries HighMemberPath=\"High\"\n                                 LowMemberPath=\"Low\"\n                                 XAxisName=\"xAxis\"\n                                 YAxisName=\"yAxis\"\n                                 Thickness=\"0\"\n                                 DataSource=\"Data\"\n                                 Title=\"Weather Forecast\">\n\n                </IgbRangeColumnSeries>\n            }\n        </IgbDataChart>\n        }\n    </div>\n</div>\n\n@code {\n\n    private List<SampleRangeItem> Data;\n    private IgbDataChart _Chart;\n    private IgbDataChart Chart\n    {\n        get { return _Chart; }\n        set\n        {\n            _Chart = value;\n            SeriesType = \"Column\";\n            StateHasChanged();\n        }\n    }\n\n    private IgbLegend legend;\n    private IgbLegend Legend\n    {\n        get { return legend; }\n        set\n        {\n            legend = value;\n            StateHasChanged();\n        }\n    }\n    private string seriesType;\n    private string SeriesType\n    {\n        get { return seriesType; }\n        set\n        {\n            seriesType = value;\n            StateHasChanged();\n        }\n    }\n\n    protected override void OnInitialized()\n    {\n\n        Data = SampleRangeData.Create();\n    }\n\n    public void OnSeriesTypeChanged(ChangeEventArgs e)\n    {\n        var selectedSeries = e.Value.ToString();\n        SeriesType = selectedSeries;\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/range-series/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbDataChartCoreModule),\n                typeof(IgbDataChartCategoryModule)\n);\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/range-series/Services/SampleRangeData.cs",
+    "content": "﻿using System;\nusing System.Collections.Generic;\n\nnamespace Infragistics.Samples\n{\n    public class SampleRangeData\n    {\n        public static Random random = new Random();\n\n        public static List<SampleRangeItem> Create()\n        {\n            var data = new List<SampleRangeItem>();\n            var temperature = 25.0;\n\n            for (var i = 1900; i < 2020; i++)\n            {\n                temperature += (random.NextDouble() - 0.485) * 0.5;\n                var low  = (temperature + (random.NextDouble() * 1));\n                var high = (temperature - (random.NextDouble() * 1));\n                var item = new SampleRangeItem();\n                item.Year = i;\n                item.High = Math.Round(low * 10) / 10;\n                item.Low = Math.Round(high * 10) / 10;\n                data.Add(item);\n            }\n            return data;\n        }\n    }\n\n    public class SampleRangeItem\n    {\n        public double High { get; set; }\n        public double Low { get; set; }\n        public int Year { get; set; }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/range-series/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

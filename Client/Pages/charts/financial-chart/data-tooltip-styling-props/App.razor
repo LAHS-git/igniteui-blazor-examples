@@ -1,0 +1,65 @@
+@page "/samples/charts/financial-chart/data-tooltip-styling-props"
+@page "/samples/charts/financial-chart-data-tooltip-styling-props"
+@page         "/charts/financial-chart/data-tooltip-styling-props"
+@page         "/charts/financial-chart-data-tooltip-styling-props"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+
+    <div class="container vertical fill">
+        <IgbFinancialChart
+        Name="chart"
+        @ref="chart"
+        IsVerticalZoomEnabled="true"
+        IsHorizontalZoomEnabled="true"
+        DataSource="StockGoogle"
+        ToolTipType="ToolTipType.Data"
+        DataToolTipIncludedColumns="@(new string[] { "Open", "Close", "High", "Low", "Change" })"
+        DataToolTipLabelTextColor="#4a4a4a"
+        DataToolTipUnitsText="K"
+        DataToolTipUnitsTextColor="#00ad03"
+        DataToolTipUnitsTextFontWeight="Bold"
+        DataToolTipValueFormatMode="DataLegendValueMode.Currency"
+        DataToolTipValueTextColor="#00ad03"
+        DataToolTipValueTextFontWeight="Bold"
+        DataToolTipHeaderFormatTime="DataLegendHeaderTimeMode.None"
+        YAxisTitle="Thousands of Dollars ($)"
+        ZoomSliderType="FinancialChartZoomSliderType.None">
+        </IgbFinancialChart>
+
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbFinancialChartModule.Register(IgniteUIBlazor);
+        IgbDataChartInteractivityModule.Register(IgniteUIBlazor);
+        IgbDataLegendModule.Register(IgniteUIBlazor);
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var chart = this.chart;
+
+    }
+
+    private IgbFinancialChart chart;
+
+    private StockGoogle _stockGoogle = null;
+    public StockGoogle StockGoogle
+    {
+        get
+        {
+            if (_stockGoogle == null)
+            {
+                _stockGoogle = new StockGoogle();
+            }
+            return _stockGoogle;
+        }
+    }
+
+}

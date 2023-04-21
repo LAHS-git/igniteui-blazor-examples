@@ -1,0 +1,68 @@
+@page "/samples/inputs/slider/value"
+@page "/samples/inputs/slider-value"
+@page         "/inputs/slider/value"
+@page         "/inputs/slider-value"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<style>
+igc-slider,
+igc-range-slider {
+padding: 30px 30px  0px 30px;
+}
+
+.value-container {
+padding-left: 30px;
+display: flex;
+}
+
+.slider-label {
+white-space: pre;
+}
+</style>
+
+<div class="container sample center">
+    <IgbSlider Value=@ValueInt Change=OnChange
+        >
+    </IgbSlider>
+    <div class="value-container">
+        <span class="slider-label">Value: @ValueInt</span>
+    </div>
+
+    <IgbRangeSlider Lower=@LowerInt Upper=@UpperInt Change=OnRangeChange>
+    </IgbRangeSlider>
+    <div class="value-container">
+        <span class="slider-label">Lower: @LowerInt, </span>
+        <span class="slider-label">Upper: @UpperInt</span>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbSliderModule.Register(IgniteUIBlazor);
+        IgbRangeSliderModule.Register(IgniteUIBlazor);
+
+    }
+    private double ValueInt = 40;
+    private double LowerInt = 20;
+    private double UpperInt = 70;
+
+    private void OnChange(IgbNumberEventArgs e)
+    {
+        if(e != null)
+        {
+            ValueInt = e.Detail;
+        }
+    }
+
+    private void OnRangeChange(IgbRangeSliderValueEventArgs e)
+    {
+        if(e.Detail != null && !double.IsNaN(e.Detail.Lower) && !double.IsNaN(e.Detail.Upper))
+        {
+            LowerInt = e.Detail.Lower;
+            UpperInt = e.Detail.Upper;
+        }
+    }
+}

@@ -1,0 +1,45 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/tooltip-template/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"options vertical\">\n        <span class=\"legend-title\">Highest Grossing Movie Franchises</span>\n        <div class=\"legend\">\n            <IgbLegend @ref=\"Legend\" Orientation=\"LegendOrientation.Horizontal\" />\n        </div>\n    </div>\n    <div class=\"container vertical\">\n        @if (Data != null)\n        {\n            <IgbCategoryChart Height=\"100%\" Width=\"100%\"\n                           DataSource=\"Data\"\n                           IsTransitionInEnabled=\"true\" XAxisInterval=\"1\"\n                           ChartType=\"CategoryChartType.Column\"\n                           ToolTipType=\"ToolTipType.None\"\n                           SeriesPointerEnterScript=\"onCategoryChatTooltipCreated\"\n                           SeriesAddedScript=\"onCategoryChatTooltipSeriesAdded\">\n            </IgbCategoryChart>\n        }\n    </div>\n</div>\n\n@code {\n    \n\n    private List<FilmFranchiseInfo> Data = new FilmFranchiseData();\n\n    private IgbLegend _Legend;\n    private IgbLegend Legend\n    {\n        get { return _Legend; }\n        set { _Legend = value; StateHasChanged(); }\n    }\n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/tooltip-template/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbLegendModule),\n                typeof(IgbInputModule),\n                typeof(IgbDataChartInteractivityModule),\n                typeof(IgbPropertyEditorPanelModule),\n                typeof(IgbCategoryChartModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/tooltip-template/Services/FilmFranchiseRevenueData.cs",
+    "content": "﻿using System.Collections.Generic;\n\nnamespace Infragistics.Samples\n{\n    public class FilmFranchiseInfo\n    {\n        public string Franchise { get; set; }\n        public double TotalRevenue { get; set; }\n        public double HighestGrossing { get; set; }\n    }\n\n    public class FilmFranchiseData : List<FilmFranchiseInfo>\n    {\n        public FilmFranchiseData()\n        {\n            Add(new FilmFranchiseInfo { Franchise = \"Marvel Universe\", TotalRevenue = 22.55, HighestGrossing = 2.8 });\n            Add(new FilmFranchiseInfo { Franchise = \"Star Wars\",       TotalRevenue = 10.32, HighestGrossing = 2.07 });\n            Add(new FilmFranchiseInfo { Franchise = \"Harry Potter\",    TotalRevenue = 9.19,  HighestGrossing = 1.34 });\n            Add(new FilmFranchiseInfo { Franchise = \"Avengers\",        TotalRevenue = 7.76,  HighestGrossing = 2.8 });\n            Add(new FilmFranchiseInfo { Franchise = \"Spider Man\",      TotalRevenue = 7.22,  HighestGrossing = 1.28 });\n            Add(new FilmFranchiseInfo { Franchise = \"James Bond\",      TotalRevenue = 7.12,  HighestGrossing = 1.11 });\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/tooltip-template/wwwroot/CategoryChartTooltipTemplates.js",
+    "content": "﻿function onCategoryChatTooltipCreated(o, e) {\r\n    console.log(\"onCategoryChatTooltipCreated \");\r\n}\r\nigRegisterScript(\"onCategoryChatTooltipCreated\", onCategoryChatTooltipCreated, false);\r\n\r\nfunction onCategoryChatTooltipSeriesAdded(o, e) {\r\n    console.log(\"onCategoryChatTooltipSeriesAdded\");\r\n\r\n    if (e.series) {\r\n        e.series.tooltipTemplate = createCategoryChatTooltipTooltip;\r\n        //console.log(\"onCategoryChatTooltipSeriesAdded tooltipTemplate\");\r\n    }\r\n}\r\nigRegisterScript(\"onCategoryChatTooltipSeriesAdded\", onCategoryChatTooltipSeriesAdded, false);\r\n\r\nfunction createCategoryChatTooltipTooltip(context) {\r\n\r\n    //console.log(\"createCategoryChatTooltipTooltip \");\r\n\r\n    if (!context) return null;\r\n\r\n    var dataItem = context.item;\r\n    if (!dataItem) return null;\r\n\r\n    var tooltipItem1 = document.createElement(\"div\");\r\n    tooltipItem1.innerHTML = \"Franchise: \" + dataItem.Franchise;\r\n    tooltipItem1.className = \"tooltipTitle\";\r\n\r\n    var tooltipItem2 = document.createElement(\"div\");\r\n    tooltipItem2.innerHTML = \"Revenue of All Movies: \" + dataItem.TotalRevenue;\r\n    tooltipItem2.className = \"tooltipLbl\";\r\n\r\n    var tooltipItem3= document.createElement(\"div\");\r\n    tooltipItem3.innerHTML = \"Highest Grossing Movie: $\" + dataItem.HighestGrossing;\r\n    tooltipItem3.className = \"tooltipLbl\";\r\n\r\n    var tooltip = document.createElement(\"div\");\r\n    tooltip.className = \"tooltipVertical\";\r\n    tooltip.appendChild(tooltipItem1);\r\n    tooltip.appendChild(tooltipItem2);\r\n    tooltip.appendChild(tooltipItem3);\r\n\r\n    return tooltip;\r\n}",
+    "isMain": true,
+    "fileExtension": "js",
+    "fileHeader": "js"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/tooltip-template/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

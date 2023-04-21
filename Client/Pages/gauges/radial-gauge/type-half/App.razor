@@ -1,0 +1,63 @@
+@page "/samples/gauges/radial-gauge/type-half"
+@page "/samples/gauges/radial-gauge-type-half"
+@page         "/gauges/radial-gauge/type-half"
+@page         "/gauges/radial-gauge-type-half"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="container vertical">
+        <IgbRadialGauge Height="100%" Width="100%"
+                     TransitionDuration="500"
+                     MinimumValue="100"
+                     MaximumValue="200"
+                     Value="125"
+                     ScaleStartAngle="180"
+                     ScaleEndAngle="0"
+                     ScaleBrush="transparent"
+                     ScaleSweepDirection="SweepDirection.Clockwise"
+                     BackingOutline="white"
+                     BackingBrush="white"
+                     BackingShape="RadialGaugeBackingShape.Fitted"
+                     NeedleEndExtent="0.8"
+                     NeedleShape="RadialGaugeNeedleShape.Triangle"
+                     NeedlePivotShape="RadialGaugePivotShape.CircleOverlay"
+                     NeedlePivotWidthRatio="0.1"
+                     NeedleBrush="#79797A"
+                     NeedleOutline="#79797A"
+                     NeedlePivotBrush="#79797A"
+                     NeedlePivotOutline="#79797A"
+                     TickBrush="transparent"
+                     MinorTickBrush="transparent"
+                     LabelInterval="20"
+                     LabelExtent="0.935"
+                     Font="13px Verdana,Arial"
+                     RangeBrushes="#32F845, #BF32F8"
+                     RangeOutlines="#32F845, #BF32F8">
+            <IgbRadialGaugeRange StartValue="100"
+                              EndValue="150"
+                              InnerStartExtent="0.3"
+                              InnerEndExtent="0.3"
+                              OuterStartExtent="0.875"
+                              OuterEndExtent="0.875">
+            </IgbRadialGaugeRange>
+            <IgbRadialGaugeRange StartValue="100"
+                              EndValue="150"
+                              InnerStartExtent="0.3"
+                              InnerEndExtent="0.3"
+                              OuterStartExtent="0.875"
+                              OuterEndExtent="0.875">
+            </IgbRadialGaugeRange>
+        </IgbRadialGauge>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbRadialGaugeModule.Register(IgniteUIBlazor);
+
+    }
+
+}

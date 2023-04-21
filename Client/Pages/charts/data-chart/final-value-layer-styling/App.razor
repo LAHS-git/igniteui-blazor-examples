@@ -1,0 +1,39 @@
+@page "/samples/charts/data-chart/final-value-layer-styling"
+@page "/samples/charts/data-chart-final-value-layer-styling"
+@page         "/charts/data-chart/final-value-layer-styling"
+@page         "/charts/data-chart-final-value-layer-styling"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="container vertical">
+        @if (Data != null)
+        {
+        <IgbDataChart Height="100%" Width="100%" Subtitle="Renewable Energy Generated">
+            <IgbCategoryXAxis Name="xAxis" DataSource="Data" Label="Year" />
+            <IgbNumericYAxis Name="yAxis" Title="TWh" LabelLocation="AxisLabelsLocation.OutsideRight" />
+
+            <IgbLineSeries XAxisName="xAxis" YAxisName="yAxis" DataSource="Data" ValueMemberPath="USA" />
+
+            <IgbFinalValueLayer AxisAnnotationBackground="Orange" AxisAnnotationTextColor="Black" AxisAnnotationOutline="Black"/>
+        </IgbDataChart>
+        }
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbDataChartCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartCategoryModule.Register(IgniteUIBlazor);
+        IgbDataChartInteractivityModule.Register(IgniteUIBlazor);
+        IgbDataChartAnnotationModule.Register(IgniteUIBlazor);
+        IgbLineSeriesModule.Register(IgniteUIBlazor);
+        IgbFinalValueLayerModule.Register(IgniteUIBlazor);
+
+    }
+
+    private List<EnergyRenewableInfo> Data = new EnergyRenewableData();
+
+}

@@ -1,0 +1,104 @@
+@page "/samples/charts/category-chart/column-chart-with-tooltips"
+@page "/samples/charts/category-chart-column-chart-with-tooltips"
+@page         "/charts/category-chart/column-chart-with-tooltips"
+@page         "/charts/category-chart-column-chart-with-tooltips"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="options vertical">
+        <IgbPropertyEditorPanel
+        Name="PropertyEditor"
+        @ref="propertyEditor"
+
+        DescriptionType="CategoryChart"
+        IsHorizontal="true"
+        IsWrappingEnabled="true">
+            <IgbPropertyEditorPropertyDescription
+            PropertyPath="ToolTipType"
+            Name="ToolTipTypeEditor"
+            @ref="toolTipTypeEditor"
+            Label="ToolTip Type: "
+            PrimitiveValue="@("Data")">
+            </IgbPropertyEditorPropertyDescription>
+
+        </IgbPropertyEditorPanel>
+
+    </div>
+    <div class="legend-title">
+        Highest Grossing Movie Franchises
+    </div>
+    <div class="legend">
+        <IgbLegend
+        Name="Legend"
+        @ref="legend">
+        </IgbLegend>
+
+    </div>
+
+    <div class="container vertical fill">
+        <IgbCategoryChart
+        Name="chart"
+        @ref="chart"
+        ChartType="CategoryChartType.Column"
+        DataSource="HighestGrossingMovies"
+        XAxisInterval="1"
+        YAxisTitle="Billions of U.S. Dollars"
+        YAxisTitleLeftMargin="10"
+        YAxisTitleRightMargin="5"
+        YAxisLabelLeftMargin="0"
+        IsHorizontalZoomEnabled="false"
+        IsVerticalZoomEnabled="false"
+        CrosshairsSnapToData="true">
+        </IgbCategoryChart>
+
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbInputModule.Register(IgniteUIBlazor);
+        IgbPropertyEditorPanelModule.Register(IgniteUIBlazor);
+        IgbLegendModule.Register(IgniteUIBlazor);
+        IgbCategoryChartModule.Register(IgniteUIBlazor);
+
+    }
+
+    private Action BindElements { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var propertyEditor = this.propertyEditor;
+        var toolTipTypeEditor = this.toolTipTypeEditor;
+        var legend = this.legend;
+        var chart = this.chart;
+
+        this.BindElements = () => {
+            propertyEditor.Target = this.chart;
+            chart.Legend = this.legend;
+        };
+        this.BindElements();
+
+    }
+
+    private IgbPropertyEditorPanel propertyEditor;
+    private IgbPropertyEditorPropertyDescription toolTipTypeEditor;
+    private IgbLegend legend;
+    private IgbCategoryChart chart;
+
+    private HighestGrossingMovies _highestGrossingMovies = null;
+    public HighestGrossingMovies HighestGrossingMovies
+    {
+        get
+        {
+            if (_highestGrossingMovies == null)
+            {
+                _highestGrossingMovies = new HighestGrossingMovies();
+            }
+            return _highestGrossingMovies;
+        }
+    }
+
+}

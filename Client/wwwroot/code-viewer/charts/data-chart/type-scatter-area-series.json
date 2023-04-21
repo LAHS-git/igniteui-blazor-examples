@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/type-scatter-area-series/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"container vertical\">\n\n        <div class=\"options vertical\">\n            <span class=\"legend-title\">Distribution of Magnetic Field</span>\n        </div>\n\n        @if (Data != null)\n        {\n        <IgbDataChart Height=\"100%\" Width=\"100%\"\n                   GridMode=\"@GridMode.BeforeSeries\"\n                   IsHorizontalZoomEnabled=\"false\"\n                   IsVerticalZoomEnabled=\"false\">\n\n            @* primary axes required for scatter-contour-series *@\n            <IgbNumericXAxis Name=\"xAxis1\" LabelLocation=\"AxisLabelsLocation.OutsideBottom\"  Title=\"Longitude\" MinimumValue=\"-180\" MaximumValue=\"180\" />\n            <IgbNumericYAxis Name=\"yAxis1\" LabelLocation=\"AxisLabelsLocation.OutsideLeft\" Title=\"Latitude\"  MinimumValue=\"-90\" MaximumValue=\"90\"/>\n\n            @* optional axes that provide more context for displayed data *@\n            <IgbNumericXAxis Name=\"xAxis2\" LabelLocation=\"AxisLabelsLocation.OutsideTop\"  Title=\"Longitude\" MinimumValue=\"-180\" MaximumValue=\"180\" />\n            <IgbNumericYAxis Name=\"yAxis2\" LabelLocation=\"AxisLabelsLocation.OutsideRight\" Title=\"Latitude\"  MinimumValue=\"-90\" MaximumValue=\"90\"/>\n\n            <IgbScatterAreaSeries XAxisName=\"xAxis1\"\n                               YAxisName=\"yAxis1\"\n                               DataSource=\"Data\"\n                               XMemberPath=\"X\"\n                               YMemberPath=\"Y\"\n                               ColorMemberPath=\"Z\"\n                               ColorScale=\"@ColorScale\"\n                               ShowDefaultTooltip=\"true\">\n            </IgbScatterAreaSeries>\n\n        </IgbDataChart>\n        }\n    </div>\n</div>\n\n@code {\n\n    private List<SampleScatterPoint> Data;\n    private IgbCustomPaletteColorScale ColorScale;\n\n    protected override void OnInitialized()\n    {\n\n        this.ColorScale = new IgbCustomPaletteColorScale();\n        this.ColorScale.InterpolationMode = ColorScaleInterpolationMode.InterpolateHSV;\n        this.ColorScale.MinimumValue = - 2;\n        this.ColorScale.MaximumValue = 2;\n        this.ColorScale.Palette = \"#8670CB, #4AC4FF, #B5CC2E, #FC8612, #ED4840\";\n\n        Data = SampleScatterData.Create();\n\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/type-scatter-area-series/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbDataChartCoreModule),\n                typeof(IgbDataChartScatterCoreModule),\n                typeof(IgbDataChartScatterModule),\n                typeof(IgbDataChartInteractivityModule),\n                typeof(IgbScatterAreaSeriesModule),\n                typeof(IgbCustomPaletteColorScaleModule)\n);\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/type-scatter-area-series/Services/SampleScatterData.cs",
+    "content": "﻿using IgniteUI.Blazor.Controls;\nusing System;\nusing System.Collections.Generic;\nusing System.ComponentModel;\n\nnamespace Infragistics.Samples\n{\n    public class SampleScatterData\n    {\n        public static List<SampleScatterPoint> Create()\n        {\n            var data = new List<SampleScatterPoint>();\n            var xMin = -180;\n            var xMax = 180;\n            var yMin = -90;\n            var yMax = 90;\n            var xCount = 11;\n            var yCount = 11;\n\n            var xStep = (xMax - xMin) / (xCount - 1);\n            var yStep = (yMax - yMin) / (yCount - 1);\n            var index = 0;\n            for (var x = xMin; x <= xMax; x += xStep)\n            {\n                for (var y = yMin; y <= yMax; y += yStep)\n                {\n                    var z = Math.Cos(x) + Math.Cos(y);\n                    var p = new SampleScatterPoint { X = x, Y = y, Z = z, Index = index++ };\n                    data.Add(p);\n\n                }\n            }\n            return data;\n        }\n\n        public static List<SampleScatterPoint> CreateWaveData()\n        {\n            var data = new List<SampleScatterPoint>();\n            int index = 0;\n\n            for (int angle =0; angle <=360; angle += 10)\n            {\n                double radians = (angle * Math.PI) / 180;\n                double sin = Math.Sin(radians);\n                double cos = Math.Cos(radians);\n\n                data.Add(new SampleScatterPoint()\n                {\n                    Angle = angle,\n                    SinValue = sin,\n                    CosValue = cos,\n                    Index = index++,\n                    Label = sin.ToString(\"N2\")\n                });\n            }\n\n            return data;\n        }\n    }\n\n    public class SampleScatterPoint\n    {\n        public string Label { get; set; }\n        public double X { get; set; }\n        public double Y { get; set; }\n        public double Z { get; set; }\n        public double Index { get; set; }\n        public double Angle { get; set; }\n        public double SinValue { get; set; }\n        public double CosValue { get; set; }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/type-scatter-area-series/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

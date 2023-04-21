@@ -1,0 +1,20 @@
+@page "/samples/inputs/button/contained"
+@page "/samples/inputs/button-contained"
+@page         "/inputs/button/contained"
+@page         "/inputs/button-contained"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <IgbButton Variant="ButtonVariant.Contained">Contained</IgbButton>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbButtonModule.Register(IgniteUIBlazor);
+
+    }
+
+}

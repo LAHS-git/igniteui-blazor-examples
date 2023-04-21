@@ -1,0 +1,119 @@
+@page "/samples/grids/data-grid/cell-activation"
+@page "/samples/grids/data-grid-cell-activation"
+@page         "/grids/data-grid/cell-activation"
+@page         "/grids/data-grid-cell-activation"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+;
+
+<div class="container vertical">
+
+    <div class="container vertical">
+        <div class="options horizontal">
+            <label>
+                Enter Key Mode:
+                <select @bind="EnterKeyMode">
+                    <option>@EnterKeyBehaviors.Edit</option>
+                    <option>@EnterKeyBehaviors.MoveDown</option>
+                    <option>@EnterKeyBehaviors.MoveLeft</option>
+                    <option>@EnterKeyBehaviors.MoveRight</option>
+                    <option>@EnterKeyBehaviors.MoveUp</option>
+                    <option>@EnterKeyBehaviors.None</option>
+                </select>
+            </label>
+            <label>
+                Enter Key After Edit Mode:
+                <select @bind="EnterKeyAfterEditMode" disabled="@EditDisabled">
+                    <option>@EnterKeyBehaviorAfterEdit.MoveDown</option>
+                    <option>@EnterKeyBehaviorAfterEdit.MoveLeft</option>
+                    <option>@EnterKeyBehaviorAfterEdit.MoveRight</option>
+                    <option>@EnterKeyBehaviorAfterEdit.MoveUp</option>
+                    <option>@EnterKeyBehaviorAfterEdit.None</option>
+                </select>
+            </label>
+        </div>
+        @if (Data != null)
+        {
+        <div style="overflow: hidden">
+            <IgbDataGrid Height="100%" Width="100%"
+                  DataSource="Data"
+                  EnterBehavior="@EnterKeyMode"
+                  EnterBehaviorAfterEdit="@EnterKeyAfterEditMode"
+                  EditMode="@CanEdit"
+                  AutoGenerateColumns="false"
+                  SelectionMode="DataGridSelectionMode.SingleRow"
+                  ActivationMode="GridActivationMode.Cell">
+                <IgbTextColumn Width="@("*>170")" Field="Name" />
+                <IgbImageColumn Width="@("*>120")" IsEditable="false" Field="Photo" PaddingTop="5" PaddingBottom="5" ContentOpacity="1" HorizontalAlignment="@CellContentHorizontalAlignment.Center"/>
+                <IgbNumericColumn Width="@("*>100")" Field="Age" HorizontalAlignment="@CellContentHorizontalAlignment.Center"/>
+                <IgbTextColumn Width="@("*>150")" Field="Street" HeaderText="Address" />
+                <IgbTextColumn Width="@("*>130")"Field="City"  />
+                <IgbImageColumn Width="@("*>120")" IsEditable="false" Field="CountryFlag" HeaderText="Country" PaddingTop="5" PaddingBottom="5" ContentOpacity="1" />
+                <IgbTextColumn Field="Phone" Width="@("*>120")" />
+                <IgbDateTimeColumn Width="@("*>150")" Field="Birthday" HorizontalAlignment="@CellContentHorizontalAlignment.Center"/>
+                <IgbNumericColumn Width="@("*>170")" Field="Salary" PositivePrefix="$" ShowGroupingSeparator="true" MinFractionDigits="2" />
+                <IgbTextColumn Width="@("*>150")" Field="Email" />
+            </IgbDataGrid>
+        </div>
+        }
+
+    </div>
+</div>
+
+@code {
+
+    private object Data;
+    private bool EditDisabled { get; set; }
+
+    private EditModeType _canEdit;
+    public EditModeType CanEdit
+    {
+        get { return _canEdit; }
+        set
+        {
+            _canEdit = value;
+        }
+    }
+
+    private EnterKeyBehaviors _enterKeyMode;
+    public EnterKeyBehaviors EnterKeyMode
+    {
+        get { return _enterKeyMode; }
+        set
+        {
+            _enterKeyMode = value;
+            if (_enterKeyMode == EnterKeyBehaviors.Edit)
+            {
+                EditDisabled = false;
+                CanEdit = EditModeType.Cell;
+            }
+            else
+            {
+                EditDisabled = true;
+                CanEdit = EditModeType.None;
+            }
+        }
+    }
+
+    private EnterKeyBehaviorAfterEdit _enterKeyAfterEditMode;
+    public EnterKeyBehaviorAfterEdit EnterKeyAfterEditMode
+    {
+        get { return _enterKeyAfterEditMode; }
+        set
+        {
+            _enterKeyAfterEditMode = value;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        IgbDataGridModule.Register(IgniteUIBlazor);
+        IgbGridColumnOptionsModule.Register(IgniteUIBlazor);
+
+        this.Data = EmployeeData.Create(200, false);
+        this.EnterKeyMode = EnterKeyBehaviors.Edit;
+        this.EnterKeyAfterEditMode = EnterKeyBehaviorAfterEdit.MoveDown;
+    }
+
+}

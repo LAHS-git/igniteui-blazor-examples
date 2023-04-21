@@ -1,0 +1,22 @@
+@page "/samples/notifications/snackbar/overview"
+@page "/samples/notifications/snackbar-overview"
+@page         "/notifications/snackbar/overview"
+@page         "/notifications/snackbar-overview"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <IgbButton onclick="snackbar.show()">Show Snackbar</IgbButton>
+    <IgbSnackbar id="snackbar"> Snackbar Message </IgbSnackbar>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbButtonModule.Register(IgniteUIBlazor);
+        IgbSnackbarModule.Register(IgniteUIBlazor);
+
+    }
+
+}

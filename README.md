@@ -1,107 +1,62 @@
-<div style="display: flex; flex-flow: row; font-family: 'Titillium Web'">
-    <img style="border-radius: 0.25rem" alt="ignite-ui" src="https://raw.githubusercontent.com/IgniteUI/igniteui-xplat-docs/vnext/doc/en/images/readme/ig-banner.png"/>
-</div>
-
-# Examples of Ignite UI for Blazor Components
-
-This repository contains over 300 examples on how to use [Ignite UI for Blazor](https://www.infragistics.com/products/ignite-ui-blazor/blazor/components/general-getting-started.html) components:
-
-- Charts:
-[Area](https://www.infragistics.com/blazorsite/components/charts/types/area-chart),
-[Bar](https://www.infragistics.com/blazorsite/components/charts/types/bar-chart),
-[Column](https://www.infragistics.com/blazorsite/components/charts/types/column-chart),
-[Composite](https://www.infragistics.com/blazorsite/components/charts/types/composite-chart),
-[Donut](https://www.infragistics.com/blazorsite/components/charts/types/donut-chart),
-[Financial/Stock](https://www.infragistics.com/blazorsite/components/charts/types/stock-chart),
-[Line](https://www.infragistics.com/blazorsite/components/charts/types/line-chart),
-[Pie](https://www.infragistics.com/blazorsite/components/charts/types/pie-chart),
-[Polar](https://www.infragistics.com/blazorsite/components/charts/types/polar-chart),
-[Radial](https://www.infragistics.com/blazorsite/components/charts/types/radial-chart),
-[Scatter](https://www.infragistics.com/blazorsite/components/charts/types/scatter-chart),
-[Shape](https://www.infragistics.com/blazorsite/components/charts/types/shape-chart),
-[Sparkline](https://www.infragistics.com/blazorsite/components/charts/types/sparkline-chart),
-[Stacked](https://www.infragistics.com/blazorsite/components/charts/types/stacked-chart),
-[Step](https://www.infragistics.com/blazorsite/components/charts/types/step-chart),
-- Maps:
-[Geographic Map](https://www.infragistics.com/blazorsite/components/geo-map.html),
-[Treemap](https://www.infragistics.com/blazorsite/components/treemap-overview.html),
-- Gauges:
-[Bullet Graph](https://www.infragistics.com/blazorsite/components/bullet-graph),
-[Linear Gauge](https://www.infragistics.com/blazorsite/components/linear-gauge.html),
-[Radial Gauges](https://www.infragistics.com/blazorsite/components/radial-gauge.html)
-- Grids:
-[Table / Grid](https://www.infragistics.com/blazorsite/components/data-grid.html),
-[Excel Library](https://www.infragistics.com/blazorsite/components/excel_library_using_workbooks.html)
-- Other:
-[Dock Manager](https://www.infragistics.com/blazorsite/components/dock-manager),
-[Date Picker](https://www.infragistics.com/blazorsite/components/editors/date-picker),
-[Multi-Column Combobox](https://www.infragistics.com/blazorsite/components/editors/multi-column-combobox)
-
-You can run each sample project individually from the [./samples](./samples) folder or you can browse all samples in one website from the [./browser](./browser) folder.
-<!-- In addition, you can run each sample on Code Sandbox website by clicking on the `Edit on CodeSandbox` button in a readme file of sample project, e.g.
-
-[./samples/charts/category-chart/overview/README.md](./samples/charts/category-chart/overview/README.md) -->
-
-
-## Preview
-
-You can preview and browse all samples in this repository by opening our [Blazor Samples Browser](https://infragistics.com/blazor-client/). Alternatively, you you can view these samples with detailed information in our [Blazor Help Documentation](https://www.infragistics.com/products/ignite-ui-blazor/blazor/components/general-getting-started.html).
-
-In addition, you can run each sample project individually from the [./samples](./samples) folder or you can run from the [./browser](./browser) folder to browse all samples in one website (see instructions below).
+This documents provides instruction on building and running Samples Browser application with Ignite UI for Blazor components
 
 ## Setup
 
-To set up this project locally, clone this repository:
-```
-git clone https://github.com/IgniteUI/igniteui-blazor-examples.git
-```
+- instal Blazor **.NET SDK** from this website:
+https://dotnet.microsoft.com/learn/aspnet/blazor-tutorial/install
 
-## Running Individual Sample
+## Copying Samples to Browser
 
-Note, as of 2022, this repo is targeting .NET 6.0 and Visual Studio 2022. VS 2019 does not support .NET 6.0.
+NOTE: this section must be completed before any other sections in this document
 
-- in VS 2022, open a solution file from the [./samples](./samples) folder, e.g.
+- open `./browser/IgBlazorSamples.Gulp/` folder in **VS Code**
 
-[./samples/charts/category-chart/overview/BlazorClientApp.csproj](./samples/charts/category-chart/overview/BlazorClientApp.csproj)
+- type `npm install` command in terminal window
 
-- right click solution and select **Restore NuGet Packages** menu item
+- type `gulp copySamplesToClient` command in terminal window
 
-- click **Debug** menu and select **Start Debugging** or press **F5** key
+NOTE: above command will copy .razor pages and their .cs files
+from `./samples/` folder to `./browser/IgBlazorSamples.Client/`
 
-- Wait until the build is completed and then open [http://localhost:4200](http://localhost:4200) in your browser
+## Running App in Visual Studio 2022
 
-At this point, you should see a website with a single example of [Ignite UI for Blazor](https://infragistics.com/blazorsite/components/general-getting-started.html) component.
+- open **Visual Studio 2022** as an Administrator
 
+- open the **IgBlazorSamplesBrowser.sln** solution
 
-## Running All Samples
+- right click solution and select **Restore NuGet Packages**
 
-- open VS Code as Administrator
+- click **Debug** menu and select **Start Debugging** or press F5 key
 
-- open the [./browser/IgBlazorSamples.Gulp](./browser/IgBlazorSamples.Gulp) folder
+## Running App in VS Code
 
-- select **View** - **Terminal** menu item
+- open `./browser/IgBlazorSamples.Client/` folder in **VS Code**
 
-- type `npm install` command
+- type `dotnet restore` command in terminal to restore assemblies
 
-- type `gulp copySamplesToClient` command
+- type `dotnet watch run` command in terminal to host app locally
 
-- wait until all samples are copied to the browser client app
+- wait for for message:
+**Now listening on: http://localhost:4200**
 
-- in VS 2022, open [./browser/IgBlazorSamplesBrowser.sln](./browser/IgBlazorSamplesBrowser.sln)
+- open **http://localhost:4200** in your browser
 
-- right click solution and select **Restore NuGet Packages** menu item
+## Building App in VS Code
 
-- click **Debug** menu and select **Start Debugging** or press **F5** key
+- open `./browser/IgBlazorSamples.Client/` folder in **VS Code**
 
-- Wait until the build is completed and then open [http://localhost:4200](http://localhost:4200) in your browser
+- type `dotnet build` command in terminal to build app
 
-At this point, you should see a website hosted all examples of [Ignite UI for Blazor](https://infragistics.com/blazorsite/components/general-getting-started.html) components.
+<!-- ## Resources -->
 
-![Samples Browser Preview](./browser/IgBlazorSamples.Client/wwwroot/images/preview.PNG)
+<!-- - [Getting reference to components](https://docs.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-3.1#capture-references-to-components) -->
 
+## Publishing App in VS Code
 
-## Resources
+- open `./browser/IgBlazorSamples.Client/` folder in **VS Code**
 
-- [Razor Component Models](https://www.codemag.com/article/1911052)
-- [Razor Syntax](https://docs.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-3.1#razor-syntax)
-- [Getting reference to components](https://docs.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-3.1#capture-references-to-components)
+- run `dotnet publish -c Release` command in terminal window
+
+- output files will be located in:
+
+`./browser/browser/IgBlazorSamples.Client/bin/Release/net6.0/publish/wwwroot`

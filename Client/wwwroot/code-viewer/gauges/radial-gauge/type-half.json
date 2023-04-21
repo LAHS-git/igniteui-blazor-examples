@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/gauges/radial-gauge/type-half/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"container vertical\">\n        <IgbRadialGauge Height=\"100%\" Width=\"100%\"\n                     TransitionDuration=\"500\"\n                     MinimumValue=\"100\"\n                     MaximumValue=\"200\"\n                     Value=\"125\"\n                     ScaleStartAngle=\"180\"\n                     ScaleEndAngle=\"0\"\n                     ScaleBrush=\"transparent\"\n                     ScaleSweepDirection=\"SweepDirection.Clockwise\"\n                     BackingOutline=\"white\"\n                     BackingBrush=\"white\"\n                     BackingShape=\"RadialGaugeBackingShape.Fitted\"\n                     NeedleEndExtent=\"0.8\"\n                     NeedleShape=\"RadialGaugeNeedleShape.Triangle\"\n                     NeedlePivotShape=\"RadialGaugePivotShape.CircleOverlay\"\n                     NeedlePivotWidthRatio=\"0.1\"\n                     NeedleBrush=\"#79797A\"\n                     NeedleOutline=\"#79797A\"\n                     NeedlePivotBrush=\"#79797A\"\n                     NeedlePivotOutline=\"#79797A\"\n                     TickBrush=\"transparent\"\n                     MinorTickBrush=\"transparent\"\n                     LabelInterval=\"20\"\n                     LabelExtent=\"0.935\"\n                     Font=\"13px Verdana,Arial\"\n                     RangeBrushes=\"#32F845, #BF32F8\"\n                     RangeOutlines=\"#32F845, #BF32F8\">\n            <IgbRadialGaugeRange StartValue=\"100\"\n                              EndValue=\"150\"\n                              InnerStartExtent=\"0.3\"\n                              InnerEndExtent=\"0.3\"\n                              OuterStartExtent=\"0.875\"\n                              OuterEndExtent=\"0.875\">\n            </IgbRadialGaugeRange>\n            <IgbRadialGaugeRange StartValue=\"100\"\n                              EndValue=\"150\"\n                              InnerStartExtent=\"0.3\"\n                              InnerEndExtent=\"0.3\"\n                              OuterStartExtent=\"0.875\"\n                              OuterEndExtent=\"0.875\">\n            </IgbRadialGaugeRange>\n        </IgbRadialGauge>\n    </div>\n</div>\n\n@code {\n    \n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/gauges/radial-gauge/type-half/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(typeof(IgbRadialGaugeModule));\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/gauges/radial-gauge/type-half/Services/GaugeRangeInfo.cs",
+    "content": "﻿using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Threading.Tasks;\n\nnamespace Infragistics.Samples\n{\n    public class GaugeRangeInfo\n    {\n        public string Name { get; set; }\n        public string Brush { get; set; }\n        public string Outline { get; set; }\n        public double StartValue { get; set; }\n        public double EndValue { get; set; }\n        public double InnerStartExtent { get; set; }\n        public double InnerEndExtent { get; set; }\n        public double OuterStartExtent { get; set; }\n        public double OuterEndExtent { get; set; }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/gauges/radial-gauge/type-half/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

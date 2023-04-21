@@ -1,0 +1,21 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/editors/date-picker/range/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n;\n\n<div class=\"container vertical\">\n    <div class=\"dateRanges\">\n        <span class=\"caption\">From:  </span>\n        <IgbDatePicker Height=\"50px\" Width=\"220px\" Value=\"@FromDate\" SelectedValueChanged=\"FromDateValueChanged\"/>\n        <span class=\"caption\">  To:  </span>\n        <IgbDatePicker Height=\"50px\" Width=\"220px\" Value=\"@ToDate\" SelectedValueChanged=\"ToDateValueChanged\"/>\n    </div>\n</div>\n\n<style>\n    .dateRanges {\n        display: flex;\n    }\n\n    .caption {\n        align-self: center;\n        margin-left: 25px;\n        margin-right: 10px;\n        margin-top: 8px;\n    }\n</style>\n\n@code {\n    \n\n    public DateTime FromDate { get; set; }\n    public DateTime ToDate { get; set; }\n\n    protected override void OnAfterRender(bool firstRender)\n    {\n        if (firstRender)\n        {\n            this.FromDate = DateTime.Today;\n            this.ToDate = DateTime.Today.AddDays(1);\n            StateHasChanged();\n        }\n    }\n\n    public void FromDateValueChanged(IgbSelectedValueChangedEventArgs e)\n    {\n        FromDate = e.NewValue;\n        if(this.FromDate > this.ToDate)\n        {\n            this.ToDate = this.FromDate.AddDays(1);\n            StateHasChanged();\n        }\n    }\n\n    public void ToDateValueChanged(IgbSelectedValueChangedEventArgs e)\n    {\n        this.ToDate = e.NewValue;\n        if (this.ToDate < this.FromDate)\n        {\n            this.FromDate = e.NewValue.AddDays(-1);\n            StateHasChanged();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/editors/date-picker/range/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(typeof(IgbDatePickerModule));\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  }
+]
+}

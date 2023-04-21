@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/layouts/tabs/alignment/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n\n    <IgbRadioGroup Alignment=@RadioGroupAlignment.Horizontal>\n        <IgbRadio Value=\"Start\" label-position=\"after\" Checked=true Change=\"OnRadioOptionClick\">Start</IgbRadio>\n        <IgbRadio Value=\"Center\" label-position=\"after\" Change=\"OnRadioOptionClick\">Center</IgbRadio>\n        <IgbRadio Value=\"End\" label-position=\"after\" Change=\"OnRadioOptionClick\">End</IgbRadio>\n        <IgbRadio Value=\"Justify\" label-position=\"after\" Change=\"OnRadioOptionClick\">Justify</IgbRadio>\n    </IgbRadioGroup>\n\n    <IgbTabs Alignment=@TabAlignment>\n        <IgbTab Panel=\"basics\">Basics</IgbTab>\n        <IgbTab Panel=\"details\">Details</IgbTab>\n        <IgbTab Panel=\"custom\">Custom</IgbTab>\"\n        <IgbTab Panel=\"disabled\" Disabled=true>Disabled</IgbTab>\n        <IgbTabPanel id=\"basics\">Basics tab panel</IgbTabPanel>\n        <IgbTabPanel id=\"details\">Details tab panel</IgbTabPanel>\n        <IgbTabPanel id=\"custom\">Custom tab panel</IgbTabPanel>\n        <IgbTabPanel id=\"disabled\">Disabled tab panel</IgbTabPanel>\n    </IgbTabs>\n</div>\n\n@code {\n\n    public TabsAlignment TabAlignment { get; set; }\n\n    protected override void OnInitialized()\n    {\n\n        TabAlignment = TabsAlignment.Start;\n    }\n\n    public void OnRadioOptionClick(IgbComponentBoolValueChangedEventArgs e)\n    {\n        IgbRadio radio = e.Parent as IgbRadio;\n\n        switch (radio.Value)\n        {\n            case \"Start\":\n                {\n                    this.TabAlignment = TabsAlignment.Start;\n                    break;\n                }\n            case \"Center\":\n                {\n                    this.TabAlignment = TabsAlignment.Center;\n                    break;\n                }\n            case \"End\":\n                {\n                    this.TabAlignment = TabsAlignment.End;\n                    break;\n                }\n            case \"Justify\":\n                {\n                    this.TabAlignment = TabsAlignment.Justify;\n                    break;\n                }\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/layouts/tabs/alignment/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbTabsModule),\n                typeof(IgbIconModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/layouts/tabs/alignment/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

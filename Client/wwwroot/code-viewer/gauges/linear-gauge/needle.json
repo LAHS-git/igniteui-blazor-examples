@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/gauges/linear-gauge/needle/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"container vertical\">\n        <IgbLinearGauge Height=\"80px\" Width=\"100%\"\n                     MinimumValue=\"0\" Value=\"50\"\n                     MaximumValue=\"100\" Interval=\"10\"\n                     IsNeedleDraggingEnabled=\"true\"\n                     NeedleShape=\"LinearGraphNeedleShape.Custom\"\n                     NeedleBrush=\"DodgerBlue\"\n                     NeedleOutline=\"DodgerBlue\"\n                     NeedleStrokeThickness=\"1\"\n                     NeedleBreadth=\"15\"\n                     NeedleInnerExtent=\"0.35\"\n                     NeedleOuterExtent=\"0.65\"\n                     NeedleOuterPointExtent=\"0.8\"\n                     NeedleInnerPointExtent=\"0.325\"\n                     NeedleInnerPointWidth=\"0\"\n                     NeedleOuterPointWidth=\"0.3\"\n                     NeedleInnerBaseWidth=\"0\"\n                     NeedleOuterBaseWidth=\"0.07\">\n        </IgbLinearGauge>\n    </div>\n</div>\n\n@code {\n    \n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/gauges/linear-gauge/needle/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(typeof(IgbLinearGaugeModule));\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/gauges/linear-gauge/needle/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

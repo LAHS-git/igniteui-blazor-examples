@@ -1,0 +1,95 @@
+@page "/samples/grids/grid/row-reorder"
+@page "/samples/grids/grid-row-reorder"
+@page         "/grids/grid/row-reorder"
+@page         "/grids/grid-row-reorder"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+
+    <div class="container vertical fill">
+        <IgbGrid
+        Name="grid"
+        @ref="grid"
+        Data="CustomersData"
+        RowDraggable="true"
+        PrimaryKey="ID">
+            <IgbColumn
+            Field="ID"
+            Header="ID">
+            </IgbColumn>
+
+            <IgbColumn
+            Field="CompanyName"
+            Header="Company">
+            </IgbColumn>
+
+            <IgbColumn
+            Field="ContactName"
+            Header="Name"
+            MinWidth="60px"
+            MaxWidth="230px">
+            </IgbColumn>
+
+            <IgbColumn
+            Field="ContactTitle"
+            Header="Title">
+            </IgbColumn>
+
+            <IgbColumn
+            Field="Address">
+            </IgbColumn>
+
+            <IgbColumn
+            Field="City">
+            </IgbColumn>
+
+            <IgbColumn
+            Field="PostalCode">
+            </IgbColumn>
+
+            <IgbColumn
+            Field="Phone">
+            </IgbColumn>
+
+            <IgbColumn
+            Field="Fax">
+            </IgbColumn>
+
+        </IgbGrid>
+
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbInputModule.Register(IgniteUIBlazor);
+        IgbPropertyEditorPanelModule.Register(IgniteUIBlazor);
+        IgbGridModule.Register(IgniteUIBlazor);
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var grid = this.grid;
+
+    }
+
+    private IgbGrid grid;
+
+    private CustomersData _customersData = null;
+    public CustomersData CustomersData
+    {
+        get
+        {
+            if (_customersData == null)
+            {
+                _customersData = new CustomersData();
+            }
+            return _customersData;
+        }
+    }
+
+}

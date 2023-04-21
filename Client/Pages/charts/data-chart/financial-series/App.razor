@@ -1,0 +1,150 @@
+@page "/samples/charts/data-chart/financial-series"
+@page "/samples/charts/data-chart-financial-series"
+@page         "/charts/data-chart/financial-series"
+@page         "/charts/data-chart-financial-series"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+
+    <div class="options vertical">
+
+        <span class="legend-title">Legend: </span>
+        <div class="legend">
+            <IgbLegend @ref="Legend" Orientation="LegendOrientation.Horizontal" />
+        </div>
+
+        <div class="overlay-right" >
+            <div class="options horizontal" >
+                <label class="options-label">Financial Series: </label>
+                <select @bind=@SeriesType>
+                    <option>@PriceDisplayType.Candlestick</option>
+                    <option>@PriceDisplayType.OHLC</option>
+                </select>
+                <label class="options-label">Indicator Display: </label>
+                <select @bind=@IndicatorsType>
+                    <option>@IndicatorDisplayType.Line</option>
+                    <option>@IndicatorDisplayType.Area</option>
+                    <option>@IndicatorDisplayType.Column</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container vertical">
+        @if (Data != null)
+        {
+            <IgbDataChart Height="100%" Width="100%"
+                       TitleTopMargin="10"
+                       IsHorizontalZoomEnabled="true"
+                       IsVerticalZoomEnabled="true"
+                       Legend="Legend"
+                       @ref="Chart">
+
+                <IgbCategoryXAxis Name="xAxis" Label="Label" DataSource="Data"
+                               LabelAngle="45" />
+                <IgbNumericYAxis Name="yAxis1" LabelLocation="AxisLabelsLocation.OutsideRight" Title="Financial Prices" />
+
+                <IgbNumericYAxis Name="yAxis2" LabelLocation="AxisLabelsLocation.OutsideLeft"
+                              Title="Indicator Values" MajorStrokeThickness="0" MaximumValue="800" />
+                <IgbBollingerBandsOverlay Name="series1"
+                                       XAxisName="xAxis"
+                                       YAxisName="yAxis1"
+                                       HighMemberPath="High"
+                                       LowMemberPath="Low"
+                                       CloseMemberPath="Close"
+                                       OpenMemberPath="Open"
+                                       Brush="rgba(171, 82, 235, 0.39)"
+                                       DataSource="Data" />
+
+                <IgbFinancialPriceSeries Name="series2"
+                                      XAxisName="xAxis"
+                                      YAxisName="yAxis1"
+                                      DisplayType=@SeriesType
+                                      HighMemberPath="High"
+                                      LowMemberPath="Low"
+                                      CloseMemberPath="Close"
+                                      OpenMemberPath="Open"
+                                      VolumeMemberPath="Volume"
+                                      DataSource="Data"
+                                      Title="Price" />
+
+                <IgbMedianPriceIndicator Name="series3"
+                                      XAxisName="xAxis"
+                                      YAxisName="yAxis2"
+                                      DisplayType="@IndicatorsType"
+                                      HighMemberPath="High"
+                                      LowMemberPath="Low"
+                                      CloseMemberPath="Close"
+                                      OpenMemberPath="Open"
+                                      VolumeMemberPath="Volume"
+                                      DataSource="Data" />
+            </IgbDataChart>
+        }
+    </div>
+</div>
+
+@code {
+
+    private List<SampleFinancialItem> Data;
+    private IgbDataChart _Chart;
+    private IgbDataChart Chart
+    {
+        get { return _Chart; }
+        set
+        {
+            _Chart = value;
+            StateHasChanged();
+        }
+    }
+
+    private IgbLegend legend;
+    private IgbLegend Legend
+    {
+        get { return legend; }
+        set
+        {
+            legend = value;
+            StateHasChanged();
+        }
+    }
+    private PriceDisplayType seriesType;
+    private PriceDisplayType SeriesType
+    {
+        get { return seriesType; }
+        set
+        {
+            seriesType = value;
+
+            StateHasChanged();
+        }
+    }
+
+    private IndicatorDisplayType indicatorsType;
+    private IndicatorDisplayType IndicatorsType
+    {
+        get { return indicatorsType; }
+        set
+        {
+            indicatorsType = value;
+
+            StateHasChanged();
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        IgbDataChartCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartCategoryModule.Register(IgniteUIBlazor);
+        IgbDataChartCategoryCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartFinancialCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartFinancialModule.Register(IgniteUIBlazor);
+        IgbDataChartFinancialOverlaysModule.Register(IgniteUIBlazor);
+        IgbDataChartInteractivityModule.Register(IgniteUIBlazor);
+        IgbDataChartAnnotationModule.Register(IgniteUIBlazor);
+
+        Data = SampleFinancialData.Create();
+    }
+}

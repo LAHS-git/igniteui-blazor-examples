@@ -1,0 +1,24 @@
+@page "/samples/scheduling/calendar/multiple-selection"
+@page "/samples/scheduling/calendar-multiple-selection"
+@page         "/scheduling/calendar/multiple-selection"
+@page         "/scheduling/calendar-multiple-selection"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div style="width: 25rem; border: 1px solid gainsboro;">
+        <IgbCalendar Selection="@CalendarBaseSelection.Multiple"/>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbInputModule.Register(IgniteUIBlazor);
+        IgbPropertyEditorPanelModule.Register(IgniteUIBlazor);
+        IgbCalendarModule.Register(IgniteUIBlazor);
+
+    }
+
+}

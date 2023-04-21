@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/scheduling/calendar/formatting/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <IgbRadioGroup Alignment=\"RadioGroupAlignment.Horizontal\">\n        <IgbRadio Value=\"en\" Checked=\"true\" Change=\"OnRadioOptionClick\">EN</IgbRadio>\n        <IgbRadio Value=\"de\" Change=\"OnRadioOptionClick\">DE</IgbRadio>\n        <IgbRadio Value=\"fr\" Change=\"OnRadioOptionClick\">FR</IgbRadio>\n        <IgbRadio Value=\"ar\" Change=\"OnRadioOptionClick\">AR</IgbRadio>\n        <IgbRadio Value=\"ja\" Change=\"OnRadioOptionClick\">JA</IgbRadio>\n    </IgbRadioGroup>\n\n    <div style=\"width: 25rem; border: 1px solid gainsboro;\">\n        <IgbCalendar FormatOptions=\"@CalendarFormat\" Locale=@CalendarLocale WeekStart=\"@CalendarBaseWeekStart.Monday\" />\n    </div>\n</div>\n\n@code {\n\n    private string CalendarLocale { get; set; }\n    private IgbCalendarFormatOptions CalendarFormat { get; set; }\n\n    protected override void OnInitialized()\n    {\n\n        this.CalendarLocale = \"en\";\n        this.CalendarFormat = new IgbCalendarFormatOptions() { Month = \"short\", Weekday = \"short\" };\n    }\n\n    public void OnRadioOptionClick(IgbComponentBoolValueChangedEventArgs e)\n    {\n        IgbRadio radio = e.Parent as IgbRadio;\n        this.CalendarLocale = radio.Value.ToString();\n\n        StateHasChanged();\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/scheduling/calendar/formatting/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbInputModule),\n                typeof(IgbPropertyEditorPanelModule),\n                typeof(IgbCalendarModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/scheduling/calendar/formatting/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

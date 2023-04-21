@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/slider/value-format/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<style>\nigc-slider {\npadding: 30px 50px;\n}\n</style>\n\n<div class=\"container sample center\">\n    <IgbSlider @ref=\"SliderRef\"\n        PrimaryTicks=\"3\"\n        SecondaryTicks=\"4\">\n    </IgbSlider>\n    <IgbSlider @ref=\"SliderRef2\"\n        ValueFormat=\"Storage: {0} GB\">\n    </IgbSlider>\n</div>\n\n@code {\n    \n    public IgbNumberFormatSpecifier formatSpecifier;\n    public IgbNumberFormatSpecifier formatSpecifier2;\n\n    private IgbSlider _slider;\n    public IgbSlider SliderRef\n    {\n        get\n        {\n            return _slider;\n        }\n        set\n        {\n            _slider = value;\n            formatSpecifier = new IgbNumberFormatSpecifier();\n            formatSpecifier.Style = \"currency\";\n            formatSpecifier.Currency = \"USD\";\n            _slider.ValueFormatOptions = formatSpecifier;\n            StateHasChanged();\n        }\n    }\n\n    private IgbSlider _slider2;\n    public IgbSlider SliderRef2\n    {\n        get\n        {\n            return _slider2;\n        }\n        set\n        {\n            _slider2 = value;\n            formatSpecifier2 = new IgbNumberFormatSpecifier();\n            formatSpecifier2.MinimumFractionDigits = 1;\n            _slider2.ValueFormatOptions = formatSpecifier2;\n            StateHasChanged();\n        }\n    }\n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/slider/value-format/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbSliderModule),\n                typeof(IgbNumberFormatSpecifierModule)\n   );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/slider/value-format/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

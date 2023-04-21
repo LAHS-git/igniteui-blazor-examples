@@ -1,0 +1,19 @@
+@page "/samples/inputs/select/header"
+@page "/samples/inputs/select-header"
+@page         "/inputs/select/header"
+@page         "/inputs/select-header"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container sample center">
+    <IgbSelect>
+        <IgbSelectHeader>Tasks</IgbSelectHeader>
+        <IgbSelectItem Value="spec" Selected>Specification</IgbSelectItem>
+        <IgbSelectItem Value="implement">Implementation</IgbSelectItem>
+        <IgbSelectItem Value="test" Disabled>Testing</IgbSelectItem>
+        <IgbSelectItem Value="docs">Documentation</IgbSelectItem>
+    </IgbSelect>
+</div>
+
+@code { }

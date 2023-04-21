@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/radio/styling/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div style=\"width: 16rem; border: 1px solid gainsboro\">\n        <style>\n            :root {\n                --igc-primary-h: 60deg;\n                --igc-primary-s: 100%;\n                --igc-primary-l: 25%;\n            }\n\n            igc-radio::part(control) {\n                --size: 18px;\n            }\n        </style>\n        <IgbRadioGroup>\n            <IgbRadio>Apple</IgbRadio>\n            <IgbRadio Checked=\"true\">Banana</IgbRadio>\n            <IgbRadio>Mango</IgbRadio>\n            <IgbRadio>Orange</IgbRadio>\n        </IgbRadioGroup>\n    </div>\n</div>\n\n@code {\n    \n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/radio/styling/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbRadioGroupModule),\n                typeof(IgbRadioModule)\n    );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/radio/styling/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/\r\n\r\n\r\nigc-radio::part(base checked):focus-within igc-radio::part(control) {\r\n    background: rgba(128,128,0, .32);\r\n}\r\n\r\nigc-radio::part(control checked)::before {\r\n    background: olive;\r\n}\r\n\r\nigc-radio::part(control checked)::after {\r\n    border-color: olive;\r\n}",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

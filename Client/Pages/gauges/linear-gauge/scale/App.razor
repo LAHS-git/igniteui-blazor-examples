@@ -1,0 +1,33 @@
+@page "/samples/gauges/linear-gauge/scale"
+@page "/samples/gauges/linear-gauge-scale"
+@page         "/gauges/linear-gauge/scale"
+@page         "/gauges/linear-gauge-scale"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="container vertical">
+        <IgbLinearGauge Height="80px" Width="100%"
+                     MinimumValue="0" Value="50"
+                     MaximumValue="100" Interval="10"
+                     IsScaleInverted="false"
+                     ScaleBrush="DodgerBlue"
+                     ScaleOutline="Red"
+                     ScaleStrokeThickness="2"
+                     ScaleInnerExtent="0.05"
+                     ScaleOuterExtent="0.65"
+                     ScaleStartExtent="0.05"
+                     ScaleEndExtent="0.95">
+        </IgbLinearGauge>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbLinearGaugeModule.Register(IgniteUIBlazor);
+
+    }
+
+}

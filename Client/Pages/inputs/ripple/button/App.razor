@@ -1,0 +1,23 @@
+@page "/samples/inputs/ripple/button"
+@page "/samples/inputs/ripple-button"
+@page         "/inputs/ripple/button"
+@page         "/inputs/ripple-button"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <IgbButton Variant="ButtonVariant.Contained">
+        Ripple Button
+        <IgbRipple></IgbRipple>
+    </IgbButton>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbButtonModule.Register(IgniteUIBlazor);
+
+    }
+
+}

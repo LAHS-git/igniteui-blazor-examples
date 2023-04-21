@@ -1,0 +1,94 @@
+@page "/samples/charts/data-chart/type-scatter-polygon-series"
+@page "/samples/charts/data-chart-type-scatter-polygon-series"
+@page         "/charts/data-chart/type-scatter-polygon-series"
+@page         "/charts/data-chart-type-scatter-polygon-series"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+@using System.Net.Http.Json
+@inject HttpClient Http
+
+<div class="container vertical">
+    <div class="container vertical">
+
+        <div class="options vertical">
+            <span class="legend-title">Airplane Seating Chart (Polygons)</span>
+        </div>
+
+        <div class="custom-legend">
+          <div><span style="background: DodgerBlue; "></span><label>First Class</label></div>
+          <div><span style="background: LimeGreen; "></span><label>Business Class</label></div>
+          <div><span style="background: Orange; "></span><label>Premium Class</label></div>
+          <div><span style="background: Red; "></span><label>Economy Class</label></div>
+          <div><span style="background: Gray; "></span><label>Sold Seat</label> </div>
+          <div><span style="background: LightGray; "></span><label>Airplane</label> </div>
+        </div>
+
+        @if (AirplaneShape != null && AirplaneSeats != null)
+        {
+            <IgbDataChart Height="100%" Width="100%"
+                       SeriesMouseEnterScript="onPolygonSeriesMouseEnter"
+                       IsHorizontalZoomEnabled="true"
+                       IsVerticalZoomEnabled="true">
+
+                <IgbNumericXAxis Name="xAxis" MinimumValue="-1000" MaximumValue="1000" Interval="200"></IgbNumericXAxis>
+                <IgbNumericYAxis Name="yAxis" MinimumValue="-600" MaximumValue="600" Interval="200"></IgbNumericYAxis>
+
+                <IgbScatterPolygonSeries XAxisName="xAxis"
+                                      YAxisName="yAxis"
+                                      DataSource="AirplaneShape"
+                                      ShapeMemberPath="Points"
+                                      ShowDefaultTooltip="false"
+                                      Thickness="0.5"
+                                      Brush="LightGray" Outline="Black">
+                </IgbScatterPolygonSeries>
+
+                <IgbScatterPolygonSeries XAxisName="xAxis"
+                                      YAxisName="yAxis"
+                                      DataSource="AirplaneSeats"
+                                      Title="AirplaneSeats"
+                                      ShapeMemberPath="Points"
+                                      StyleShapeScript="onPolygonShapeStyle">
+                </IgbScatterPolygonSeries>
+
+            </IgbDataChart>
+        }
+
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbDataChartCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartShapeCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartShapeModule.Register(IgniteUIBlazor);
+        IgbDataChartInteractivityModule.Register(IgniteUIBlazor);
+        IgbScatterPolygonSeriesModule.Register(IgniteUIBlazor);
+
+    }
+
+    private AirplaneSeatInfo[] AirplaneShape;
+    private AirplaneSeatInfo[] AirplaneSeats;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var http = new HttpClient();
+        var shape = "https://static.infragistics.com/xplatform/json/airplane-shape.json";
+        this.AirplaneShape = await http.GetFromJsonAsync<AirplaneSeatInfo[]>(shape);
+
+        var seats = "https://static.infragistics.com/xplatform/json/airplane-seats.json";
+        this.AirplaneSeats = await http.GetFromJsonAsync<AirplaneSeatInfo[]>(seats);
+    }
+
+    public class AirplaneSeatInfo
+    {
+        public string Seat { get; set; }
+        public string Class { get; set; }
+        public string Price { get; set; }
+        public string Status { get; set; }
+
+        public List<List<Point>> Points { get; set; }
+    }
+}

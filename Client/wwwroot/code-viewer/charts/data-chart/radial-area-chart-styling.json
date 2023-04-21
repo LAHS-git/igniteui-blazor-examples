@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/radial-area-chart-styling/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"legend-title\">\n        Ronaldo vs Messi Player Stats\n    </div>\n    <div class=\"legend\">\n        <IgbLegend\n        Name=\"Legend\"\n        @ref=\"legend\"\n        Orientation=\"LegendOrientation.Horizontal\">\n        </IgbLegend>\n\n    </div>\n\n    <div class=\"container vertical fill\">\n        <IgbDataChart\n        Name=\"chart\"\n        @ref=\"chart\"\n        IsHorizontalZoomEnabled=\"false\"\n        IsVerticalZoomEnabled=\"false\"\n        MarkerBrushes=\"white\"\n        MarkerOutlines=\"#8ce7d9 #ee5879\"\n        Brushes=\"#8ce7d9 #ee5879\"\n        Outlines=\"#8ce7d9 #ee5879\">\n            <IgbCategoryAngleAxis\n            Name=\"angleAxis\"\n            @ref=\"angleAxis\"\n            DataSource=\"FootballPlayerStats\"\n            Label=\"Attribute\">\n            </IgbCategoryAngleAxis>\n\n            <IgbNumericRadiusAxis\n            Name=\"radiusAxis\"\n            @ref=\"radiusAxis\"\n            InnerRadiusExtentScale=\"0.1\"\n            Interval=\"2\"\n            MinimumValue=\"0\"\n            MaximumValue=\"10\">\n            </IgbNumericRadiusAxis>\n\n            <IgbRadialAreaSeries\n            Name=\"RadialAreaSeries1\"\n            @ref=\"radialAreaSeries1\"\n            DataSource=\"FootballPlayerStats\"\n            AngleAxisName=\"angleAxis\"\n            ValueAxisName=\"radiusAxis\"\n            ValueMemberPath=\"Ronaldo\"\n            ShowDefaultTooltip=\"true\"\n            AreaFillOpacity=\"0.5\"\n            Thickness=\"3\"\n            Title=\"Ronaldo\"\n            MarkerType=\"MarkerType.Circle\">\n            </IgbRadialAreaSeries>\n\n            <IgbRadialAreaSeries\n            Name=\"RadialAreaSeries2\"\n            @ref=\"radialAreaSeries2\"\n            DataSource=\"FootballPlayerStats\"\n            AngleAxisName=\"angleAxis\"\n            ValueAxisName=\"radiusAxis\"\n            ValueMemberPath=\"Messi\"\n            ShowDefaultTooltip=\"true\"\n            AreaFillOpacity=\"0.5\"\n            Thickness=\"3\"\n            Title=\"Messi\"\n            MarkerType=\"MarkerType.Circle\">\n            </IgbRadialAreaSeries>\n\n        </IgbDataChart>\n\n    </div>\n</div>\n\n@code {\n    \n\n    private Action BindElements { get; set; }\n\n    protected override async Task OnAfterRenderAsync(bool firstRender)\n    {\n        var legend = this.legend;\n        var chart = this.chart;\n        var angleAxis = this.angleAxis;\n        var radiusAxis = this.radiusAxis;\n        var radialAreaSeries1 = this.radialAreaSeries1;\n        var radialAreaSeries2 = this.radialAreaSeries2;\n\n        this.BindElements = () => {\n            chart.Legend = this.legend;\n        };\n        this.BindElements();\n\n    }\n\n    private IgbLegend legend;\n    private IgbDataChart chart;\n    private IgbCategoryAngleAxis angleAxis;\n    private IgbNumericRadiusAxis radiusAxis;\n    private IgbRadialAreaSeries radialAreaSeries1;\n    private IgbRadialAreaSeries radialAreaSeries2;\n\n    private FootballPlayerStats _footballPlayerStats = null;\n    public FootballPlayerStats FootballPlayerStats\n    {\n        get\n        {\n            if (_footballPlayerStats == null)\n            {\n                _footballPlayerStats = new FootballPlayerStats();\n            }\n            return _footballPlayerStats;\n        }\n    }\n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/radial-area-chart-styling/FootballPlayerStats.cs",
+    "content": "using System;\nusing System.Collections.Generic;\npublic class FootballPlayerStatsItem\n{\n    public string Attribute { get; set; }\n    public double Ronaldo { get; set; }\n    public double Messi { get; set; }\n}\n\npublic class FootballPlayerStats\n    : List<FootballPlayerStatsItem>\n{\n    public FootballPlayerStats()\n    {\n        this.Add(new FootballPlayerStatsItem()\n        {\n            Attribute = @\"Dribbling\",\n            Ronaldo = 8,\n            Messi = 10\n        });\n        this.Add(new FootballPlayerStatsItem()\n        {\n            Attribute = @\"Passing\",\n            Ronaldo = 8,\n            Messi = 10\n        });\n        this.Add(new FootballPlayerStatsItem()\n        {\n            Attribute = @\"Finishing\",\n            Ronaldo = 10,\n            Messi = 10\n        });\n        this.Add(new FootballPlayerStatsItem()\n        {\n            Attribute = @\"Free Kicks\",\n            Ronaldo = 8,\n            Messi = 9\n        });\n        this.Add(new FootballPlayerStatsItem()\n        {\n            Attribute = @\"Penalties\",\n            Ronaldo = 9,\n            Messi = 7\n        });\n        this.Add(new FootballPlayerStatsItem()\n        {\n            Attribute = @\"Physical\",\n            Ronaldo = 10,\n            Messi = 7\n        });\n        this.Add(new FootballPlayerStatsItem()\n        {\n            Attribute = @\"Team Play\",\n            Ronaldo = 7,\n            Messi = 9\n        });\n        this.Add(new FootballPlayerStatsItem()\n        {\n            Attribute = @\"Heading\",\n            Ronaldo = 9,\n            Messi = 6\n        });\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/radial-area-chart-styling/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbLegendModule),\n                typeof(IgbDataChartCoreModule),\n                typeof(IgbDataChartRadialModule),\n                typeof(IgbDataChartRadialCoreModule),\n                typeof(IgbDataChartInteractivityModule),\n                typeof(IgbDataChartAnnotationModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/radial-area-chart-styling/wwwroot/index.css",
+    "content": "/*\r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

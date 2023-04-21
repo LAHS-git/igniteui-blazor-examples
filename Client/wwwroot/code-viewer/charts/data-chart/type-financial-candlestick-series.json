@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/type-financial-candlestick-series/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"container vertical\">\n\n        <IgbDataChart Height=\"100%\" Width=\"100%\"\n                   Subtitle=\"Stock Prices Series in Candlestick Display Type\"\n                   SubtitleTopMargin=\"10\"\n                   IsHorizontalZoomEnabled=\"true\"\n                   IsVerticalZoomEnabled=\"true\">\n\n            <IgbCategoryXAxis Name=\"xAxis\" Label=\"Label\" DataSource=\"Data\" />\n            <IgbNumericYAxis  Name=\"yAxis\" Title=\"Amount (in USD)\" TitleRightMargin=\"10\"\n                           LabelRightMargin=\"10\"\n                           LabelHorizontalAlignment=\"HorizontalAlignment.Left\"\n                           LabelLocation=\"AxisLabelsLocation.OutsideRight\" />\n\n            <IgbFinancialPriceSeries XAxisName=\"xAxis\"\n                                  YAxisName=\"yAxis\"\n                                  DataSource=\"Data\"\n                                  DisplayType=\"PriceDisplayType.Candlestick\"\n                                  OpenMemberPath=\"Open\"\n                                  CloseMemberPath=\"Close\"\n                                  HighMemberPath=\"High\"\n                                  LowMemberPath=\"Low\"\n                                  VolumeMemberPath=\"Volume\"\n                                  ShowDefaultTooltip=\"true\"\n                                  IsTransitionInEnabled=\"true\"\n                                  Brush=\"rgba(2, 199, 74, 1.0)\"\n                                  Outline=\"rgba(2, 199, 74, 1.0)\"\n                                  Title=\"Price\" />\n\n        </IgbDataChart>\n\n    </div>\n</div>\n\n@code {\n\n    private List<SampleFinancialItem> Data;\n\n    protected override void OnInitialized()\n    {\n\n        Data = SampleFinancialData.Create();\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/type-financial-candlestick-series/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbDataChartCoreModule),\n                typeof(IgbDataChartCategoryModule),\n                typeof(IgbDataChartInteractivityModule),\n                typeof(IgbFinancialPriceSeriesModule)\n);\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/type-financial-candlestick-series/Services/SampleFinancialData.cs",
+    "content": "﻿using System;\nusing System.Collections.Generic;\n\nnamespace Infragistics.Samples\n{\n    public class SampleFinancialData\n    {\n        public static Random random = new Random();\n        public static List<SampleFinancialItem> Create(int itemsCount = 365)\n        {\n            var data = new List<SampleFinancialItem>();\n\n            // initial values\n            var v = 10000.0;\n            var o = 500.0;\n            var h = Math.Round(o + (random.NextDouble() * 5));\n            var l = Math.Round(o - (random.NextDouble() * 5));\n            var c = Math.Round(l + (random.NextDouble() * (h - l)));\n\n            var today = DateTime.Now;\n            var end = new DateTime(today.Year, 12, 31);\n            var time = end.AddDays(-itemsCount);\n\n            for (var i = 0; i < itemsCount; i++)\n            {\n                var date = time.ToShortDateString();\n                var label = GetShortDate(time, false);\n                // adding new data item\n                var item = new SampleFinancialItem();\n                item.Time = time;\n                item.Date = date;\n                item.Label = label;\n                item.Close = c;\n                item.Open = o;\n                item.High = h;\n                item.Low = l;\n                item.Volume = v;\n                data.Add(item);\n\n                // generating new values\n                var mod = random.NextDouble() - 0.49;\n                o = Math.Round(o + (mod * 5 * 4));\n                v = Math.Round(v + (mod * 5 * 100));\n                h = Math.Round(o + (random.NextDouble() * 15));\n                l = Math.Round(o - (random.NextDouble() * 15));\n                c = Math.Round(l + (random.NextDouble() * (h - l)));\n                time = time.AddDays(1);\n            }\n            return data;\n        }\n\n        public static string GetShortDate(DateTime dt, bool showYear)\n        {\n            var months = new List<string> {\n                \"Jan\", \"Feb\", \"Mar\", \"Apr\", \"May\", \"Jun\", \"Jul\", \"Aug\", \"Sep\", \"Oct\", \"Nov\", \"Dec\"\n            };\n            var ind = dt.Month - 1;\n            var day = dt.Day;\n            var label = months[ind] + \" \" + day;\n            if (showYear)\n            {\n                label += \" \" + dt.Year;\n            }\n            return label;\n        }\n    }\n\n    public class SampleFinancialItem\n    {\n        public double High { get; set; }\n        public double Low { get; set; }\n        public double Open { get; set; }\n        public double Close { get; set; }\n        public double Volume { get; set; }\n\n        public string Label { get; set; }\n        public string Date { get; set; }\n        public DateTime Time { get; set; }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/type-financial-candlestick-series/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

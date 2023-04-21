@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/maps/geo-map/binding-shp-polylines/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"container vertical\">\n        <IgbGeographicMap Height=\"100%\" Width=\"100%\" Zoomable=\"true\">\n            <IgbGeographicPolylineSeries ShapefileDataSource=\"Data\"\n                                      ShapeFilterResolution=\"0.0\"\n                                      ShapeStrokeThickness=\"3\"\n                                      ShapeStroke=\"rgb(82, 82, 82, 0.4)\"/>\n        </IgbGeographicMap>\n    </div>\n</div>\n\n@code {\n\n    private IgbShapeDataSource Data;\n\n    protected override void OnInitialized()\n    {\n\n        this.Data = new IgbShapeDataSource()\n        {\n            ShapefileSource = \"https://static.infragistics.com/xplatform/shapes/WorldCableRoutes.shp\",\n            DatabaseSource  = \"https://static.infragistics.com/xplatform/shapes/WorldCableRoutes.dbf\"\n        };\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/maps/geo-map/binding-shp-polylines/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbGeographicMapModule),\n                typeof(IgbDataChartInteractivityModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/maps/geo-map/binding-shp-polylines/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

@@ -1,0 +1,20 @@
+@page "/samples/inputs/checkbox/indeterminate"
+@page "/samples/inputs/checkbox-indeterminate"
+@page         "/inputs/checkbox/indeterminate"
+@page         "/inputs/checkbox-indeterminate"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <IgbCheckbox Indeterminate=true>Label</IgbCheckbox>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbCheckboxModule.Register(IgniteUIBlazor);
+
+    }
+
+}

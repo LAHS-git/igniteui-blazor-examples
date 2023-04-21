@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/gauges/linear-gauge/type-curved/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"container vertical\">\n        <IgbLinearGauge Height=\"120px\" Width=\"100%\"\n                     MinimumValue=\"0\"\n                     MaximumValue=\"100\"\n                     Value=\"80\"\n                     Interval=\"10\"\n                     LabelInterval=\"10\"\n                     LabelExtent=\"0.0\"\n                     FontBrush=\"Black\"\n                     TransitionDuration=\"500\"\n\n                     IsNeedleDraggingEnabled=\"true\"\n                     NeedleShape=\"LinearGraphNeedleShape.Triangle\"\n                     NeedleBrush=\"#494949\"\n                     NeedleOutline=\"#494949\"\n                     NeedleStrokeThickness=\"1\"\n                     NeedleOuterExtent=\"0.9\"\n                     NeedleInnerExtent=\"0.6\"\n                     NeedleBreadth=\"20\"\n\n                     TickBrush=\"Gray\"\n                     TickStartExtent=\"0.1\"\n                     TickEndExtent=\"0.0\"\n                     TickStrokeThickness=\"1\"\n\n                     MinorTickBrush=\"Gray\"\n                     MinorTickStartExtent=\"0.1\"\n                     MinorTickEndExtent=\"0.05\"\n                     MinorTickStrokeThickness=\"1\"\n                     MinorTickCount=\"9\"\n\n                     BackingBrush=\"transparent\"\n                     BackingOutline=\"transparent\"\n\n                     ScaleStrokeThickness=\"0\"\n                     ScaleBrush=\"#E0DFDF\"\n                     ScaleOutline=\"#E0DFDF\"\n                     ScaleInnerExtent=\"0.1\"\n                     ScaleOuterExtent=\"0.95\">\n            @for (int i = 0; i < RangeInfo.Count; i++)\n            {\n                GaugeRangeInfo info = RangeInfo[i];\n\n                <IgbLinearGraphRange StartValue=info.StartValue\n                                  EndValue=info.EndValue\n                                  InnerEndExtent=info.InnerEndExtent\n                                  InnerStartExtent=info.InnerStartExtent\n                                  OuterEndExtent=info.OuterEndExtent\n                                  OuterStartExtent=info.OuterStartExtent\n                                  Brush=\"@info.Brush\"\n                                  Outline=\"@info.Outline\">\n                </IgbLinearGraphRange>\n            }\n        </IgbLinearGauge>\n    </div>\n</div>\n\n@code {\n\n    private List<GaugeRangeInfo> RangeInfo;\n\n    protected override void OnInitialized()\n    {\n\n        RangeInfo = new List<GaugeRangeInfo>();\n\n        List<string> colors = new List<string>() { \"#009f00\", \"#16a316\", \"#23a724\", \"#2eab2f\", \"#36af39\", \"#3eb342\", \"#46b74a\", \"#4dbb52\", \"#54bf5a\", \"#5bc361\", \"#62c768\", \"#69cb6e\", \"#70cf74\", \"#77d37a\", \"#7fd77f\", \"#86db83\", \"#8edf87\", \"#97e38a\", \"#9fe78d\", \"#a8eb8e\", \"#b2ef8e\", \"#bcf28b\", \"#c7f686\", \"#d3f97d\", \"#e0fd6a\", \"#f5f732\", \"#f7ef37\", \"#f9e73b\", \"#fbdf3e\", \"#fcd741\", \"#fdcf44\", \"#fec746\", \"#ffbe48\", \"#ffb649\", \"#ffae4b\", \"#ffa64c\", \"#ff9d4c\", \"#ff944d\", \"#ff8b4d\", \"#ff824d\", \"#fe794d\", \"#fd6f4c\", \"#fc654b\", \"#fb5b4a\", \"#f95048\", \"#f74445\", \"#f53742\", \"#f2273e\", \"#ef1438\", \"#e9002c\" };\n\n        double rangeSpan = 100;\n        double rangeValueInterval = rangeSpan / colors.Count;\n        double curveInterval = 180 / colors.Count;\n\n        for (int i = 0; i < colors.Count; i++)\n        {\n            string color = colors[i];\n\n            double start = 0.75 * Math.Sin(i * curveInterval * Math.PI / 180);\n            double end = 0.75 * Math.Sin((i + 1) * curveInterval * Math.PI / 180);\n\n            GaugeRangeInfo info = new GaugeRangeInfo()\n            {\n                StartValue = rangeValueInterval * i,\n                EndValue = rangeValueInterval * (i + 1),\n                Brush = color,\n                Outline = color,\n                InnerStartExtent = 0.1,\n                InnerEndExtent = 0.1,\n                OuterStartExtent = 0.95 - start,\n                OuterEndExtent = 0.95 - end\n            };\n\n            RangeInfo.Add(info);\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/gauges/linear-gauge/type-curved/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(typeof(IgbLinearGaugeModule));\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/gauges/linear-gauge/type-curved/Services/GaugeRangeInfo.cs",
+    "content": "﻿using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Threading.Tasks;\n\nnamespace Infragistics.Samples\n{\n    public class GaugeRangeInfo\n    {\n        public string Name { get; set; }\n        public string Brush { get; set; }\n        public string Outline { get; set; }\n        public double StartValue { get; set; }\n        public double EndValue { get; set; }\n        public double InnerStartExtent { get; set; }\n        public double InnerEndExtent { get; set; }\n        public double OuterStartExtent { get; set; }\n        public double OuterEndExtent { get; set; }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/gauges/linear-gauge/type-curved/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

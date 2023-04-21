@@ -1,0 +1,82 @@
+@page "/samples/charts/category-chart/column-chart-styling"
+@page "/samples/charts/category-chart-column-chart-styling"
+@page         "/charts/category-chart/column-chart-styling"
+@page         "/charts/category-chart-column-chart-styling"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="legend-title">
+        Percentage Change in Energy Generation
+    </div>
+    <div class="legend">
+        <IgbLegend
+        Name="Legend"
+        @ref="legend"
+        Orientation="LegendOrientation.Horizontal">
+        </IgbLegend>
+
+    </div>
+
+    <div class="container vertical fill">
+        <IgbCategoryChart
+        Name="chart"
+        @ref="chart"
+        DataSource="EnergyRenewableConsumption"
+        ChartType="CategoryChartType.Column"
+        IsHorizontalZoomEnabled="false"
+        IsVerticalZoomEnabled="false"
+        IsSeriesHighlightingEnabled="true"
+        Brushes="#9de772 #8b5bb1 #6db1ff #ee5879 #f8a15f"
+        Outlines="white"
+        XAxisMajorStroke="lightgray"
+        XAxisGap="0.5"
+        CrosshairsDisplayMode="CrosshairsDisplayMode.None"
+        IsCategoryHighlightingEnabled="true"
+        HighlightingMode="SeriesHighlightingMode.FadeOthersSpecific"
+        HighlightingBehavior="SeriesHighlightingBehavior.NearestItemsAndSeries">
+        </IgbCategoryChart>
+
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbLegendModule.Register(IgniteUIBlazor);
+        IgbCategoryChartModule.Register(IgniteUIBlazor);
+
+    }
+
+    private Action BindElements { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var legend = this.legend;
+        var chart = this.chart;
+
+        this.BindElements = () => {
+            chart.Legend = this.legend;
+        };
+        this.BindElements();
+
+    }
+
+    private IgbLegend legend;
+    private IgbCategoryChart chart;
+
+    private EnergyRenewableConsumption _energyRenewableConsumption = null;
+    public EnergyRenewableConsumption EnergyRenewableConsumption
+    {
+        get
+        {
+            if (_energyRenewableConsumption == null)
+            {
+                _energyRenewableConsumption = new EnergyRenewableConsumption();
+            }
+            return _energyRenewableConsumption;
+        }
+    }
+
+}

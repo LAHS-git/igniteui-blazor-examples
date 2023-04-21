@@ -1,0 +1,64 @@
+@page "/samples/charts/data-chart/axis-sharing"
+@page "/samples/charts/data-chart-axis-sharing"
+@page         "/charts/data-chart/axis-sharing"
+@page         "/charts/data-chart-axis-sharing"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="container vertical">
+        @if (Data != null)
+        {
+            <IgbDataChart Height="100%" Width="100%"
+                       Subtitle="Stock Prices and Trade Volume"
+                       SubtitleTopMargin="10"
+                       IsHorizontalZoomEnabled="true"
+                       IsVerticalZoomEnabled="true">
+                <IgbCategoryXAxis Name="xAxisShared" Label="Label" Gap="0.75" DataSource="Data" />
+                <IgbNumericYAxis Name="yAxisRight" LabelLocation="AxisLabelsLocation.OutsideRight"
+                                 MinimumValue="400"
+                                 MaximumValue="700" Title="Stock Price ($)" />
+                <IgbNumericYAxis Name="yAxisLeft" LabelLocation="AxisLabelsLocation.OutsideLeft"
+                                 MinimumValue="5000"
+                                 MaximumValue="45000" Title="Trade Volume"
+                                 MajorStrokeThickness="0"
+                                 AbbreviateLargeNumbers="true" />
+
+                <IgbColumnSeries XAxisName="xAxisShared"
+                                 YAxisName="yAxisLeft"
+                                 DataSource="Data"
+                                 ValueMemberPath="Volume"
+                                 ShowDefaultTooltip="true"
+                                 Title="Trade Volume" />
+
+                <IgbFinancialPriceSeries XAxisName="xAxisShared"
+                                         YAxisName="yAxisRight"
+                                         DisplayType="PriceDisplayType.Candlestick"
+                                         DataSource="Data"
+                                         HighMemberPath="High" LowMemberPath="Low" CloseMemberPath="Close" OpenMemberPath="Open"
+                                         VolumeMemberPath="Volume"
+                                         ShowDefaultTooltip="true"
+                                         Title="Stock Price" />
+            </IgbDataChart>
+        }
+
+    </div>
+</div>
+
+@code {
+
+    private List<SharedAxisFinancialItem> Data;
+
+    protected override void OnInitialized()
+    {
+        IgbDataChartCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartCategoryModule.Register(IgniteUIBlazor);
+        IgbDataChartInteractivityModule.Register(IgniteUIBlazor);
+        IgbFinancialPriceSeriesModule.Register(IgniteUIBlazor);
+        IgbNumberAbbreviatorModule.Register(IgniteUIBlazor);
+        IgbColumnSeriesModule.Register(IgniteUIBlazor);
+
+        this.Data = SharedAxisFinancialData.Create();
+    }
+}

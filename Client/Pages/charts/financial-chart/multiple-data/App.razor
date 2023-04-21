@@ -1,0 +1,41 @@
+@page "/samples/charts/financial-chart/multiple-data"
+@page "/samples/charts/financial-chart-multiple-data"
+@page         "/charts/financial-chart/multiple-data"
+@page         "/charts/financial-chart-multiple-data"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="container vertical">
+
+        @if (Data != null)
+        {
+            <IgbFinancialChart Width="100%"
+                Height="100%"
+                ChartType=FinancialChartType.Line
+                Thickness=2
+                DataSource="Data"
+                ChartTitle="Google vs Microsoft Changes"
+                Subtitle="Between 2013 and 2017"
+                YAxisMode="FinancialChartYAxisMode.PercentChange"
+                YAxisTitle="Percent Changed"
+             />
+        }
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbFinancialChartModule.Register(IgniteUIBlazor);
+
+    }
+
+    protected List<StockPrice[]> Data;
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.Data = await StocksHistory.GetMultipleStocks();
+    }
+}

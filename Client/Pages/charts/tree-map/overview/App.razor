@@ -1,0 +1,69 @@
+@page "/samples/charts/tree-map/overview"
+@page "/samples/charts/tree-map-overview"
+@page         "/charts/tree-map/overview"
+@page         "/charts/tree-map-overview"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="legend-title">
+        Comparing Population of Countries
+    </div>
+
+    <div class="container vertical fill">
+        <IgbTreemap
+        Name="treemap"
+        @ref="treemap"
+        DataSource="CountyHierarchicalData"
+        ParentIdMemberPath="Parent"
+        IdMemberPath="Name"
+        LabelMemberPath="Name"
+        ValueMemberPath="Population"
+        FillScaleMode="TreemapFillScaleMode.Value"
+        FillScaleMinimumValue="0"
+        FillScaleMaximumValue="1500000000"
+        FillBrushes="#4e62cf #8a58d6"
+        IsFillScaleLogarithmic="true"
+        RootTitle="Countries"
+        HeaderDisplayMode="TreemapHeaderDisplayMode.Overlay"
+        ParentNodeBottomPadding="0"
+        ParentNodeLeftPadding="0"
+        ParentNodeRightPadding="0"
+        ParentNodeTopPadding="0"
+        Outline="black"
+        StrokeThickness="1">
+        </IgbTreemap>
+
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbTreemapModule.Register(IgniteUIBlazor);
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var treemap = this.treemap;
+
+    }
+
+    private IgbTreemap treemap;
+
+    private CountyHierarchicalData _countyHierarchicalData = null;
+    public CountyHierarchicalData CountyHierarchicalData
+    {
+        get
+        {
+            if (_countyHierarchicalData == null)
+            {
+                _countyHierarchicalData = new CountyHierarchicalData();
+            }
+            return _countyHierarchicalData;
+        }
+    }
+
+}

@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/gauges/bullet-graph/measures/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"container vertical\">\n        <IgbBulletGraph Height=\"80px\" Width=\"100%\"\n                     MinimumValue=\"0\"\n                     MaximumValue=\"100\"\n\n                     Value=\"50\"\n                     ValueBrush=\"DodgerBlue\"\n                     ValueStrokeThickness=\"1\"\n                     ValueInnerExtent=\"0.5\"\n                     ValueOuterExtent=\"0.65\"\n\n                     TargetValue=\"80\"\n                     TargetValueBreadth=\"10\"\n                     TargetValueBrush=\"LimeGreen\"\n                     TargetValueOutline=\"LimeGreen\"\n                     TargetValueStrokeThickness=\"1\"\n                     TargetValueInnerExtent=\"0.3\"\n                     TargetValueOuterExtent=\"0.85\"\n\n                     ScaleBackgroundBrush=\"#E5E5E5\"\n                     ScaleBackgroundOutline=\"#E5E5E5\"\n                     BackingBrush=\"#F7F7F7\"\n                     BackingOutline=\"#BFBFBF\"\n                     TickStrokeThickness=\"1.5\">\n        </IgbBulletGraph>\n    </div>\n</div>\n\n@code {\n    \n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/gauges/bullet-graph/measures/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(typeof(IgbBulletGraphModule));\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/gauges/bullet-graph/measures/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

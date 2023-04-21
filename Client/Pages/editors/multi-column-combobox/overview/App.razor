@@ -1,0 +1,34 @@
+@page "/samples/editors/multi-column-combobox/overview"
+@page "/samples/editors/multi-column-combobox-overview"
+@page         "/editors/multi-column-combobox/overview"
+@page         "/editors/multi-column-combobox-overview"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+    <div class="container vertical">
+        <div class="container vertical">
+            @if (CountryData != null)
+            {
+                <IgbMultiColumnComboBox Height="50px" Width="400px"
+                    DataSource="CountryData"
+                    Fields="DisplayFields"
+                    TextField="Country"
+                    Placeholder="Choose a country"
+                    DefaultColumnWidth="200"/>
+            }
+        </div>
+    </div>
+
+@code {
+
+    protected List<ComboBoxItem> CountryData;
+    protected string[] DisplayFields = new string[] { "Country", "Pop", "Continent" };
+
+    protected override void OnInitialized()
+    {
+        IgbMultiColumnComboBoxModule.Register(IgniteUIBlazor);
+
+        this.CountryData = SampleComboData.Create();
+    }
+}

@@ -1,0 +1,69 @@
+@page "/samples/charts/data-chart/type-scatter-area-series"
+@page "/samples/charts/data-chart-type-scatter-area-series"
+@page         "/charts/data-chart/type-scatter-area-series"
+@page         "/charts/data-chart-type-scatter-area-series"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="container vertical">
+
+        <div class="options vertical">
+            <span class="legend-title">Distribution of Magnetic Field</span>
+        </div>
+
+        @if (Data != null)
+        {
+        <IgbDataChart Height="100%" Width="100%"
+                   GridMode="@GridMode.BeforeSeries"
+                   IsHorizontalZoomEnabled="false"
+                   IsVerticalZoomEnabled="false">
+
+            @* primary axes required for scatter-contour-series *@
+            <IgbNumericXAxis Name="xAxis1" LabelLocation="AxisLabelsLocation.OutsideBottom"  Title="Longitude" MinimumValue="-180" MaximumValue="180" />
+            <IgbNumericYAxis Name="yAxis1" LabelLocation="AxisLabelsLocation.OutsideLeft" Title="Latitude"  MinimumValue="-90" MaximumValue="90"/>
+
+            @* optional axes that provide more context for displayed data *@
+            <IgbNumericXAxis Name="xAxis2" LabelLocation="AxisLabelsLocation.OutsideTop"  Title="Longitude" MinimumValue="-180" MaximumValue="180" />
+            <IgbNumericYAxis Name="yAxis2" LabelLocation="AxisLabelsLocation.OutsideRight" Title="Latitude"  MinimumValue="-90" MaximumValue="90"/>
+
+            <IgbScatterAreaSeries XAxisName="xAxis1"
+                               YAxisName="yAxis1"
+                               DataSource="Data"
+                               XMemberPath="X"
+                               YMemberPath="Y"
+                               ColorMemberPath="Z"
+                               ColorScale="@ColorScale"
+                               ShowDefaultTooltip="true">
+            </IgbScatterAreaSeries>
+
+        </IgbDataChart>
+        }
+    </div>
+</div>
+
+@code {
+
+    private List<SampleScatterPoint> Data;
+    private IgbCustomPaletteColorScale ColorScale;
+
+    protected override void OnInitialized()
+    {
+        IgbDataChartCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartScatterCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartScatterModule.Register(IgniteUIBlazor);
+        IgbDataChartInteractivityModule.Register(IgniteUIBlazor);
+        IgbScatterAreaSeriesModule.Register(IgniteUIBlazor);
+        IgbCustomPaletteColorScaleModule.Register(IgniteUIBlazor);
+
+        this.ColorScale = new IgbCustomPaletteColorScale();
+        this.ColorScale.InterpolationMode = ColorScaleInterpolationMode.InterpolateHSV;
+        this.ColorScale.MinimumValue = - 2;
+        this.ColorScale.MaximumValue = 2;
+        this.ColorScale.Palette = "#8670CB, #4AC4FF, #B5CC2E, #FC8612, #ED4840";
+
+        Data = SampleScatterData.Create();
+
+    }
+}

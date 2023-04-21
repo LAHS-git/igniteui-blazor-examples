@@ -1,0 +1,67 @@
+@page "/samples/charts/category-chart/data-tooltip-formatting-decimals"
+@page "/samples/charts/category-chart-data-tooltip-formatting-decimals"
+@page         "/charts/category-chart/data-tooltip-formatting-decimals"
+@page         "/charts/category-chart-data-tooltip-formatting-decimals"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="legend-title">
+        Highest Grossing Movie Franchises
+    </div>
+
+    <div class="container vertical fill">
+        <IgbCategoryChart
+        Name="chart"
+        @ref="chart"
+        ChartType="CategoryChartType.Column"
+        DataSource="HighestGrossingMovies"
+        ToolTipType="ToolTipType.Data"
+        DataToolTipUnitsText="B"
+        DataToolTipValueFormatMode="DataLegendValueMode.Decimal"
+        DataToolTipValueFormatMinFractions="2"
+        XAxisInterval="1"
+        YAxisTitle="Billions of U.S. Dollars"
+        YAxisTitleLeftMargin="10"
+        YAxisTitleRightMargin="5"
+        YAxisLabelLeftMargin="0"
+        IsCategoryHighlightingEnabled="true"
+        CrosshairsDisplayMode="CrosshairsDisplayMode.None"
+        HighlightingMode="SeriesHighlightingMode.FadeOthersSpecific"
+        HighlightingBehavior="SeriesHighlightingBehavior.NearestItemsAndSeries">
+        </IgbCategoryChart>
+
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbLegendModule.Register(IgniteUIBlazor);
+        IgbCategoryChartModule.Register(IgniteUIBlazor);
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var chart = this.chart;
+
+    }
+
+    private IgbCategoryChart chart;
+
+    private HighestGrossingMovies _highestGrossingMovies = null;
+    public HighestGrossingMovies HighestGrossingMovies
+    {
+        get
+        {
+            if (_highestGrossingMovies == null)
+            {
+                _highestGrossingMovies = new HighestGrossingMovies();
+            }
+            return _highestGrossingMovies;
+        }
+    }
+
+}

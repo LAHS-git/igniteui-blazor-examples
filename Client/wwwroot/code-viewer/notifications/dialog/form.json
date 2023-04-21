@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/notifications/dialog/form/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <IgbButton onclick=\"dialog.show()\" Variant=@ButtonVariant.Contained>Show Dialog</IgbButton>\n    <IgbDialog id=\"dialog\" Title=\"Login\">\n        <IgbForm id=\"form\" method=\"dialog\">\n            <IgbInput Label=\"Username\">\n                <span slot=\"prefix\">\n                    <IgbIcon @ref=\"@UsernameIconRef\" IconName=\"username\" Collection=\"material\"></IgbIcon>\n                </span>\n            </IgbInput>\n            <br>\n            <IgbInput type=\"password\" Label=\"Password\">\n                <span slot=\"prefix\">\n                    <IgbIcon @ref=\"@PasswordIconRef\" IconName=\"password\" Collection=\"material\"></IgbIcon>\n                </span>\n            </IgbInput>\n            <br>\n            <div style=\"display: flex; justify-content: flex-end;\">\n                <IgbButton DisplayType=\"ButtonBaseType.Reset\" Variant=@ButtonVariant.Flat>Reset</IgbButton>\n                <IgbButton DisplayType=\"ButtonBaseType.Submit\" Variant=@ButtonVariant.Flat>Submit</IgbButton>\n            </div>\n        </IgbForm>\n\n        <div slot=\"footer\">\n            <igc-button>Create an account</igc-button>\n        </div>\n    </IgbDialog>\n</div>\n\n@code {\n    \n    private IgbIcon UsernameIconRef { get; set; }\n    private IgbIcon PasswordIconRef { get; set; }\n\n    protected override async Task OnAfterRenderAsync(bool firstRender)\n    {\n        if (firstRender && this.UsernameIconRef != null)\n        {\n            await this.UsernameIconRef.EnsureReady();\n            string usernameIcon = \"<svg width='24px' height='24px' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M15.71,12.71a6,6,0,1,0-7.42,0,10,10,0,0,0-6.22,8.18,1,1,0,0,0,2,.22,8,8,0,0,1,15.9,0,1,1,0,0,0,1,.89h.11a1,1,0,0,0,.88-1.1A10,10,0,0,0,15.71,12.71ZM12,12a4,4,0,1,1,4-4A4,4,0,0,1,12,12Z'/></svg>\";\n            await this.UsernameIconRef.RegisterIconFromTextAsync(\"username\", usernameIcon, \"material\");\n        }\n\n        if (firstRender && this.PasswordIconRef != null)\n        {\n            await this.PasswordIconRef.EnsureReady();\n            string passwordIcon = \"<svg width='24px' height='24px' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M13.0151 13.6556C14.8093 14.3587 16.9279 13.9853 18.3777 12.5355C20.3304 10.5829 20.3304 7.41709 18.3777 5.46447C16.4251 3.51184 13.2593 3.51184 11.3067 5.46447C9.85687 6.91426 9.48353 9.03288 10.1866 10.8271M12.9964 13.6742L6.82843 19.8422L4.2357 19.6065L4 17.0138L10.168 10.8458M15.5493 8.31568V8.29289' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' /></svg>\";\n            await this.PasswordIconRef.RegisterIconFromTextAsync(\"password\", passwordIcon, \"material\");\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/notifications/dialog/form/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\n\n// required for registering IgniteUIBlazor\nusing IgniteUI.Blazor.Controls;\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n\n            // registering Infragistics Blazor\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbButtonModule),\n                typeof(IgbDialogModule),\n                typeof(IgbFormModule),\n                typeof(IgbIconModule),\n                typeof(IgbInputModule)\n\n   );\n\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/notifications/dialog/form/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

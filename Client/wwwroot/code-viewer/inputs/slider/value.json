@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/slider/value/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<style>\nigc-slider,\nigc-range-slider {\npadding: 30px 30px  0px 30px;\n}\n\n.value-container {\npadding-left: 30px;\ndisplay: flex;\n}\n\n.slider-label {\nwhite-space: pre;\n}\n</style>\n\n<div class=\"container sample center\">\n    <IgbSlider Value=@ValueInt Change=OnChange\n        >\n    </IgbSlider>\n    <div class=\"value-container\">\n        <span class=\"slider-label\">Value: @ValueInt</span>\n    </div>\n\n    <IgbRangeSlider Lower=@LowerInt Upper=@UpperInt Change=OnRangeChange>\n    </IgbRangeSlider>\n    <div class=\"value-container\">\n        <span class=\"slider-label\">Lower: @LowerInt, </span>\n        <span class=\"slider-label\">Upper: @UpperInt</span>\n    </div>\n</div>\n\n@code {\n    \n    private double ValueInt = 40;\n    private double LowerInt = 20;\n    private double UpperInt = 70;\n\n    private void OnChange(IgbNumberEventArgs e)\n    {\n        if(e != null)\n        {\n            ValueInt = e.Detail;\n        }\n    }\n\n    private void OnRangeChange(IgbRangeSliderValueEventArgs e)\n    {\n        if(e.Detail != null && !double.IsNaN(e.Detail.Lower) && !double.IsNaN(e.Detail.Upper))\n        {\n            LowerInt = e.Detail.Lower;\n            UpperInt = e.Detail.Upper;\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/slider/value/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbSliderModule),\n                typeof(IgbRangeSliderModule)\n    );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/slider/value/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

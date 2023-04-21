@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/selection/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"options horizontal\" >\n        <div class=\"options vertical\">\n            <span class=\"legend-title\">Global Electricity Demand by Energy Use</span>\n            <div class=\"legend\">\n                <IgbItemLegend @ref=\"Legend\" Orientation=\"LegendOrientation.Horizontal\"/>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"container relative\">\n        <div class=\"container-overlay\">\n\n            <IgbDoughnutChart Height=\"100%\" Width=\"100%\"\n                           @ref=\"Chart\"\n                           AllowSliceSelection=\"true\" InnerExtent=\"0.6\"\n                           SliceClick=\"OnSliceClick\"\n                           SelectedSliceStroke=\"White\"\n                           SelectedSliceFill=\"Gray\"\n                           SelectedSliceStrokeThickness=\"1\"\n                           SelectedSliceOpacity=\"0.75\">\n                <IgbRingSeries DataSource=\"Data\"\n                            LabelMemberPath=\"Summary\"\n                            LabelsPosition=\"LabelsPosition.OutsideEnd\"\n                            LabelExtent=\"30\"\n                            ValueMemberPath=\"MarketShare\"\n                            LegendLabelMemberPath=\"Category\"\n                            RadiusFactor=\"0.6\"\n                            StartAngle=\"30\">\n                </IgbRingSeries>\n            </IgbDoughnutChart>\n\n            <div class=\"overlay-center\" style=\"line-height: 1.1\">\n                <label class=\"options-label\" style=\"font-size: 1.2rem;\"> @SelectedSliceLabel </label>\n                <label class=\"options-value\" style=\"font-size: 2.2rem;\"> @SelectedSliceValue </label>\n            </div>\n        </div>\n    </div>\n</div>\n\n@code {\n\n    public List<DataItem> Data;\n    public string SelectedSliceLabel;\n    public string SelectedSliceValue;\n    public IgbItemLegend Legend;\n    public IgbDoughnutChart Chart;\n\n    protected override void OnInitialized()\n    {\n\n        this.Data = new List<DataItem>();\n        this.Data.Add(new DataItem { MarketShare = 37, Category = \"Cooling\", });\n        this.Data.Add(new DataItem { MarketShare = 25, Category = \"Residential\", });\n        this.Data.Add(new DataItem { MarketShare = 12, Category = \"Heating\", });\n        this.Data.Add(new DataItem { MarketShare = 11, Category = \"Lighting\", });\n        this.Data.Add(new DataItem { MarketShare = 15, Category = \"Other\", });\n\n        this.SelectedSliceValue = this.Data[0].MarketShare + \"%\";\n        this.SelectedSliceLabel = this.Data[0].Category;\n    }\n\n    public class DataItem\n    {\n        public string Category { get; set; }\n        public double MarketShare { get; set; }\n        public string Summary { get { return Category + \" \" + MarketShare + \"%\"; } }\n    }\n\n    protected override void OnAfterRender(bool firstRender)\n    {\n        if (Chart != null && Legend != null && !firstRender)\n            this.Chart.ActualSeries[0].Legend = Legend;\n\n    }\n\n    protected void OnSliceClick(IgbSliceClickEventArgs e)\n    {\n        if (e.IsSelected)\n        {\n            this.SelectedSliceLabel = this.Data[e.Index].Category;\n            this.SelectedSliceValue = this.Data[e.Index].MarketShare + \"%\";\n        }\n        else\n        {\n            this.SelectedSliceLabel = \"No Selection\";\n            this.SelectedSliceValue = \"0%\";\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/selection/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbItemLegendModule),\n                typeof(IgbDoughnutChartModule),\n                typeof(IgbRingSeriesModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/selection/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

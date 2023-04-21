@@ -1,0 +1,84 @@
+@page "/samples/charts/category-chart/axis-titles"
+@page "/samples/charts/category-chart-axis-titles"
+@page         "/charts/category-chart/axis-titles"
+@page         "/charts/category-chart-axis-titles"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="legend-title">
+        Renewable Electricity Generated
+    </div>
+    <div class="legend">
+        <IgbLegend
+        Name="Legend"
+        @ref="legend"
+        Orientation="LegendOrientation.Horizontal">
+        </IgbLegend>
+
+    </div>
+
+    <div class="container vertical fill">
+        <IgbCategoryChart
+        Name="chart"
+        @ref="chart"
+        DataSource="CountryRenewableElectricity"
+        IncludedProperties="@(new string[] { "Year", "Europe", "China", "America" })"
+        ChartType="CategoryChartType.Line"
+        IsHorizontalZoomEnabled="false"
+        IsVerticalZoomEnabled="false"
+        ComputedPlotAreaMarginMode="ComputedPlotAreaMarginMode.Series"
+        XAxisTitle="Year"
+        XAxisTitleTextColor="gray"
+        XAxisTitleTextStyle="10pt 'Titillium Web'"
+        XAxisTitleAngle="0"
+        YAxisTitle="Trillions of Watt-hours (Twh)"
+        YAxisTitleTextColor="gray"
+        YAxisTitleTextStyle="10pt 'Titillium Web'"
+        YAxisTitleAngle="90"
+        YAxisTitleLeftMargin="5">
+        </IgbCategoryChart>
+
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbLegendModule.Register(IgniteUIBlazor);
+        IgbCategoryChartModule.Register(IgniteUIBlazor);
+
+    }
+
+    private Action BindElements { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var legend = this.legend;
+        var chart = this.chart;
+
+        this.BindElements = () => {
+            chart.Legend = this.legend;
+        };
+        this.BindElements();
+
+    }
+
+    private IgbLegend legend;
+    private IgbCategoryChart chart;
+
+    private CountryRenewableElectricity _countryRenewableElectricity = null;
+    public CountryRenewableElectricity CountryRenewableElectricity
+    {
+        get
+        {
+            if (_countryRenewableElectricity == null)
+            {
+                _countryRenewableElectricity = new CountryRenewableElectricity();
+            }
+            return _countryRenewableElectricity;
+        }
+    }
+
+}

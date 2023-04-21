@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/pyramid-chart/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"options vertical\">\n        <span class=\"legend-title\">Population Demographic of Africa by Age</span>\n        <div class=\"legend\">\n            <IgbLegend @ref=\"Legend\" Orientation=\"LegendOrientation.Horizontal\" />\n        </div>\n    </div>\n\n    <div class=\"container horizontal\" >\n         <IgbDataChart Height=\"100%\" Width=\"100%\"  @ref=\"Chart1\"\n                    IsHorizontalZoomEnabled=\"false\" GridMode=\"GridMode.BeforeSeries\"\n                    IsVerticalZoomEnabled=\"false\">\n             <IgbNumericXAxis  Name=\"xAxis\" Title=\"Males (Millions)\" IsInverted=\"true\" />\n             <IgbCategoryYAxis Name=\"yAxis\" Label=\"Age\" DataSource=\"Data\" Gap=\"0.4\" Interval=\"1\"\n                            LabelLocation=\"AxisLabelsLocation.OutsideRight\"\n                            LabelTextColor=\"Transparent\" LabelExtent=\"10\" />\n             <IgbBarSeries XAxisName=\"xAxis\"\n                        YAxisName=\"yAxis\" Brush=\"#1885F7\" Outline=\"#1885F7\"\n                        DataSource=\"Data\"\n                        ValueMemberPath=\"Male\" Title=\"Males\"\n                        ShowDefaultTooltip=\"true\"\n                        IsTransitionInEnabled=\"true\"\n                        IsHighlightingEnabled=\"true\">\n             </IgbBarSeries>\n         </IgbDataChart>\n         <IgbDataChart Height=\"100%\" Width=\"100%\" @ref=\"Chart2\"\n                    IsHorizontalZoomEnabled=\"false\" GridMode=\"GridMode.BeforeSeries\"\n                    IsVerticalZoomEnabled=\"false\">\n             <IgbNumericXAxis  Name=\"xAxis\" Title=\"Female (Millions)\" IsInverted=\"false\"   />\n             <IgbCategoryYAxis Name=\"yAxis\" Label=\"Age\" DataSource=\"Data\" Gap=\"0.4\" Interval=\"1\"\n                            LabelLocation=\"AxisLabelsLocation.OutsideLeft\"\n                            LabelHorizontalAlignment=\"HorizontalAlignment.Center\"\n                            LabelRightMargin=\"5\" LabelLeftMargin=\"0\"/>\n             <IgbBarSeries XAxisName=\"xAxis\"\n                        YAxisName=\"yAxis\" Brush=\"#D93EF4\" Outline=\"#D93EF4\"\n                        DataSource=\"Data\"\n                        ValueMemberPath=\"Female\" Title=\"Females\"\n                        ShowDefaultTooltip=\"true\"\n                        IsTransitionInEnabled=\"true\"\n                        IsHighlightingEnabled=\"true\">\n             </IgbBarSeries>\n         </IgbDataChart>\n    </div>\n</div>\n\n@code {\n\n    private IgbDataChart Chart1;\n    private IgbDataChart Chart2;\n    private IgbLegend Legend;\n\n    private List<Population> Data = new List<Population>();\n\n    protected override void OnInitialized()\n    {\n\n        var rand = new Random();\n        for (int i = 0; i <= 80; i += 5)\n        {\n            var variant = 2 + Math.Abs(rand.Next(1, 5) / 10.0);\n            var population = new Population();\n            population.Age = i;\n            population.Male =    Math.Abs(190 - (i * variant)) / 5.0;\n            population.Female =  Math.Abs(190 - (i * variant)) / 5.0;\n            this.Data.Add(population);\n        }\n    }\n\n    public class Population\n    {\n        public double Male { get; set; }\n        public double Female { get; set; }\n        public int Age { get; set; }\n    }\n\n    protected override void OnAfterRender(bool firstRender)\n    {\n        if (this.Chart1 != null && this.Legend != null && !firstRender) {\n            this.Chart1.Legend = this.Legend;\n        }\n\n        if (this.Chart2 != null && this.Legend != null && !firstRender) {\n            this.Chart2.Legend = this.Legend;\n        }\n    }\n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/pyramid-chart/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                 typeof(IgbDataChartCoreModule),\n                 typeof(IgbDataChartCategoryCoreModule),\n                 typeof(IgbDataChartCategoryModule),\n                 typeof(IgbDataChartVerticalCategoryModule),\n                 typeof(IgbDataChartInteractivityModule),\n                 typeof(IgbLegendModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/pyramid-chart/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

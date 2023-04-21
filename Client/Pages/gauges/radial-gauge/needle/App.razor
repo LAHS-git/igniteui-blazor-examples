@@ -1,0 +1,41 @@
+@page "/samples/gauges/radial-gauge/needle"
+@page "/samples/gauges/radial-gauge-needle"
+@page         "/gauges/radial-gauge/needle"
+@page         "/gauges/radial-gauge-needle"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="container vertical">
+        <IgbRadialGauge Height="100%" Width="100%"
+                     IsNeedleDraggingEnabled="true"
+                     IsNeedleDraggingConstrained="true"
+                     NeedleShape="RadialGaugeNeedleShape.NeedleWithBulb"
+                     NeedleBrush="DodgerBlue"
+                     NeedleOutline="DodgerBlue"
+                     NeedleEndExtent="0.475"
+                     NeedleStrokeThickness="1"
+
+                     NeedlePivotShape="RadialGaugePivotShape.CircleOverlay"
+                     NeedlePivotBrush="#9F9FA0"
+                     NeedlePivotOutline="#9F9FA0"
+                     NeedlePivotWidthRatio="0.2"
+                     NeedlePivotStrokeThickness="1"
+
+                     Value="50"
+                     MinimumValue="0"
+                     MaximumValue="80"
+                     Interval="10">
+        </IgbRadialGauge>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbRadialGaugeModule.Register(IgniteUIBlazor);
+
+    }
+
+}

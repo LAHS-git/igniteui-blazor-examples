@@ -1,0 +1,45 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/column-chart-styling/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"options vertical\">\n        <span class=\"legend-title\">Annual Percentage Change in Energy Generation in 2019</span>\n        <div class=\"legend\">\n            <IgbLegend @ref=\"Legend\" Orientation=\"LegendOrientation.Horizontal\" />\n        </div>\n    </div>\n    <div class=\"container vertical\">\n        <IgbDataChart Height=\"100%\" Width=\"100%\"\n                   Legend=\"Legend\"\n                   IsHorizontalZoomEnabled=\"false\"\n                   IsVerticalZoomEnabled=\"false\">\n\n            <IgbCategoryXAxis Name=\"xAxis\" DataSource=\"Data\" Label=\"Location\" MajorStrokeThickness=\"1\" MajorStroke=\"LightGray\" Interval=\"1\"\n                           CrossingAxisName=\"yAxis\" CrossingValue=\"0\" Gap=\".5\"/>\n            <IgbNumericYAxis Name=\"yAxis\" MinimumValue=\"-20\" MaximumValue=\"30\" Interval=\"10\"/>\n\n            <IgbColumnSeries XAxisName=\"xAxis\" YAxisName=\"yAxis\" DataSource=\"Data\" ValueMemberPath=\"Solar\" Title=\"Solar\"\n                          MarkerTemplateScript=\"onColumnChartStylingMarkerTemplate\" ShowDefaultTooltip=\"true\"/>\n            <IgbColumnSeries XAxisName=\"xAxis\" YAxisName=\"yAxis\" DataSource=\"Data\" ValueMemberPath=\"Coal\" Title=\"Coal\"\n                          MarkerTemplateScript=\"onColumnChartStylingMarkerTemplate\" ShowDefaultTooltip=\"true\"/>\n            <IgbColumnSeries XAxisName=\"xAxis\" YAxisName=\"yAxis\" DataSource=\"Data\" ValueMemberPath=\"Hydro\" Title=\"Hydro\"\n                          MarkerTemplateScript=\"onColumnChartStylingMarkerTemplate\" ShowDefaultTooltip=\"true\"/>\n            <IgbColumnSeries XAxisName=\"xAxis\" YAxisName=\"yAxis\" DataSource=\"Data\" ValueMemberPath=\"Wind\" Title=\"Wind\"\n                          MarkerTemplateScript=\"onColumnChartStylingMarkerTemplate\" ShowDefaultTooltip=\"true\"/>\n            <IgbColumnSeries XAxisName=\"xAxis\" YAxisName=\"yAxis\" DataSource=\"Data\" ValueMemberPath=\"Nuclear\" Title=\"Nuclear\"\n                          MarkerTemplateScript=\"onColumnChartStylingMarkerTemplate\" ShowDefaultTooltip=\"true\"/>\n\n            <IgbCategoryHighlightLayer />\n\n            <IgbCategoryToolTipLayer />\n\n        </IgbDataChart>\n    </div>\n</div>\n\n@code {\n    \n\n    private IgbLegend _Legend;\n    private IgbLegend Legend\n    {\n        get { return _Legend; }\n        set { _Legend = value; StateHasChanged(); }\n    }\n\n    private List<EnergyChangeInfo> Data = new EnergyChangeData();\n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/column-chart-styling/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbDataChartCoreModule),\n                typeof(IgbDataChartCategoryCoreModule),\n                typeof(IgbDataChartCategoryModule),\n                typeof(IgbDataChartInteractivityModule),\n                typeof(IgbColumnSeriesModule),\n                typeof(IgbLegendModule)\n);\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/column-chart-styling/Services/EnergyChangeData.cs",
+    "content": "﻿using System.Collections.Generic;\n\nnamespace Infragistics.Samples\n{\n    public class EnergyChangeInfo\n    {\n        public string Location { get; set; }\n        public double Solar { get; set; }\n        public double Coal { get; set; }\n        public double Hydro { get; set; }\n        public double Wind { get; set; }\n        public double Nuclear { get; set; }\n    }\n\n    public class EnergyChangeData : List<EnergyChangeInfo>\n    {\n        public EnergyChangeData()\n        {\n            Add(new EnergyChangeInfo { Location = \"World\", Solar = 23, Coal = -1, Hydro = 1, Wind = 12, Nuclear = 3 });\n            Add(new EnergyChangeInfo { Location = \"China\", Solar = 26, Coal = 2, Hydro = 5, Wind = 10, Nuclear = 18 });\n            Add(new EnergyChangeInfo { Location = \"U.S.\", Solar = 15, Coal = -15, Hydro = -7, Wind = 10, Nuclear = 1 });\n            Add(new EnergyChangeInfo { Location = \"EU\", Solar = 11, Coal = -12, Hydro = -2, Wind = 14, Nuclear = -1 });\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/column-chart-styling/wwwroot/ColumnChartStyling.js",
+    "content": "﻿function onColumnChartStylingMarkerTemplate(o, e) {\r\n\r\n    let style = { text: \"black\" };\r\n    let size = 12;\r\n\r\n    return {\r\n        measure: function (measureInfo) {\r\n            const data = measureInfo.data;\r\n            const context = measureInfo.context;\r\n            let value = \"0.00\";\r\n            let item = data.item;\r\n            if (item != null) {\r\n                value = item.Solar.toString();\r\n            }\r\n            const height = context.measureText(\"M\").width;\r\n            const width = context.measureText(value).width;\r\n            measureInfo.width = width;\r\n            measureInfo.height = height + size;\r\n        },\r\n        render: function (renderInfo) {\r\n            const item = renderInfo.data.item;\r\n            const series = renderInfo.data.series;\r\n\r\n            const valuePath = series.valueColumn.propertyName;\r\n\r\n            var value = 0;\r\n\r\n            switch (valuePath) {\r\n                case \"Solar\":\r\n                    value = item.Solar;\r\n                    break;\r\n                case \"Coal\":\r\n                    value = item.Coal;\r\n                    break;\r\n                case \"Hydro\":\r\n                    value = item.Hydro;\r\n                    break;\r\n                case \"Wind\":\r\n                    value = item.Wind;\r\n                    break;\r\n                case \"Nuclear\":\r\n                    value = item.Nuclear;\r\n                    break;\r\n            }\r\n\r\n            const ctx = renderInfo.context;\r\n            let x = renderInfo.xPosition;\r\n            let y = renderInfo.yPosition;\r\n\r\n            if (renderInfo.isHitTestRender) {\r\n                ctx.fillStyle = renderInfo.data.actualItemBrush.fill;\r\n\r\n                let width = renderInfo.availableWidth;\r\n                let height = renderInfo.availableHeight;\r\n\r\n                ctx.fillRect(x - (width / 2), y - (height), renderInfo.availableWidth, renderInfo.availableHeight);\r\n                return;\r\n            }\r\n\r\n            let xOffset = 20;\r\n            let yOffset = 10;\r\n\r\n            ctx.font = '8pt Verdana';\r\n            ctx.textBaseline = 'top';\r\n            ctx.fillStyle = style.text;\r\n\r\n            if (value < 0) {\r\n                ctx.fillText(value + \"%\", x - (xOffset / 2), y + (yOffset ));\r\n            }\r\n            else {\r\n                ctx.fillText(value + \"%\", x - (xOffset / 2), y - (yOffset * 2));\r\n            }\r\n        }\r\n    }\r\n}\r\n\r\nigRegisterScript(\"onColumnChartStylingMarkerTemplate\", onColumnChartStylingMarkerTemplate, true);",
+    "isMain": true,
+    "fileExtension": "js",
+    "fileHeader": "js"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/column-chart-styling/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

@@ -1,0 +1,115 @@
+@page "/samples/charts/data-chart/callout-layer-styling"
+@page "/samples/charts/data-chart-callout-layer-styling"
+@page         "/charts/data-chart/callout-layer-styling"
+@page         "/charts/data-chart-callout-layer-styling"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="legend-title">
+        Renewable Electricity Generated
+    </div>
+
+    <div class="container vertical fill">
+        <IgbDataChart
+        ShouldAutoExpandMarginForInitialLabels="true"
+        ComputedPlotAreaMarginMode="ComputedPlotAreaMarginMode.Series"
+        Name="chart"
+        @ref="chart">
+            <IgbCategoryXAxis
+            Name="xAxis"
+            @ref="xAxis"
+            DataSource="CountryRenewableElectricity"
+            Label="Year">
+            </IgbCategoryXAxis>
+
+            <IgbNumericYAxis
+            Name="yAxis"
+            @ref="yAxis"
+            Title="TWh"
+            LabelLocation="AxisLabelsLocation.OutsideRight">
+            </IgbNumericYAxis>
+
+            <IgbLineSeries
+            Name="LineSeries1"
+            @ref="lineSeries1"
+            XAxisName="xAxis"
+            YAxisName="yAxis"
+            DataSource="CountryRenewableElectricity"
+            ValueMemberPath="America">
+            </IgbLineSeries>
+
+            <IgbCalloutLayer
+            Name="CalloutLayer1"
+            @ref="calloutLayer1"
+            DataSource="CountryRenewableCallouts"
+            XMemberPath="Index"
+            YMemberPath="Value"
+            LabelMemberPath="Label"
+            CalloutLeaderBrush="black"
+            CalloutOutline="black"
+            CalloutBackground="orange"
+            CalloutTextColor="black"
+            CalloutStrokeThickness="2">
+            </IgbCalloutLayer>
+
+        </IgbDataChart>
+
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbDataChartCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartCategoryModule.Register(IgniteUIBlazor);
+        IgbDataChartAnnotationModule.Register(IgniteUIBlazor);
+        IgbDataChartInteractivityModule.Register(IgniteUIBlazor);
+        IgbAnnotationLayerProxyModule.Register(IgniteUIBlazor);
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var chart = this.chart;
+        var xAxis = this.xAxis;
+        var yAxis = this.yAxis;
+        var lineSeries1 = this.lineSeries1;
+        var calloutLayer1 = this.calloutLayer1;
+
+    }
+
+    private IgbDataChart chart;
+    private IgbCategoryXAxis xAxis;
+    private IgbNumericYAxis yAxis;
+    private IgbLineSeries lineSeries1;
+    private IgbCalloutLayer calloutLayer1;
+
+    private CountryRenewableElectricity _countryRenewableElectricity = null;
+    public CountryRenewableElectricity CountryRenewableElectricity
+    {
+        get
+        {
+            if (_countryRenewableElectricity == null)
+            {
+                _countryRenewableElectricity = new CountryRenewableElectricity();
+            }
+            return _countryRenewableElectricity;
+        }
+    }
+
+    private CountryRenewableCallouts _countryRenewableCallouts = null;
+    public CountryRenewableCallouts CountryRenewableCallouts
+    {
+        get
+        {
+            if (_countryRenewableCallouts == null)
+            {
+                _countryRenewableCallouts = new CountryRenewableCallouts();
+            }
+            return _countryRenewableCallouts;
+        }
+    }
+
+}

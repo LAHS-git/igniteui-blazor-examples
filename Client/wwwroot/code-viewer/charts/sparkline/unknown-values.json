@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/sparkline/unknown-values/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"options vertical\">\n        <IgbPropertyEditorPanel\n\n        DescriptionType=\"Sparkline\"\n        IsHorizontal=\"true\"\n        IsWrappingEnabled=\"true\"\n        Name=\"propertyEditorPanel1\"\n        @ref=\"propertyEditorPanel1\">\n            <IgbPropertyEditorPropertyDescription\n            PropertyPath=\"UnknownValuePlotting\"\n            Name=\"UnknownValuePlottingEditor\"\n            @ref=\"unknownValuePlottingEditor\"\n            Label=\"Unknown Value Plotting\"\n            ShouldOverrideDefaultEditor=\"true\"\n            ValueType=\"PropertyEditorValueType.EnumValue\"\n            DropDownNames=\"@(new string[] { \"LinearInterpolate\", \"DontPlot\" })\"\n            DropDownValues=\"@(new string[] { \"LinearInterpolate\", \"DontPlot\" })\"\n            PrimitiveValue=\"@(\"LinearInterpolate\")\">\n            </IgbPropertyEditorPropertyDescription>\n\n        </IgbPropertyEditorPanel>\n\n    </div>\n\n    <div class=\"container vertical fill\">\n        <IgbSparkline\n        Name=\"chart\"\n        @ref=\"chart\"\n        DataSource=\"SparklineUnknownData\"\n        DisplayType=\"SparklineDisplayType.Area\"\n        LabelMemberPath=\"Label\"\n        ValueMemberPath=\"Value\"\n        UnknownValuePlotting=\"UnknownValuePlotting.LinearInterpolate\">\n        </IgbSparkline>\n\n    </div>\n</div>\n\n@code {\n    \n\n    private Action BindElements { get; set; }\n\n    protected override async Task OnAfterRenderAsync(bool firstRender)\n    {\n        var propertyEditorPanel1 = this.propertyEditorPanel1;\n        var unknownValuePlottingEditor = this.unknownValuePlottingEditor;\n        var chart = this.chart;\n\n        this.BindElements = () => {\n            propertyEditorPanel1.Target = this.chart;\n        };\n        this.BindElements();\n\n    }\n\n    private IgbPropertyEditorPanel propertyEditorPanel1;\n    private IgbPropertyEditorPropertyDescription unknownValuePlottingEditor;\n    private IgbSparkline chart;\n\n    private SparklineUnknownData _sparklineUnknownData = null;\n    public SparklineUnknownData SparklineUnknownData\n    {\n        get\n        {\n            if (_sparklineUnknownData == null)\n            {\n                _sparklineUnknownData = new SparklineUnknownData();\n            }\n            return _sparklineUnknownData;\n        }\n    }\n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/sparkline/unknown-values/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbInputModule),\n                typeof(IgbPropertyEditorPanelModule),\n                typeof(IgbSparklineModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/sparkline/unknown-values/SparklineUnknownData.cs",
+    "content": "using System;\nusing System.Collections.Generic;\npublic class SparklineUnknownDataItem\n{\n    public double Label { get; set; }\n    public double Value { get; set; }\n}\n\npublic class SparklineUnknownData\n    : List<SparklineUnknownDataItem>\n{\n    public SparklineUnknownData()\n    {\n        this.Add(new SparklineUnknownDataItem()\n        {\n            Label = 4,\n            Value = 4\n        });\n        this.Add(new SparklineUnknownDataItem()\n        {\n            Label = 5,\n            Value = 5\n        });\n        this.Add(new SparklineUnknownDataItem()\n        {\n            Label = 2,\n            Value = double.NaN\n        });\n        this.Add(new SparklineUnknownDataItem()\n        {\n            Label = 7,\n            Value = 7\n        });\n        this.Add(new SparklineUnknownDataItem()\n        {\n            Label = -1,\n            Value = -1\n        });\n        this.Add(new SparklineUnknownDataItem()\n        {\n            Label = 3,\n            Value = 3\n        });\n        this.Add(new SparklineUnknownDataItem()\n        {\n            Label = -2,\n            Value = -2\n        });\n        this.Add(new SparklineUnknownDataItem()\n        {\n            Label = 5,\n            Value = double.NaN\n        });\n        this.Add(new SparklineUnknownDataItem()\n        {\n            Label = 2,\n            Value = 2\n        });\n        this.Add(new SparklineUnknownDataItem()\n        {\n            Label = 6,\n            Value = 6\n        });\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/sparkline/unknown-values/wwwroot/index.css",
+    "content": "/*\r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

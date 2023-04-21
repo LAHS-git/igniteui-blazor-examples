@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/slider/styling/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<style>\nigc-slider {\npadding: 30px 30px  0px 30px;\n}\n\nigc-range-slider {\npadding: 30px 30px  0px 30px;\n}\n\nigc-slider::part(thumb) {\nbackground: #28a745;\n}\n\nigc-slider::part(thumb):focus {\nbackground: #28a745;\nbox-shadow: 0 0 0 2px #28a74694;\n}\n\nigc-slider::part(fill) {\ndisplay: block;\nbackground: #28a745;\n}\n\nigc-range-slider::part(thumb) {\nbackground: orange;\n}\n\nigc-range-slider::part(thumb):focus {\nbackground: navy;\nbox-shadow: 0 0 0 2px orange;\n}\n\nigc-range-slider::part(track) {\ndisplay: block;\nbackground: navy;\n}\n\nigc-range-slider::part(thumb-label-inner) {\nbackground: navy;\n}\n</style>\n\n<div class=\"container sample center\">\n    <div class=\"slider-container\">\n        <span class=\"slider-label\">Slider</span>\n        <IgbSlider Value=\"40\">\n        </IgbSlider>\n    </div>\n    <div class=\"slider-container\">\n        <span class=\"slider-label\"> Range Slider</span>\n        <IgbRangeSlider Lower=\"20\" Upper=\"70\">\n        </IgbRangeSlider>\n    </div>\n</div>\n\n@code {\n    \n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/slider/styling/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbSliderModule),\n                typeof(IgbRangeSliderModule)\n   );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/slider/styling/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

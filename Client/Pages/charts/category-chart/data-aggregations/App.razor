@@ -1,0 +1,112 @@
+@page "/samples/charts/category-chart/data-aggregations"
+@page "/samples/charts/category-chart-data-aggregations"
+@page         "/charts/category-chart/data-aggregations"
+@page         "/charts/category-chart-data-aggregations"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="options vertical">
+        <IgbPropertyEditorPanel
+
+        DescriptionType="CategoryChart"
+        IsHorizontal="true"
+        IsWrappingEnabled="true"
+        Name="propertyEditorPanel1"
+        @ref="propertyEditorPanel1">
+            <IgbPropertyEditorPropertyDescription
+            PropertyPath="InitialGroups"
+            Name="InitialGroups"
+            @ref="initialGroups"
+            Label="Initial Groups"
+            ValueType="PropertyEditorValueType.StringValue">
+            </IgbPropertyEditorPropertyDescription>
+
+            <IgbPropertyEditorPropertyDescription
+            PropertyPath="InitialSummaries"
+            Name="InitialSummaries"
+            @ref="initialSummaries"
+            Label="Initial Summaries"
+            ValueType="PropertyEditorValueType.StringValue">
+            </IgbPropertyEditorPropertyDescription>
+
+            <IgbPropertyEditorPropertyDescription
+            PropertyPath="GroupSorts"
+            Name="GroupSorts"
+            @ref="groupSorts"
+            Label="Sort Groups"
+            ValueType="PropertyEditorValueType.StringValue">
+            </IgbPropertyEditorPropertyDescription>
+
+        </IgbPropertyEditorPanel>
+
+    </div>
+    <div class="legend-title">
+        Renewable Electricity Generated
+    </div>
+
+    <div class="container vertical fill">
+        <IgbCategoryChart
+        Name="chart"
+        @ref="chart"
+        DataSource="SalesData"
+        ChartType="CategoryChartType.Column"
+        IsHorizontalZoomEnabled="false"
+        IsVerticalZoomEnabled="false"
+        CrosshairsDisplayMode="CrosshairsDisplayMode.None"
+        InitialGroups="Country"
+        InitialSummaries="Sum(Sales) as Sales"
+        GroupSorts="Sales Desc">
+        </IgbCategoryChart>
+
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbInputModule.Register(IgniteUIBlazor);
+        IgbPropertyEditorPanelModule.Register(IgniteUIBlazor);
+        IgbLegendModule.Register(IgniteUIBlazor);
+        IgbCategoryChartModule.Register(IgniteUIBlazor);
+
+    }
+
+    private Action BindElements { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var propertyEditorPanel1 = this.propertyEditorPanel1;
+        var initialGroups = this.initialGroups;
+        var initialSummaries = this.initialSummaries;
+        var groupSorts = this.groupSorts;
+        var chart = this.chart;
+
+        this.BindElements = () => {
+            propertyEditorPanel1.Target = this.chart;
+        };
+        this.BindElements();
+
+    }
+
+    private IgbPropertyEditorPanel propertyEditorPanel1;
+    private IgbPropertyEditorPropertyDescription initialGroups;
+    private IgbPropertyEditorPropertyDescription initialSummaries;
+    private IgbPropertyEditorPropertyDescription groupSorts;
+    private IgbCategoryChart chart;
+
+    private SalesData _salesData = null;
+    public SalesData SalesData
+    {
+        get
+        {
+            if (_salesData == null)
+            {
+                _salesData = new SalesData();
+            }
+            return _salesData;
+        }
+    }
+
+}

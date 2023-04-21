@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/menus/nav-drawer/styling/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div id=\"root\" style=\"display: flex;\">\n        <style>\n            igc-nav-drawer::part(base) {\n                background: #2d313a;\n            }\n\n            igc-nav-drawer-item::part(base) {\n                color: #fff;\n            }\n\n            igc-nav-drawer-item::part(base):hover {\n                background-color: #3D4149;\n            }\n\n            igc-nav-drawer-item[active]::part(base) {\n                background: #f3c03e;\n                color: #2c2c2c\n            }\n\n            igc-nav-drawer-header-item {\n                color: #f3c03e\n            }\n        </style>\n\n        <IgbNavDrawer id=\"navDrawer\" Open=\"true\" style=\"position: relative\">\n            <IgbNavDrawerHeaderItem>\n                Sample Drawer\n            </IgbNavDrawerHeaderItem>\n\n            <IgbNavDrawerItem>\n                <IgbIcon @ref=\"@HomeIcon\" slot=\"icon\" Collection=\"material\" IconName=\"home\" />\n                <span slot=\"content\">Home</span>\n            </IgbNavDrawerItem>\n\n            <IgbNavDrawerItem>\n                <IgbIcon slot=\"icon\" Collection=\"material\" IconName=\"search\" />\n                <span slot=\"content\">Search</span>\n            </IgbNavDrawerItem>\n        </IgbNavDrawer>\n    </div>\n</div>\n\n@code {\n    \n\n    public IgbIcon HomeIcon { get; set; }\n\n    protected override async Task OnAfterRenderAsync(bool firstRender)\n    {\n        if (firstRender && this.HomeIcon != null)\n        {\n            await this.HomeIcon.EnsureReady();\n            await this.HomeIcon.RegisterIconAsync(\"home\", \"https://unpkg.com/material-design-icons@3.0.1/action/svg/production/ic_home_24px.svg\", \"material\");\n            await this.HomeIcon.RegisterIconAsync(\"search\", \"https://unpkg.com/material-design-icons@3.0.1/action/svg/production/ic_search_24px.svg\", \"material\");\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/menus/nav-drawer/styling/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbNavDrawerModule),\n                typeof(IgbNavDrawerItemModule),\n                typeof(IgbNavDrawerHeaderItemModule),\n                typeof(IgbIconModule)\n   );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/menus/nav-drawer/styling/wwwroot/drawer-styling.css",
+    "content": "igc-nav-drawer::part(base) {\r\n    background: #2d313a;\r\n}\r\n\r\nigc-nav-drawer-item::part(base) {\r\n    color: #fff;\r\n}\r\n\r\nigc-nav-drawer-item::part(base):hover {\r\n    background-color: #3D4149;\r\n}\r\n\r\nigc-nav-drawer-item[active]::part(base) {\r\n    background: #f3c03e;\r\n    color: #2c2c2c\r\n}\r\n\r\nigc-nav-drawer-header-item {\r\n    color: #f3c03e\r\n}\r\n",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/menus/nav-drawer/styling/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

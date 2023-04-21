@@ -1,0 +1,21 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/layouts/expansion-panel/usage/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <IgbExpansionPanel>\n        <h1 slot=\"title\">Golden Retriever</h1>\n        <h3 slot=\"subtitle\">Medium-large gun dog</h3>\n        <span>\n            The Golden Retriever is a medium-large gun dog that retrieves shot waterfowl, such as ducks\n            and upland game birds, during hunting and shooting parties.[3] The name \"retriever\" refers to the breed's ability\n            to retrieve shot game undamaged due to their soft mouth. Golden retrievers have an instinctive love of water, and\n            are easy to train to basic or advanced obedience standards.\n        </span>\n    </IgbExpansionPanel>\n</div>",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/layouts/expansion-panel/usage/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing Microsoft.AspNetCore.Components.Web;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\nusing BlazorClientApp;\n\nvar builder = WebAssemblyHostBuilder.CreateDefault(args);\nbuilder.RootComponents.Add<App>(\"app\");\nbuilder.RootComponents.Add<HeadOutlet>(\"head::after\");\n\nbuilder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n\nbuilder.Services.AddIgniteUIBlazor(\n    typeof(IgbIconModule),\n    typeof(IgbDateTimeInputModule),\n    typeof(IgbRadioGroupModule),\n    typeof(IgbRadioModule),\n    typeof(IgbRatingModule),\n    typeof(IgbAccordionModule),\n    typeof(IgbExpansionPanelModule),\n    typeof(IgbCheckboxModule),\n    typeof(IgbSliderModule),\n    typeof(IgbRangeSliderModule)\n);\n\nawait builder.Build().RunAsync();",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  }
+]
+}

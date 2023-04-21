@@ -1,0 +1,83 @@
+@page "/samples/grids/grid/editing-lifecycle"
+@page "/samples/grids/grid-editing-lifecycle"
+@page         "/grids/grid/editing-lifecycle"
+@page         "/grids/grid-editing-lifecycle"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+@inject IJSRuntime JS
+
+<div class="container vertical">
+
+    <div class="container vertical fill">
+        <IgbGrid
+        AutoGenerate="false"
+        Data="NwindData"
+        Name="grid"
+        @ref="grid"
+        Id="grid"
+        RowEditable="true"
+        PrimaryKey="ProductID"
+        RenderedScript="WebGridRendered"
+        RowEditEnterScript="WebGridRowEditEnter"
+        RowEditScript="WebGridRowEdit"
+        RowEditDoneScript="WebGridRowEditDone"
+        RowEditExitScript="WebGridRowEditExit"
+        CellEditEnterScript="WebGridCellEditEnter"
+        CellEditScript="WebGridCellEdit"
+        CellEditDoneScript="WebGridCellEditDone"
+        CellEditExitScript="WebGridCellEditExit">
+            <IgbColumn
+            Field="ProductName"
+            Header="Product Name">
+            </IgbColumn>
+
+            <IgbColumn
+            Field="UnitPrice"
+            Header="Unit Price">
+            </IgbColumn>
+
+            <IgbColumn
+            Field="UnitsInStock"
+            Header="Units In Stock">
+            </IgbColumn>
+
+            <IgbColumn
+            Field="Ordered">
+            </IgbColumn>
+
+        </IgbGrid>
+
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbGridModule.Register(IgniteUIBlazor);
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var grid = this.grid;
+
+    }
+
+    private IgbGrid grid;
+
+    private NwindData _nwindData = null;
+    public NwindData NwindData
+    {
+        get
+        {
+            if (_nwindData == null)
+            {
+                _nwindData = new NwindData();
+            }
+            return _nwindData;
+        }
+    }
+
+}

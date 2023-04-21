@@ -1,0 +1,60 @@
+@page "/samples/charts/financial-chart/data-tooltip-formatting-currency"
+@page "/samples/charts/financial-chart-data-tooltip-formatting-currency"
+@page         "/charts/financial-chart/data-tooltip-formatting-currency"
+@page         "/charts/financial-chart-data-tooltip-formatting-currency"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+
+    <div class="container vertical fill">
+        <IgbFinancialChart
+        Name="chart"
+        @ref="chart"
+        ChartType="FinancialChartType.Candle"
+        ToolTipType="ToolTipType.Data"
+        DataSource="MultipleStocks"
+        DataToolTipIncludedColumns="@(new string[] { "Close", "Change", "Value" })"
+        DataToolTipExcludedColumns="@(new string[] { "High", "Low", "Open", "Volume" })"
+        DataToolTipLabelDisplayMode="DataLegendLabelMode.Hidden"
+        DataToolTipValueFormatMode="DataLegendValueMode.Currency"
+        DataToolTipValueFormatCulture="en-GB"
+        DataToolTipHeaderFormatTime="DataLegendHeaderTimeMode.None"
+        ZoomSliderType="FinancialChartZoomSliderType.None">
+        </IgbFinancialChart>
+
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbFinancialChartModule.Register(IgniteUIBlazor);
+        IgbDataChartInteractivityModule.Register(IgniteUIBlazor);
+        IgbLegendModule.Register(IgniteUIBlazor);
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var chart = this.chart;
+
+    }
+
+    private IgbFinancialChart chart;
+
+    private MultipleStocks _multipleStocks = null;
+    public MultipleStocks MultipleStocks
+    {
+        get
+        {
+            if (_multipleStocks == null)
+            {
+                MultipleStocks.Fetch().ContinueWith((t) => {_multipleStocks = t.Result;  StateHasChanged(); });
+            }
+            return _multipleStocks;
+        }
+    }
+
+}

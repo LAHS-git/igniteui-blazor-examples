@@ -1,0 +1,60 @@
+@page "/samples/charts/category-chart/step-area-single-source"
+@page "/samples/charts/category-chart-step-area-single-source"
+@page         "/charts/category-chart/step-area-single-source"
+@page         "/charts/category-chart-step-area-single-source"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="legend-title">
+        Renewable Electricity Generated
+    </div>
+
+    <div class="container vertical fill">
+        <IgbCategoryChart
+        DataSource="CountryRenewableElectricity"
+        IncludedProperties="@(new string[] { "Year", "Europe" })"
+        Name="chart"
+        @ref="chart"
+        ChartType="CategoryChartType.StepArea"
+        IsTransitionInEnabled="true"
+        IsHorizontalZoomEnabled="false"
+        IsVerticalZoomEnabled="false"
+        YAxisTitle="TWh"
+        CrosshairsSnapToData="true">
+        </IgbCategoryChart>
+
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbCategoryChartModule.Register(IgniteUIBlazor);
+        IgbDataChartInteractivityModule.Register(IgniteUIBlazor);
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var chart = this.chart;
+
+    }
+
+    private IgbCategoryChart chart;
+
+    private CountryRenewableElectricity _countryRenewableElectricity = null;
+    public CountryRenewableElectricity CountryRenewableElectricity
+    {
+        get
+        {
+            if (_countryRenewableElectricity == null)
+            {
+                _countryRenewableElectricity = new CountryRenewableElectricity();
+            }
+            return _countryRenewableElectricity;
+        }
+    }
+
+}

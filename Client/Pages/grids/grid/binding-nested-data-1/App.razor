@@ -1,0 +1,106 @@
+@page "/samples/grids/grid/binding-nested-data-1"
+@page "/samples/grids/grid-binding-nested-data-1"
+@page         "/grids/grid/binding-nested-data-1"
+@page         "/grids/grid-binding-nested-data-1"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+@inject IJSRuntime JS
+
+<div class="container vertical">
+
+    <div class="container vertical fill">
+        <IgbGrid
+        AutoGenerate="false"
+        Data="EmployeesNestedData"
+        Name="grid"
+        @ref="grid"
+        Id="grid">
+            <IgbColumn
+            Header="Name"
+            Field="Name"
+            Width="15%">
+            </IgbColumn>
+
+            <IgbColumn
+            Field="Title"
+            Header="Title"
+            Width="15%">
+            </IgbColumn>
+
+            <IgbColumn
+            Field="Salary"
+            Header="Salary"
+            Width="10%">
+            </IgbColumn>
+
+            <IgbColumn
+            Field="Employees"
+            Header="Employees"
+            BodyTemplateScript="WebGridNestedDataCellTemplate"
+            Width="30%"
+            Name="column1"
+            @ref="column1">
+            </IgbColumn>
+
+            <IgbColumn
+            Field="City"
+            Header="City"
+            Width="15%">
+            </IgbColumn>
+
+            <IgbColumn
+            Field="Country"
+            Header="Country"
+            Width="15%">
+            </IgbColumn>
+
+            <IgbColumn
+            Field="Age"
+            Header="Age"
+            Width="10%">
+            </IgbColumn>
+
+            <IgbColumn
+            Field="HireDate"
+            Header="Hire Date"
+            DataType="GridColumnDataType.Date">
+            </IgbColumn>
+
+        </IgbGrid>
+
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbGridModule.Register(IgniteUIBlazor);
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var grid = this.grid;
+        var column1 = this.column1;
+
+    }
+
+    private IgbGrid grid;
+    private IgbColumn column1;
+
+    private EmployeesNestedData _employeesNestedData = null;
+    public EmployeesNestedData EmployeesNestedData
+    {
+        get
+        {
+            if (_employeesNestedData == null)
+            {
+                _employeesNestedData = new EmployeesNestedData();
+            }
+            return _employeesNestedData;
+        }
+    }
+
+}

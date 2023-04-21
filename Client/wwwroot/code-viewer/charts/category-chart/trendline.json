@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/trendline/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"options horizontal\">\n        <span class=\"options-label\">Trend Line Type: </span>\n        <select @bind=\"@ChartTrendline\">\n            <option>@TrendLineType.LinearFit</option>\n            <option>@TrendLineType.QuadraticFit</option>\n            <option>@TrendLineType.CubicFit</option>\n            <option>@TrendLineType.QuarticFit</option>\n            <option>@TrendLineType.QuinticFit</option>\n            <option>@TrendLineType.LogarithmicFit</option>\n            <option>@TrendLineType.ExponentialFit</option>\n            <option>@TrendLineType.PowerLawFit</option>\n            <option>@TrendLineType.SimpleAverage</option>\n            <option>@TrendLineType.ExponentialAverage</option>\n            <option>@TrendLineType.ModifiedAverage</option>\n            <option>@TrendLineType.CumulativeAverage</option>\n            <option>@TrendLineType.WeightedAverage</option>\n            <option>@TrendLineType.None</option>\n        </select>\n    </div>\n    <div class=\"container vertical\">\n        @if (Data != null)\n        {\n            <IgbCategoryChart Height=\"100%\" Width=\"100%\"\n                           DataSource=\"Data\"\n                           ChartType=\"CategoryChartType.Point\"\n                           ChartTitle=\"Average Temperature over 2000 Years\"\n                           IsTransitionInEnabled=\"true\"\n                           TrendLineType=\"@ChartTrendline\"\n                           TrendLineThickness=\"2\"\n                           TrendLinePeriod=\"20\"\n                           YAxisMinimumValue=\"0\"\n                           YAxisTitle=\"Temperature (C)\"\n                           XAxisTitle=\"Years\"\n                           IncludedProperties=\"@IncludedProps\"\n                           ExcludedProperties=\"@ExcludedProps\">\n            </IgbCategoryChart>\n        }\n    </div>\n</div>\n\n@code {\n\n    private List<Temperature> Data;\n\n    private string[] IncludedProps = new string[] { \"Value\", \"Label\" };\n    private string[] ExcludedProps = new string[] { \"High\", \"Low\" };\n\n    private TrendLineType ChartTrendline = TrendLineType.LinearFit;\n\n    protected override void OnInitialized()\n    {\n\n        this.Data = TemperatureHistory.Generate(30, 0, 2000);\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/trendline/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbLegendModule),\n                typeof(IgbInputModule),\n                typeof(IgbDataChartInteractivityModule),\n                typeof(IgbPropertyEditorPanelModule),\n                typeof(IgbCategoryChartModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/trendline/Services/TemperatureHistory.cs",
+    "content": "using System;\nusing System.Collections.Generic;\n\nnamespace Infragistics.Samples\n{\n    public class Temperature\n    {\n        public string Label { get; set; }\n        public double Value { get; set; }\n        public double Low { get; set; }\n        public double High { get; set; }\n    }\n\n    public static class TemperatureHistory\n    {\n        public static List<Temperature> Generate(double startValue, double startYear, double endYear)\n        {\n            var data = new List<Temperature>();\n            var value = startValue;\n            var random = new Random();\n            for (var i = startYear; i <= endYear; i++)\n            {\n                value += (random.NextDouble() - 0.5) * 0.5;\n                var high = value + (random.NextDouble() * 2);\n                var low = value - (random.NextDouble() * 2);\n                var v = Math.Abs(Math.Round(value * 10) / 10);\n                var h = Math.Abs(Math.Round(high * 10) / 10);\n                var l = Math.Abs(Math.Round(low * 10) / 10);\n                data.Add(new Temperature { Label = i.ToString(), Value = v, High = h, Low = l, });\n            }\n            return data;\n        }\n\n        public static string ToShortString(double largeValue)\n        {\n            double roundValue;\n\n            if (largeValue >= 1000000)\n            {\n                roundValue = Math.Round(largeValue / 100000) / 10;\n                return roundValue + \"m\";\n            }\n            if (largeValue >= 1000)\n            {\n                roundValue = Math.Round(largeValue / 100) / 10;\n                return roundValue + \"k\";\n            }\n\n            roundValue = Math.Round(largeValue);\n            return roundValue + \"\";\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/trendline/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

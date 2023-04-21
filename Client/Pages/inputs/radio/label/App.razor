@@ -1,0 +1,29 @@
+@page "/samples/inputs/radio/label"
+@page "/samples/inputs/radio-label"
+@page         "/inputs/radio/label"
+@page         "/inputs/radio-label"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <IgbRadioGroup>
+        <IgbRadio LabelPosition="RadioLabelPosition.Before" Value="apple">Apple</IgbRadio>
+        <div style="display: flex; align-items: center">
+            <span id="radio-label">Label</span>
+            <IgbRadio LabelPosition="RadioLabelPosition.Before"
+                       AriaLabelledby="radio-label"
+                       Value="orange"></IgbRadio>
+        </div>
+    </IgbRadioGroup>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbRadioGroupModule.Register(IgniteUIBlazor);
+        IgbRadioModule.Register(IgniteUIBlazor);
+
+    }
+
+}

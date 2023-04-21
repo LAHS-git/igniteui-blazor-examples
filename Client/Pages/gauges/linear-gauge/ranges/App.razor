@@ -1,0 +1,41 @@
+@page "/samples/gauges/linear-gauge/ranges"
+@page "/samples/gauges/linear-gauge-ranges"
+@page         "/gauges/linear-gauge/ranges"
+@page         "/gauges/linear-gauge-ranges"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="container vertical">
+        <IgbLinearGauge Height="80px" Width="100%"
+                     MinimumValue="0" Value="50"
+                     MaximumValue="100" Interval="10"
+                     RangeBrushes="#A4BD29, #F86232"
+                     RangeOutlines="#A4BD29, #F86232">
+            <IgbLinearGraphRange StartValue="0"
+                              EndValue="50"
+                              InnerStartExtent="0.075"
+                              InnerEndExtent="0.075"
+                              OuterStartExtent="0.25"
+                              OuterEndExtent="0.4">
+            </IgbLinearGraphRange>
+            <IgbLinearGraphRange StartValue="50"
+                              EndValue="100"
+                              InnerStartExtent="0.075"
+                              InnerEndExtent="0.075"
+                              OuterStartExtent="0.4"
+                              OuterEndExtent="0.55">
+            </IgbLinearGraphRange>
+        </IgbLinearGauge>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbLinearGaugeModule.Register(IgniteUIBlazor);
+
+    }
+
+}

@@ -1,0 +1,21 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/layouts/expansion-panel/styling/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<style>\nigc-expansion-panel {\nwidth: 500px;\nbackground-color: #18203b;\ncolor: white;\nborder-radius: 8px;\n}\n\nigc-button::part(base) {\ncolor: #18203b;\n}\n\nigc-button::part(base)::before {\nbackground-color: #ffd351;\n}\n\nigc-expansion-panel::part(indicator) {\ncolor: #ffd351;\n}\n\nigc-expansion-panel::part(header) {\nbackground-color: #18203b;\n}\n\nigc-expansion-panel::part(title),\nigc-expansion-panel::part(subtitle) {\ncolor: #ffd351;\n}\n\nigc-button {\ndisplay: flex;\nmargin-top: 16px;\n}\n\na {\ntext-decoration: none;\n}\n\nimg {\nwidth: 100%;\nmargin-bottom: 8px;\nborder-radius: 8px;\n}\n</style>\n\n<div class=\"container vertical\">\n    <IgbExpansionPanel IndicatorPosition=\"ExpansionPanelIndicatorPosition.End\">\n        <h1 slot=\"title\">Golden Retriever</h1>\n        <h3 slot=\"subtitle\">Medium-large gun dog</h3>\n        <img height=\"100\" src=\"https://i.ibb.co/6ZdY7cn/Untitled-design-3.png\" alt=\"\">\n        <span>\n            The Golden Retriever is a medium-large gun dog that retrieves shot waterfowl, such as ducks\n            and upland game birds, during hunting and shooting parties.[3] The name \"retriever\" refers to the breed's ability\n            to retrieve shot game undamaged due to their soft mouth. Golden retrievers have an instinctive love of water, and\n            are easy to train to basic or advanced obedience standards.\n        </span>\n        <IgbButton href=\"https://en.wikipedia.org/wiki/Golden_Retriever\" Variant=\"ButtonVariant.Contained\" Target=\"ButtonBaseTarget._blank\">Read more</IgbButton>\n    </IgbExpansionPanel>\n</div>",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/layouts/expansion-panel/styling/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing Microsoft.AspNetCore.Components.Web;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\nusing BlazorClientApp;\n\nvar builder = WebAssemblyHostBuilder.CreateDefault(args);\nbuilder.RootComponents.Add<App>(\"app\");\nbuilder.RootComponents.Add<HeadOutlet>(\"head::after\");\n\nbuilder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n\nbuilder.Services.AddIgniteUIBlazor(\n    typeof(IgbIconModule),\n    typeof(IgbDateTimeInputModule),\n    typeof(IgbRadioGroupModule),\n    typeof(IgbRadioModule),\n    typeof(IgbRatingModule),\n    typeof(IgbAccordionModule),\n    typeof(IgbExpansionPanelModule),\n    typeof(IgbCheckboxModule),\n    typeof(IgbSliderModule),\n    typeof(IgbRangeSliderModule)\n);\n\nawait builder.Build().RunAsync();",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  }
+]
+}

@@ -1,0 +1,125 @@
+@page "/samples/charts/data-chart/range-series"
+@page "/samples/charts/data-chart-range-series"
+@page         "/charts/data-chart/range-series"
+@page         "/charts/data-chart-range-series"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+
+    <div class="options vertical">
+
+        <span class="legend-title">Legend: </span>
+        <div class="legend">
+            <IgbLegend @ref="Legend" Orientation="LegendOrientation.Horizontal" />
+        </div>
+
+        <div class="overlay-right" >
+            <div class="options horizontal" >
+                <label class="options-label">Range Series: </label>
+                <select value=@SeriesType @onchange="OnSeriesTypeChanged">
+                    <option>Area</option>
+                    <option>Column</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="container vertical">
+        @if (Data != null)
+        {
+        <IgbDataChart Height="100%" Width="100%"
+                   ChartTitle="Annual Temperature Changes"
+                   IsHorizontalZoomEnabled="false"
+                   IsVerticalZoomEnabled="false"
+                   Legend="Legend"
+                   @ref="Chart">
+
+            <IgbCategoryXAxis Name="xAxis"
+                           Label="Year"
+                           Gap="0.5"
+                           DataSource="Data" />
+            <IgbNumericYAxis Name="yAxis"
+                          MinimumValue="20"
+                          Title="Temperature (�C)" />
+
+            @if (SeriesType == "Area")
+            {
+                <IgbRangeAreaSeries HighMemberPath="High"
+                                 LowMemberPath="Low"
+                                 XAxisName="xAxis"
+                                 YAxisName="yAxis"
+                                 Thickness="0"
+                                 DataSource="Data"
+                                 Title="Weather Forecast">
+
+                </IgbRangeAreaSeries>
+            }
+            @if (SeriesType == "Column")
+            {
+                <IgbRangeColumnSeries HighMemberPath="High"
+                                 LowMemberPath="Low"
+                                 XAxisName="xAxis"
+                                 YAxisName="yAxis"
+                                 Thickness="0"
+                                 DataSource="Data"
+                                 Title="Weather Forecast">
+
+                </IgbRangeColumnSeries>
+            }
+        </IgbDataChart>
+        }
+    </div>
+</div>
+
+@code {
+
+    private List<SampleRangeItem> Data;
+    private IgbDataChart _Chart;
+    private IgbDataChart Chart
+    {
+        get { return _Chart; }
+        set
+        {
+            _Chart = value;
+            SeriesType = "Column";
+            StateHasChanged();
+        }
+    }
+
+    private IgbLegend legend;
+    private IgbLegend Legend
+    {
+        get { return legend; }
+        set
+        {
+            legend = value;
+            StateHasChanged();
+        }
+    }
+    private string seriesType;
+    private string SeriesType
+    {
+        get { return seriesType; }
+        set
+        {
+            seriesType = value;
+            StateHasChanged();
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        IgbDataChartCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartCategoryModule.Register(IgniteUIBlazor);
+
+        Data = SampleRangeData.Create();
+    }
+
+    public void OnSeriesTypeChanged(ChangeEventArgs e)
+    {
+        var selectedSeries = e.Value.ToString();
+        SeriesType = selectedSeries;
+    }
+}

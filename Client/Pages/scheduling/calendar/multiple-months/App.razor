@@ -1,0 +1,24 @@
+@page "/samples/scheduling/calendar/multiple-months"
+@page "/samples/scheduling/calendar-multiple-months"
+@page         "/scheduling/calendar/multiple-months"
+@page         "/scheduling/calendar-multiple-months"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div style="width: 37.5rem; border: 1px solid gainsboro;">
+        <IgbCalendar VisibleMonths="2" HideOutsideDays="true"/>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbInputModule.Register(IgniteUIBlazor);
+        IgbPropertyEditorPanelModule.Register(IgniteUIBlazor);
+        IgbCalendarModule.Register(IgniteUIBlazor);
+
+    }
+
+}

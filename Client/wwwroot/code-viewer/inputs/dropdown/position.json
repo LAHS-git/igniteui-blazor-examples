@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/dropdown/position/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<style>\nigc-dropdown::part(list) {\nheight: 200px;\n}\n\n.center {\nalign-items: center;\njustify-content: center;\n}\n</style>\n\n<div class=\"container sample center\">\n    <IgbDropdown @ref=\"DropDownRef\" Distance=\"5\" Change=OnChange Placement=@placement>\n        <IgbButton slot=\"target\">Option</IgbButton>\n        <IgbDropdownItem Value=\"top\">top</IgbDropdownItem>\n        <IgbDropdownItem Value=\"bottom\">bottom</IgbDropdownItem>\n\n        @*<IgbDropdownItem>@DropdownPlacement.Top</IgbDropdownItem>\n        <IgbDropdownItem>@DropdownPlacement.TopStart</IgbDropdownItem>\n        <IgbDropdownItem>@DropdownPlacement.TopEnd</IgbDropdownItem>\n        <IgbDropdownItem>@DropdownPlacement.Bottom</IgbDropdownItem>\n        <IgbDropdownItem>@DropdownPlacement.BottomStart</IgbDropdownItem>\n        <IgbDropdownItem>@DropdownPlacement.BottomEnd</IgbDropdownItem>\n        <IgbDropdownItem>@DropdownPlacement.Left</IgbDropdownItem>\n        <IgbDropdownItem>@DropdownPlacement.LeftStart</IgbDropdownItem>\n        <IgbDropdownItem>@DropdownPlacement.LeftEnd</IgbDropdownItem>\n        <IgbDropdownItem>@DropdownPlacement.Right</IgbDropdownItem>\n        <IgbDropdownItem>@DropdownPlacement.RightStart</IgbDropdownItem>\n        <IgbDropdownItem>@DropdownPlacement.RightEnd</IgbDropdownItem>*@\n    </IgbDropdown>\n</div>\n\n@code {\n    \n\n    IgbDropdown DropDownRef { get; set; }\n    DropdownPlacement placement { get; set; }\n\n    private void OnChange(IgbDropdownItemComponentEventArgs e)\n    {\n        //Console.WriteLine(e.Detail.Value);\n\n        //this.placement = e.Detail.Value;\n        if(e.Detail.Value == \"top\")\n        {\n            //TODO\n        }\n\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/dropdown/position/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbDropdownModule),\n                typeof(IgbDropdownItemModule),\n                typeof(IgbButtonModule)\n  );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/dropdown/position/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

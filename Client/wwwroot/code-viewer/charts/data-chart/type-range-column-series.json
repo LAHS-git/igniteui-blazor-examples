@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/type-range-column-series/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"container vertical\">\n\n        <IgbDataChart Height=\"100%\" Width=\"100%\"\n                   Subtitle=\"Average Temperatures between 1900-2020\"\n                   SubtitleTopMargin=\"10\"\n                   IsHorizontalZoomEnabled=\"false\"\n                   IsVerticalZoomEnabled=\"false\">\n\n            <IgbCategoryXAxis Name=\"xAxis\" Label=\"Year\" DataSource=\"Data\"/>\n            <IgbNumericYAxis  Name=\"yAxis\" Title=\"Temperature (in Celcius)\"\n                           TitleLeftMargin=\"10\" />\n\n            <IgbRangeColumnSeries XAxisName=\"xAxis\" Title=\"Temperature\"\n                               YAxisName=\"yAxis\"\n                               DataSource=\"Data\"\n                               LowMemberPath=\"Low\"\n                               HighMemberPath=\"High\"\n                               ShowDefaultTooltip=\"true\"\n                               IsTransitionInEnabled=\"true\"\n                               Thickness=\"1\"\n                               Brush=\"rgba(129, 66, 245, 0.7)\"\n                               Outline=\"rgba(129, 66, 245, 0.9)\">\n            </IgbRangeColumnSeries>\n        </IgbDataChart>\n\n    </div>\n</div>\n\n@code {\n\n    private List<SampleRangeItem> Data;\n\n    protected override void OnInitialized()\n    {\n\n        Data = SampleRangeData.Create();\n    }\n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/type-range-column-series/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbDataChartCoreModule),\n                typeof(IgbDataChartCategoryCoreModule),\n                typeof(IgbDataChartCategoryModule),\n                typeof(IgbDataChartInteractivityModule),\n                typeof(IgbRangeAreaSeriesModule)\n);\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/type-range-column-series/Services/SampleRangeData.cs",
+    "content": "﻿using System;\nusing System.Collections.Generic;\n\nnamespace Infragistics.Samples\n{\n    public class SampleRangeData\n    {\n        public static Random random = new Random();\n\n        public static List<SampleRangeItem> Create()\n        {\n            var data = new List<SampleRangeItem>();\n            var temperature = 25.0;\n\n            for (var i = 1900; i < 2020; i++)\n            {\n                temperature += (random.NextDouble() - 0.485) * 0.5;\n                var low  = (temperature + (random.NextDouble() * 1));\n                var high = (temperature - (random.NextDouble() * 1));\n                var item = new SampleRangeItem();\n                item.Year = i;\n                item.High = Math.Round(low * 10) / 10;\n                item.Low = Math.Round(high * 10) / 10;\n                data.Add(item);\n            }\n            return data;\n        }\n    }\n\n    public class SampleRangeItem\n    {\n        public double High { get; set; }\n        public double Low { get; set; }\n        public int Year { get; set; }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/data-chart/type-range-column-series/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

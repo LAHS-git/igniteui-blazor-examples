@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/legend/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"legend-title\">\n        Global Electricity Demand by Energy Use\n    </div>\n    <div class=\"legend\">\n        <IgbItemLegend\n        Name=\"Legend\"\n        @ref=\"legend\"\n        Orientation=\"LegendOrientation.Horizontal\">\n        </IgbItemLegend>\n\n    </div>\n\n    <div class=\"container vertical fill\">\n        <IgbDoughnutChart\n        Name=\"chart\"\n        @ref=\"chart\"\n        AllowSliceExplosion=\"true\">\n            <IgbRingSeries\n            Name=\"series\"\n            @ref=\"series\"\n            LabelMemberPath=\"Summary\"\n            LabelsPosition=\"LabelsPosition.OutsideEnd\"\n            LabelExtent=\"30\"\n            ValueMemberPath=\"Value\"\n            LegendLabelMemberPath=\"Category\"\n            Outlines=\"white\"\n            RadiusFactor=\"0.6\"\n            StartAngle=\"30\"\n            DataSource=\"EnergyGlobalDemand\">\n            </IgbRingSeries>\n\n        </IgbDoughnutChart>\n\n    </div>\n</div>\n\n@code {\n    \n\n    private Action BindElements { get; set; }\n\n    protected override async Task OnAfterRenderAsync(bool firstRender)\n    {\n        var legend = this.legend;\n        var chart = this.chart;\n        var series = this.series;\n\n        this.BindElements = () => {\n            series.Legend = this.legend;\n        };\n        this.BindElements();\n\n    }\n\n    private IgbItemLegend legend;\n    private IgbDoughnutChart chart;\n    private IgbRingSeries series;\n\n    private EnergyGlobalDemand _energyGlobalDemand = null;\n    public EnergyGlobalDemand EnergyGlobalDemand\n    {\n        get\n        {\n            if (_energyGlobalDemand == null)\n            {\n                _energyGlobalDemand = new EnergyGlobalDemand();\n            }\n            return _energyGlobalDemand;\n        }\n    }\n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/legend/EnergyGlobalDemand.cs",
+    "content": "using System;\nusing System.Collections.Generic;\npublic class EnergyGlobalDemandItem\n{\n    public double Value { get; set; }\n    public string Category { get; set; }\n    public string Summary { get; set; }\n}\n\npublic class EnergyGlobalDemand\n    : List<EnergyGlobalDemandItem>\n{\n    public EnergyGlobalDemand()\n    {\n        this.Add(new EnergyGlobalDemandItem()\n        {\n            Value = 37,\n            Category = @\"Cooling\",\n            Summary = @\"Cooling 37%\"\n        });\n        this.Add(new EnergyGlobalDemandItem()\n        {\n            Value = 25,\n            Category = @\"Residential\",\n            Summary = @\"Residential 25%\"\n        });\n        this.Add(new EnergyGlobalDemandItem()\n        {\n            Value = 12,\n            Category = @\"Heating\",\n            Summary = @\"Heating 12%\"\n        });\n        this.Add(new EnergyGlobalDemandItem()\n        {\n            Value = 11,\n            Category = @\"Lighting\",\n            Summary = @\"Lighting 11%\"\n        });\n        this.Add(new EnergyGlobalDemandItem()\n        {\n            Value = 15,\n            Category = @\"Other\",\n            Summary = @\"Other 15%\"\n        });\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/legend/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbItemLegendModule),\n                typeof(IgbDoughnutChartModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/legend/wwwroot/index.css",
+    "content": "/*\r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

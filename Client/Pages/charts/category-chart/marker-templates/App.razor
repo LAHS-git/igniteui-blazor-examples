@@ -1,0 +1,53 @@
+@page "/samples/charts/category-chart/marker-templates"
+@page "/samples/charts/category-chart-marker-templates"
+@page         "/charts/category-chart/marker-templates"
+@page         "/charts/category-chart-marker-templates"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="options vertical">
+        <span class="legend-title">Percentage Change in Energy Generation in 2019</span>
+        <div class="legend">
+            <IgbLegend @ref="Legend" Orientation="LegendOrientation.Horizontal" />
+        </div>
+    </div>
+
+    <div class="container vertical">
+             <IgbCategoryChart Height="100%" Width="100%"
+                           Legend="Legend"
+                           DataSource="Data"
+                           ChartType="CategoryChartType.Column"
+                           Thickness="2"
+                           IsHorizontalZoomEnabled="false"
+                           IsVerticalZoomEnabled="false"
+                           IsSeriesHighlightingEnabled="true"
+                           YAxisMinimumValue="-20" YAxisMaximumValue="30" YAxisInterval="10"
+                           XAxisMajorStrokeThickness="1" XAxisMajorStroke="LightGray"
+                           SeriesAddedScript="onCategoryChatMarkerStylingSeries">
+                @* note custom marker template is implemented in CategoryChatMarkerStyling.js *@
+            </IgbCategoryChart>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbLegendModule.Register(IgniteUIBlazor);
+        IgbInputModule.Register(IgniteUIBlazor);
+        IgbPropertyEditorPanelModule.Register(IgniteUIBlazor);
+        IgbCategoryChartModule.Register(IgniteUIBlazor);
+
+    }
+
+    private IgbLegend _Legend;
+    private IgbLegend Legend
+    {
+        get { return _Legend; }
+        set { _Legend = value; StateHasChanged(); }
+    }
+
+    private List<EnergyChangeInfo> Data = new EnergyChangeData();
+
+}

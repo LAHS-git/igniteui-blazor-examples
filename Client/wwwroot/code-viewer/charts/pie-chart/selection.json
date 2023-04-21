@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/pie-chart/selection/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"options vertical\">\n        <span class=\"legend-title\">Global Electricity Demand by Energy Use</span>\n        <div class=\"legend\">\n            <IgbItemLegend @ref=\"Legend\" Orientation=\"LegendOrientation.Horizontal\" />\n        </div>\n    </div>\n\n    <div class=\"container vertical\">\n        @if (Data != null)\n        {\n            <IgbPieChart Height=\"calc(100% - 2rem)\" Width=\"calc(100% - 2rem)\"\n                      Legend=\"Legend\"\n                      DataSource=\"Data\"\n                      LegendLabelMemberPath=\"Category\"\n                      LabelMemberPath=\"Summary\"\n                      LabelsPosition=\"LabelsPosition.OutsideEnd\"\n                      LabelExtent=\"30\"\n                      ValueMemberPath=\"MarketShare\"\n                      Outlines=\"#FFFFFF\"\n                      SelectionMode=\"SliceSelectionMode.Multiple\"\n                      SelectedSliceStroke=\"#FFFFFF\"\n                      SelectedSliceFill=\"#8F8F8F\"\n                      SelectedSliceOpacity=\"1.0\"\n                      SelectedSliceStrokeThickness=\"2\"\n                      RadiusFactor=\"0.7\"\n                      StartAngle=\"0\">\n            </IgbPieChart>\n        }\n    </div>\n</div>\n\n@code {\n\n    private List<DataItem> Data;\n\n    private IgbItemLegend _legend;\n    public IgbItemLegend Legend\n    {\n        get { return _legend; }\n        set { _legend = value; StateHasChanged(); }\n    }\n\n    protected override void OnInitialized()\n    {\n\n        this.Data = new List<DataItem>();\n        this.Data.Add(new DataItem { MarketShare = 37, Category = \"Cooling\", });\n        this.Data.Add(new DataItem { MarketShare = 25, Category = \"Residential\", });\n        this.Data.Add(new DataItem { MarketShare = 12, Category = \"Heating\", });\n        this.Data.Add(new DataItem { MarketShare = 11, Category = \"Lighting\", });\n        this.Data.Add(new DataItem { MarketShare = 15, Category = \"Other\", });\n    }\n\n    public class DataItem\n    {\n        public string Category { get; set; }\n        public double MarketShare { get; set; }\n        public string Summary { get { return Category + \" \" + MarketShare + \"%\"; } }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/pie-chart/selection/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbItemLegendModule),\n                typeof(IgbPieChartModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/pie-chart/selection/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

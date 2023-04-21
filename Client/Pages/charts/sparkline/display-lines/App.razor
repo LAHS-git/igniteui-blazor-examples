@@ -1,0 +1,54 @@
+@page "/samples/charts/sparkline/display-lines"
+@page "/samples/charts/sparkline-display-lines"
+@page         "/charts/sparkline/display-lines"
+@page         "/charts/sparkline-display-lines"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+
+    <div class="container vertical fill">
+        <IgbSparkline
+        Name="chart"
+        @ref="chart"
+        DataSource="SparklineMixedData"
+        DisplayType="SparklineDisplayType.Line"
+        LabelMemberPath="Label"
+        ValueMemberPath="Value">
+        </IgbSparkline>
+
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbInputModule.Register(IgniteUIBlazor);
+        IgbPropertyEditorPanelModule.Register(IgniteUIBlazor);
+        IgbSparklineModule.Register(IgniteUIBlazor);
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var chart = this.chart;
+
+    }
+
+    private IgbSparkline chart;
+
+    private SparklineMixedData _sparklineMixedData = null;
+    public SparklineMixedData SparklineMixedData
+    {
+        get
+        {
+            if (_sparklineMixedData == null)
+            {
+                _sparklineMixedData = new SparklineMixedData();
+            }
+            return _sparklineMixedData;
+        }
+    }
+
+}

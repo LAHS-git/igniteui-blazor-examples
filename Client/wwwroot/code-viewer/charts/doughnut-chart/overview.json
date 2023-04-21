@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/overview/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"legend-title\">\n        Market Share of Tech Companies\n    </div>\n\n    <div class=\"container vertical fill\">\n        <IgbDoughnutChart\n        Name=\"chart\"\n        @ref=\"chart\">\n            <IgbRingSeries\n            Name=\"series\"\n            @ref=\"series\"\n            LabelMemberPath=\"Summary\"\n            ValueMemberPath=\"Value\"\n            LegendLabelMemberPath=\"Category\"\n            Outlines=\"white\"\n            DataSource=\"CompanyMarketShares\">\n            </IgbRingSeries>\n\n        </IgbDoughnutChart>\n\n    </div>\n</div>\n\n@code {\n    \n\n    protected override async Task OnAfterRenderAsync(bool firstRender)\n    {\n        var chart = this.chart;\n        var series = this.series;\n\n    }\n\n    private IgbDoughnutChart chart;\n    private IgbRingSeries series;\n\n    private CompanyMarketShares _companyMarketShares = null;\n    public CompanyMarketShares CompanyMarketShares\n    {\n        get\n        {\n            if (_companyMarketShares == null)\n            {\n                _companyMarketShares = new CompanyMarketShares();\n            }\n            return _companyMarketShares;\n        }\n    }\n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/overview/CompanyMarketShares.cs",
+    "content": "using System;\nusing System.Collections.Generic;\npublic class CompanyMarketSharesItem\n{\n    public double Value { get; set; }\n    public string Category { get; set; }\n    public string Summary { get; set; }\n}\n\npublic class CompanyMarketShares\n    : List<CompanyMarketSharesItem>\n{\n    public CompanyMarketShares()\n    {\n        this.Add(new CompanyMarketSharesItem()\n        {\n            Value = 30,\n            Category = @\"Google\",\n            Summary = @\"Google 30%\"\n        });\n        this.Add(new CompanyMarketSharesItem()\n        {\n            Value = 25,\n            Category = @\"Apple\",\n            Summary = @\"Apple 25%\"\n        });\n        this.Add(new CompanyMarketSharesItem()\n        {\n            Value = 20,\n            Category = @\"Microsoft\",\n            Summary = @\"Microsoft 20%\"\n        });\n        this.Add(new CompanyMarketSharesItem()\n        {\n            Value = 15,\n            Category = @\"Samsung\",\n            Summary = @\"Samsung 15%\"\n        });\n        this.Add(new CompanyMarketSharesItem()\n        {\n            Value = 10,\n            Category = @\"Other\",\n            Summary = @\"Other 10%\"\n        });\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/overview/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbLegendModule),\n                typeof(IgbDoughnutChartModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/doughnut-chart/overview/wwwroot/index.css",
+    "content": "/*\r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

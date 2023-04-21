@@ -1,0 +1,23 @@
+@page "/samples/inputs/button/fab"
+@page "/samples/inputs/button-fab"
+@page         "/inputs/button/fab"
+@page         "/inputs/button-fab"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <IgbButton Variant="ButtonVariant.Fab">
+        <span slot="prefix">+</span>
+        Add
+    </IgbButton>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbButtonModule.Register(IgniteUIBlazor);
+
+    }
+
+}

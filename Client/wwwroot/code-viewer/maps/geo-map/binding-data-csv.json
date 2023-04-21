@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/maps/geo-map/binding-data-csv/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n@inject HttpClient Http\n\n<div class=\"container vertical\">\n    <div class=\"container vertical\">\n        <IgbGeographicMap @ref=\"MapRef\" Height=\"100%\" Width=\"100%\" Zoomable=\"true\">\n            <IgbGeographicHighDensityScatterSeries DataSource=\"Data\"\n                    LatitudeMemberPath=\"Lat\"\n                    LongitudeMemberPath=\"Lon\"\n                    HeatMaximumColor=\"Red\"\n                    HeatMinimumColor=\"Black\"\n                    HeatMinimum=\"0\"\n                    HeatMaximum=\"5\"\n                    PointExtent=\"1\"\n                    MouseOverEnabled=\"true\" />\n        </IgbGeographicMap>\n    </div>\n</div>\n\n@code {\n    \n\n    private List<WorldPlaceCsv> Data;\n    public IgbGeographicMap MapRef;\n\n    protected override async Task OnInitializedAsync()\n    {\n        string url = \"https://static.infragistics.com/xplatform/data/UsaCitiesPopulation.csv\";\n        string csv = await Http.GetStringAsync(url);\n        var csvLines = csv.Split(Environment.NewLine);\n        var dataItems = new List<WorldPlaceCsv>();\n\n        for (int i = 1; i < csvLines.Length - 1; i++)\n        {\n            var columns = csvLines[i].Split(\",\");\n            var location = new WorldPlaceCsv() {\n                Lat =  double.Parse(columns[1]),\n                Lon = double.Parse(columns[2]),\n                Name = columns[0],\n                Pop = double.Parse(columns[3])\n            };\n\n            dataItems.Add(location);\n        }\n\n        this.Data = dataItems;\n    }\n\n    protected override void OnAfterRender(bool firstRender)\n    {\n        if (MapRef != null && !firstRender)\n        {\n            var geoRegion = new Rect(-130, 15, new Size(65, 35));\n            MapRef.ZoomToGeographic(geoRegion);\n        }\n    }\n\n    public class WorldPlaceCsv {\n        public string Name { get; set; }\n        public double Lat { get; set; }\n        public double Lon { get; set; }\n        public double Pop { get; set; }\n        public string Country { get; set; }\n        public bool Cap { get; set; }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/maps/geo-map/binding-data-csv/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbGeographicMapModule),\n                typeof(IgbDataChartInteractivityModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/maps/geo-map/binding-data-csv/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

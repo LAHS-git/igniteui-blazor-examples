@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/layouts/card/horizontal/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container sample\" style=\"align-items: center\">\n    <div class=\"card-wrapper\" style=\"max-width: 25rem; min-width: 15.625rem;\">\n        <IgbCard>\n            <div class=\"card-horizontal\" style=\"display: flex; flex-direction: row; flex: 1 1 0%;\">\n                <div>\n                    <IgbCardHeader>\n                        <img slot=\"thumbnail\" src=\"https://static.infragistics.com/xplatform/images/music/rozes.jpg\" width=\"64\" height=\"64\"/>\n                        <h5 slot=\"title\">Rozes</h5>\n                        <h5 slot=\"subtitle\">Under the Grave (2016)</h5>\n                    </IgbCardHeader>\n                    <IgbCardContent>\n                        <p>\n                            As I have always said: I write what's real and what's true,\n                            even if it means throwing myself under the bus.\n                        </p>\n                    </IgbCardContent>\n                </div>\n                <div class=\"divider\" style=\"border-right: 1px solid darkgray;\"></div>\n                <IgbCardActions style=\"justify-content: center;\">\n                    <span class=\"material-icons\">skip_previous</span>\n                    <span class=\"material-icons\">play_arrow</span>\n                    <span class=\"material-icons\">skip_next</span>\n                </IgbCardActions>\n            </div>\n        </IgbCard>\n    </div>\n</div>\n\n@code {\n    \n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/layouts/card/horizontal/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbCardModule)\n   );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/layouts/card/horizontal/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

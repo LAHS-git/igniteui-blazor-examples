@@ -1,0 +1,21 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/editors/date-picker/date-limits/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n        <div class=\"options vertical\">\n        <div class=\"options horizontal\">\n            <label class=\"options-label\">Minimum Date: @MinDate\"</label>\n        </div>\n        <div class=\"options horizontal\">\n            <label class=\"options-label\">Maximum Date: @MaxDate\"</label>\n        </div>\n        </div>\n        <div class=\"container vertical\">\n            <IgbDatePicker @ref=\"DatePicker\" Height=\"60px\" Width=\"220px\"\n                        Value=\"@SelectedDate\"\n                        MinDate=\"@MinDate\"\n                        MaxDate=\"@MaxDate\"\n                        AllowTextInput=\"false\" />\n        </div>\n    </div>\n\n@code {\n    public DateTime SelectedDate { get; set; }\n    public DateTime MinDate { get; set; }\n    public DateTime MaxDate { get; set; }\n    public IgbDatePicker DatePicker { get; set; }\n\n    protected override void OnInitialized()\n    {\n\n        this.SelectedDate = DateTime.Today;\n        var current = DateTime.Today;\n        this.MinDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);\n        this.MaxDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month));\n    }\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/editors/date-picker/date-limits/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(typeof(IgbDatePickerModule));\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  }
+]
+}

@@ -1,0 +1,29 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/linear-progress-indicator/striped/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <style>\n        .progress-container {\n            margin-bottom: 15px;\n        }\n    </style>\n\n    <IgbLinearProgress class=\"progress-container\" Value=100 Variant=@ProgressBaseVariant.Primary/>\n\n    <IgbLinearProgress class=\"progress-container\" Value=100 Variant=@ProgressBaseVariant.Success\n                       Indeterminate=true Striped=true/>\n\n    <IgbLinearProgress Value=100 Variant=@ProgressBaseVariant.Danger LabelFormat=\"Custom Text\"\n                       LabelAlign=@LinearProgressLabelAlign.BottomEnd />\n\n    <IgbLinearProgress class=\"progress-container\" Value=100 Variant=@ProgressBaseVariant.Info Striped=true HideLabel=true />\n\n    <IgbLinearProgress class=\"progress-container\" Value=100 Variant=@ProgressBaseVariant.Warning\n                       LabelAlign=\"@LinearProgressLabelAlign.BottomStart\" />\n</div>\n\n@code {\n    \n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/linear-progress-indicator/striped/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(typeof(IgbLinearProgressModule));\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/inputs/linear-progress-indicator/striped/wwwroot/index.css",
+    "content": "/* \r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

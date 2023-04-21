@@ -1,0 +1,64 @@
+@page "/samples/charts/doughnut-chart/overview"
+@page "/samples/charts/doughnut-chart-overview"
+@page         "/charts/doughnut-chart/overview"
+@page         "/charts/doughnut-chart-overview"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="legend-title">
+        Market Share of Tech Companies
+    </div>
+
+    <div class="container vertical fill">
+        <IgbDoughnutChart
+        Name="chart"
+        @ref="chart">
+            <IgbRingSeries
+            Name="series"
+            @ref="series"
+            LabelMemberPath="Summary"
+            ValueMemberPath="Value"
+            LegendLabelMemberPath="Category"
+            Outlines="white"
+            DataSource="CompanyMarketShares">
+            </IgbRingSeries>
+
+        </IgbDoughnutChart>
+
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbLegendModule.Register(IgniteUIBlazor);
+        IgbDoughnutChartModule.Register(IgniteUIBlazor);
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var chart = this.chart;
+        var series = this.series;
+
+    }
+
+    private IgbDoughnutChart chart;
+    private IgbRingSeries series;
+
+    private CompanyMarketShares _companyMarketShares = null;
+    public CompanyMarketShares CompanyMarketShares
+    {
+        get
+        {
+            if (_companyMarketShares == null)
+            {
+                _companyMarketShares = new CompanyMarketShares();
+            }
+            return _companyMarketShares;
+        }
+    }
+
+}

@@ -1,0 +1,100 @@
+@page "/samples/charts/data-chart/scatter-bubble-chart-single-source"
+@page "/samples/charts/data-chart-scatter-bubble-chart-single-source"
+@page         "/charts/data-chart/scatter-bubble-chart-single-source"
+@page         "/charts/data-chart-scatter-bubble-chart-single-source"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="legend-title">
+        GDP per Capita vs Population
+    </div>
+
+    <div class="container vertical fill">
+        <IgbDataChart
+        Name="chart"
+        @ref="chart">
+            <IgbNumericXAxis
+            IsLogarithmic="true"
+            AbbreviateLargeNumbers="true"
+            Title="Population"
+            Name="xAxis"
+            @ref="xAxis">
+            </IgbNumericXAxis>
+
+            <IgbNumericYAxis
+            IsLogarithmic="false"
+            AbbreviateLargeNumbers="true"
+            Title="GDP per Capita"
+            Name="yAxis"
+            @ref="yAxis">
+            </IgbNumericYAxis>
+
+            <IgbBubbleSeries
+            RadiusMemberPath="Population"
+            XAxisName="xAxis"
+            YAxisName="yAxis"
+            XMemberPath="Population"
+            YMemberPath="GDP"
+            MarkerType="MarkerType.Circle"
+            DataSource="CountryStatsEurope"
+            ShowDefaultTooltip="true"
+            Title="European Countries"
+            Name="BubbleSeries1"
+            @ref="bubbleSeries1">
+            </IgbBubbleSeries>
+
+            <IgbDataToolTipLayer
+            Name="DataToolTipLayer"
+            @ref="dataToolTipLayer">
+            </IgbDataToolTipLayer>
+
+        </IgbDataChart>
+
+    </div>
+
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbNumberAbbreviatorModule.Register(IgniteUIBlazor);
+        IgbDataChartCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartScatterModule.Register(IgniteUIBlazor);
+        IgbDataChartScatterCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartInteractivityModule.Register(IgniteUIBlazor);
+
+    }
+
+    private Action BindElements { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var chart = this.chart;
+        var xAxis = this.xAxis;
+        var yAxis = this.yAxis;
+        var bubbleSeries1 = this.bubbleSeries1;
+        var dataToolTipLayer = this.dataToolTipLayer;
+    }
+
+    private IgbDataChart chart;
+    private IgbNumericXAxis xAxis;
+    private IgbNumericYAxis yAxis;
+    private IgbBubbleSeries bubbleSeries1;
+    private IgbDataToolTipLayer dataToolTipLayer;
+
+    private CountryStatsEurope _countryStatsEurope = null;
+    public CountryStatsEurope CountryStatsEurope
+    {
+        get
+        {
+            if (_countryStatsEurope == null)
+            {
+                _countryStatsEurope = new CountryStatsEurope();
+            }
+            return _countryStatsEurope;
+        }
+    }
+
+}

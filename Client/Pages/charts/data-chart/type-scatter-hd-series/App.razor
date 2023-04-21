@@ -1,0 +1,67 @@
+@page "/samples/charts/data-chart/type-scatter-hd-series"
+@page "/samples/charts/data-chart-type-scatter-hd-series"
+@page         "/charts/data-chart/type-scatter-hd-series"
+@page         "/charts/data-chart-type-scatter-hd-series"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <div class="container vertical">
+
+        <div class="options vertical">
+            <span class="legend-title">Stars Distribution in Milky Way Galaxy</span>
+        </div>
+
+        @if (Data != null)
+        {
+            <IgbDataChart Height="100%" Width="100%"
+                              IsHorizontalZoomEnabled="true"
+                              IsVerticalZoomEnabled="true">
+                <IgbNumericXAxis Name="xAxis"
+                              AbbreviateLargeNumbers="true"
+                              TitleBottomMargin="10"
+                              Title="Plane of Rotation (in Light Years)">
+                </IgbNumericXAxis>
+                <IgbNumericYAxis Name="yAxis"
+                              AbbreviateLargeNumbers="true"
+                              TitleLeftMargin="10"
+                              Title="Vertical Plane (in Light Years)">
+                </IgbNumericYAxis>
+                <IgbHighDensityScatterSeries XAxisName="xAxis"
+                                          YAxisName="yAxis"
+                                          Title="Distribution"
+                                          DataSource="Data"
+                                          XMemberPath="X"
+                                          YMemberPath="Y"
+                                          ShowDefaultTooltip="true"
+                                          MouseOverEnabled="true"
+                                          ProgressiveLoad="true"
+                                          HeatMinimumColor="Black"
+                                          HeatMaximumColor="Yellow"
+                                          HeatMaximum="1"
+                                          HeatMinimum="5"
+                                          Resolution="3">
+                </IgbHighDensityScatterSeries>
+            </IgbDataChart>
+        }
+    </div>
+</div>
+
+@code {
+
+    private List<SampleDensityPoint> Data;
+
+    protected override void OnInitialized()
+    {
+        IgbDataChartScatterCoreModule.Register(IgniteUIBlazor);
+        IgbDataChartScatterModule.Register(IgniteUIBlazor);
+        IgbDataChartInteractivityModule.Register(IgniteUIBlazor);
+        IgbNumberAbbreviatorModule.Register(IgniteUIBlazor);
+        IgbHighDensityScatterSeriesModule.Register(IgniteUIBlazor);
+        IgbNumericYAxisModule.Register(IgniteUIBlazor);
+        IgbNumericXAxisModule.Register(IgniteUIBlazor);
+
+        Data = SampleDensityData.Create();
+    }
+}

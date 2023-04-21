@@ -1,0 +1,37 @@
+{
+ "sampleFiles":
+[
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/axis-options/App.razor",
+    "content": "\n@using IgniteUI.Blazor.Controls\n\n<div class=\"container vertical\">\n    <div class=\"legend-title\">\n        Olympic Medals By Country\n    </div>\n\n    <div class=\"container vertical fill\">\n        <IgbCategoryChart\n        Name=\"chart\"\n        @ref=\"chart\"\n        DataSource=\"OlympicMedalsTopCountries\"\n        ChartType=\"CategoryChartType.Line\"\n        Thickness=\"3\"\n        ComputedPlotAreaMarginMode=\"ComputedPlotAreaMarginMode.Series\"\n        XAxisLabelTextStyle=\"9pt Verdana\"\n        XAxisLabelTopMargin=\"5\"\n        XAxisLabelTextColor=\"gray\"\n        YAxisLabelLocation=\"YAxisLabelLocation.OutsideRight\"\n        YAxisLabelTextStyle=\"9pt Verdana\"\n        YAxisLabelRightMargin=\"0\"\n        YAxisLabelTextColor=\"gray\"\n        XAxisTitle=\"Olympic Games\"\n        XAxisTitleTextColor=\"gray\"\n        XAxisTitleTextStyle=\"10pt Verdana\"\n        XAxisTitleAngle=\"0\"\n        YAxisTitle=\"Total Medals\"\n        YAxisTitleTextStyle=\"10pt Verdana\"\n        YAxisTitleTextColor=\"gray\"\n        YAxisTitleAngle=\"90\"\n        YAxisTitleLeftMargin=\"5\"\n        XAxisTickLength=\"10\"\n        XAxisTickStrokeThickness=\"0.5\"\n        XAxisTickStroke=\"black\"\n        YAxisTickLength=\"10\"\n        YAxisTickStrokeThickness=\"0.5\"\n        YAxisTickStroke=\"black\"\n        YAxisMinimumValue=\"50\"\n        YAxisMaximumValue=\"150\"\n        XAxisInterval=\"1\"\n        XAxisMajorStroke=\"gray\"\n        XAxisMajorStrokeThickness=\"0.5\"\n        YAxisInterval=\"25\"\n        YAxisMajorStroke=\"black\"\n        YAxisMajorStrokeThickness=\"1\"\n        YAxisMinorInterval=\"5\"\n        YAxisMinorStroke=\"gray\"\n        YAxisMinorStrokeThickness=\"0.5\"\n        XAxisGap=\"0.125\"\n        XAxisOverlap=\"0\">\n        </IgbCategoryChart>\n\n    </div>\n</div>\n\n@code {\n    \n\n    protected override async Task OnAfterRenderAsync(bool firstRender)\n    {\n        var chart = this.chart;\n\n    }\n\n    private IgbCategoryChart chart;\n\n    private OlympicMedalsTopCountries _olympicMedalsTopCountries = null;\n    public OlympicMedalsTopCountries OlympicMedalsTopCountries\n    {\n        get\n        {\n            if (_olympicMedalsTopCountries == null)\n            {\n                _olympicMedalsTopCountries = new OlympicMedalsTopCountries();\n            }\n            return _olympicMedalsTopCountries;\n        }\n    }\n\n}",
+    "isMain": true,
+    "fileExtension": "razor",
+    "fileHeader": "razor"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/axis-options/OlympicMedalsTopCountries.cs",
+    "content": "using System;\nusing System.Collections.Generic;\npublic class OlympicMedalsTopCountriesItem\n{\n    public string Year { get; set; }\n    public double America { get; set; }\n    public double China { get; set; }\n    public double Russia { get; set; }\n}\n\npublic class OlympicMedalsTopCountries\n    : List<OlympicMedalsTopCountriesItem>\n{\n    public OlympicMedalsTopCountries()\n    {\n        this.Add(new OlympicMedalsTopCountriesItem()\n        {\n            Year = @\"1996\",\n            America = 148,\n            China = 110,\n            Russia = 95\n        });\n        this.Add(new OlympicMedalsTopCountriesItem()\n        {\n            Year = @\"2000\",\n            America = 142,\n            China = 115,\n            Russia = 91\n        });\n        this.Add(new OlympicMedalsTopCountriesItem()\n        {\n            Year = @\"2004\",\n            America = 134,\n            China = 121,\n            Russia = 86\n        });\n        this.Add(new OlympicMedalsTopCountriesItem()\n        {\n            Year = @\"2008\",\n            America = 131,\n            China = 129,\n            Russia = 65\n        });\n        this.Add(new OlympicMedalsTopCountriesItem()\n        {\n            Year = @\"2012\",\n            America = 135,\n            China = 115,\n            Russia = 77\n        });\n        this.Add(new OlympicMedalsTopCountriesItem()\n        {\n            Year = @\"2016\",\n            America = 146,\n            China = 112,\n            Russia = 88\n        });\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "DATA"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/axis-options/Program.cs",
+    "content": "using System;\nusing System.Net.Http;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing System.Text;\nusing Microsoft.AspNetCore.Components.WebAssembly.Hosting;\nusing Microsoft.Extensions.Configuration;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\nusing IgniteUI.Blazor.Controls; // for registering Ignite UI modules\n\nnamespace Infragistics.Samples\n{\n    public class Program\n    {\n        public static async Task Main(string[] args)\n        {\n            var builder = WebAssemblyHostBuilder.CreateDefault(args);\n            builder.RootComponents.Add<App>(\"app\");\n            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });\n            // registering Ignite UI modules\n            builder.Services.AddIgniteUIBlazor(\n                typeof(IgbCategoryChartModule)\n            );\n            await builder.Build().RunAsync();\n        }\n    }\n}",
+    "isMain": true,
+    "fileExtension": "cs",
+    "fileHeader": "MODULES"
+  },
+  {
+    "hasRelativeAssetsUrls": false,
+    "path": "../../samples/charts/category-chart/axis-options/wwwroot/index.css",
+    "content": "/*\r\nCSS styles are loaded from the shared CSS file located at:\r\nhttps://static.infragistics.com/xplatform/css/samples/\r\n*/",
+    "isMain": true,
+    "fileExtension": "css",
+    "fileHeader": "css"
+  }
+]
+}

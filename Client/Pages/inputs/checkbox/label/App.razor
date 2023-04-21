@@ -1,0 +1,30 @@
+@page "/samples/inputs/checkbox/label"
+@page "/samples/inputs/checkbox-label"
+@page         "/inputs/checkbox/label"
+@page         "/inputs/checkbox-label"
+
+@using IgniteUI.Blazor.Controls
+@inject IIgniteUIBlazor IgniteUIBlazor
+
+<div class="container vertical">
+    <style>
+        .wrapper {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+
+    <div class="wrapper">
+        <span id="checkbox-label">Label</span>
+        <IgbCheckbox AriaLabelledby="checkbox-label" LabelPosition=CheckboxBaseLabelPosition.Before />
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        IgbCheckboxModule.Register(IgniteUIBlazor);
+
+    }
+
+}
