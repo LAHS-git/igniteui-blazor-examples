@@ -1,0 +1,156 @@
+﻿@inherits LayoutComponentBase
+
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Routing
+
+@inject NavigationManager NavManager
+@*@inject IJSRuntime JSRuntime;*@
+@inject Infragistics.Samples.Core.SampleBrowser SB
+
+<div class="sb-root">
+
+    <div class="sb-sidebar-menu no-selection" style="@SidebarStyle">
+        <BrowserMenu />
+    </div>
+
+    <div class="sb-main" style="@MainStyle">
+
+        <div class="sb-toolbar" style="@ToolbarStyle">
+            @* icons preview https://useiconic.com/open *@
+            <span class="sb-toolbar-toggle" @onclick="ToggleSidebarMenu">
+                <span class="oi oi-menu" aria-hidden="true"></span>
+            </span>
+            <div class="sb-toolbar-name no-selection">@SB.CurrentSampleTitle</div>
+            <div class="sb-toolbar-version no-selection">@SB.IgVersion</div>
+            <span class="sb-toolbar-toggle" @onclick=SB.NavigateToBackSample>
+                <span class="oi oi-chevron-left" aria-hidden="true"></span>
+            </span>
+            <span class="sb-toolbar-toggle" @onclick=SB.NavigateToNextSample>
+                <span class="oi oi-chevron-right" aria-hidden="true"></span>
+            </span>
+
+            @* <a href="https://infragistics.com/blazorsite/components/general-getting-started.html" target="_blank" class="ml-md-auto">Help Docs</a> *@
+
+            @*fullscreen-enter*@
+            @*<span class="sb-toolbar-toggle" @onclick="EnterFullScreen">
+                <span class="oi oi-monitor" aria-hidden="true"></span>
+            </span>*@
+
+            @*<a target="_blank" href="@SB.CurrentHelpUrl">
+                <span class="sb-toolbar-toggle">
+                    <span class="oi oi-file" aria-hidden="true"></span>
+                </span>
+            </a>*@
+        </div>
+
+        <div class="sb-container">
+            @Body
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+protected bool IsSampleEmbedded = false;
+protected static bool ToolbarCollapsed = false;
+//protected string ToolbarStyle => ToolbarCollapsed || SB.IsEmbedded ? "display: none" : "display: flex";
+protected string ToolbarStyle => ToolbarCollapsed || IsSampleEmbedded ? "display: none" : "display: flex";
+
+protected static bool SidebarCollapsed = false;
+//protected string SidebarStyle => SidebarCollapsed || SB.IsEmbedded ? "display: none" : "display: flex";
+protected string SidebarStyle => SidebarCollapsed || IsSampleEmbedded ? "display: none" : "display: flex";
+protected string SidebarWidth = "16rem";
+
+protected string MainStyle => SidebarCollapsed || IsSampleEmbedded ? "width: 100%" : "width: calc(100% - " + SidebarWidth + ")";
+
+public static void ToggleSidebarMenu()
+{
+    SidebarCollapsed = !SidebarCollapsed;
+}
+
+public BrowserLayout()
+{
+    // Console.WriteLine("SB.NAV BrowserLayout ");
+}
+
+protected override async Task OnInitializedAsync()
+{
+    //Console.WriteLine("SB.NAV OnInit Async");
+    @* await SB.CheckUIAsync(NavManager.Uri);
+        StateHasChanged(); *@
+    await Task.Delay(1);
+}
+
+protected bool IsSampleWithNavigation() {
+    if (NavManager.Uri.Contains("/samples")) return true;
+    if (NavManager.Uri.EndsWith("/")) return true;
+    if (NavManager.Uri.EndsWith("/blazor-client")) return true;
+    if (NavManager.Uri.EndsWith("/blazor-client/")) return true;
+    if (NavManager.Uri.EndsWith("/blazor-server")) return true;
+    if (NavManager.Uri.EndsWith("/blazor-server/")) return true;
+    //if (NavManager.Uri.Contains("localhost")) return true; //&&
+    //if (NavManager.Uri + "/" == this.NavManager.BaseUri)  return true;
+
+    return false;
+
+    // return !NavManager.Uri.Contains("/samples") && NavManager.Uri != this.NavManager.BaseUri + "/";
+}
+
+protected override void OnInitialized()
+{
+    //Console.WriteLine("SB.NAV OnInit " + NavManager.BaseUri);
+    //Console.WriteLine("SB.NAV OnInit " + NavManager.Uri);
+
+    this.IsSampleEmbedded = !IsSampleWithNavigation(); // NavManager.Uri.Contains("/samples") && NavManager.Uri != this.NavManager.BaseUri + "/";
+
+    //Console.WriteLine("SB.NAV IsSampleEmbedded " + IsSampleEmbedded);
+
+    NavManager.LocationChanged += this.OnLocationChanged;
+
+    //SB.AppBaseUri = NavManager.BaseUri;
+    SB.SamplesLoaded += OnSamplesLoaded;
+}
+
+public void OnSamplesLoaded(object sender, EventArgs arg)
+{
+    // Console.WriteLine("SB.NAV Loaded Base " + NavManager.BaseUri);
+    Console.WriteLine("SB.NAV Loaded " + NavManager.Uri);
+
+    this.IsSampleEmbedded = !IsSampleWithNavigation(); // !NavManager.Uri.Contains("/samples") && NavManager.Uri != this.NavManager.BaseUri;
+
+    //Console.WriteLine("SB.NAV IsSampleEmbedded " + IsSampleEmbedded);
+
+    SB.CheckUI(NavManager.Uri);
+    StateHasChanged();
+}
+
+public async void OnLocationChanged(object sender, LocationChangedEventArgs arg)
+{
+    //Console.WriteLine("SB.NAV Changed Base " + NavManager.BaseUri);
+    Console.WriteLine("SB.NAV " + NavManager.Uri);
+
+    this.IsSampleEmbedded = !IsSampleWithNavigation(); // !NavManager.Uri.Contains("/samples") && NavManager.Uri != this.NavManager.BaseUri;
+
+    //Console.WriteLine("SB.NAV IsSampleEmbedded " + IsSampleEmbedded);
+
+    await Task.Delay(10);
+    await SB.CheckUIAsync(arg.Location);
+    // SB.CheckUI(arg.Location);
+    StateHasChanged();
+}
+
+public void EnterFullScreen()
+{
+    var url = NavManager.Uri;
+    //Console.WriteLine("SB EnterFullScreen1 " + url);
+
+    if (url.Contains("samples/"))
+    {
+        url = url.Replace("samples/", "");
+        //Console.WriteLine("SB EnterFullScreen2 " + url);
+        NavManager.NavigateTo(url);
+    }
+}
+
+}

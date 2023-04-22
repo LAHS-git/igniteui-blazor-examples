@@ -1,0 +1,126 @@
+﻿@inject NavigationManager NavManager
+
+<style>
+
+.sb-comming-soon-root {      
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+} 
+
+.sb-comming-soon-img {
+    max-height: calc(100% - 6rem); 
+    max-width: 35rem
+} 
+
+.sb-comming-soon-details { 
+    background: #f2f2f2; 
+    width: 100%; 
+    padding-bottom: 1rem; 
+    margin-top: -0.5rem; 
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+} 
+
+</style>
+
+<div class="sb-comming-soon-root">
+   <img class="sb-comming-soon-img" src="_content/Infragistics.Samples.Core/images/comingSoon.svg" />
+
+   
+     <div class="sb-comming-soon-details">
+           <div style="font-size: 1.50rem; text-align: center; font-weight: bold;">Coming Soon...</div>
+           <div style="font-size: 0.75rem; text-align: center;  ">
+               This <a href="@SampleUrl" title="@NavPath" >example</a> is under development. We are almost done!
+           </div>
+
+           <div style="font-size: 0.75rem; text-align: center;">
+               <span>
+                   Meanwhile, you can explore all Web Component samples on this
+                   <a href="https://infragistics.com/blazor-client/" target="_blank">website</a>
+               </span>
+           </div>
+     </div>
+
+</div>
+
+@*<div class="sb-note">
+       
+   @*<div>
+        <span class="oi oi-bell mr-2" aria-hidden="true"></span>
+        <span>
+            Sorry, there's no sample at this address. Please inform Infragistics support about this issue:
+        </span>
+    </div>
+    <div>
+        <span class="oi oi-warning mr-2" aria-hidden="true"></span>
+        <span>
+            Blazor samples browser is missing a sample with these page directives:
+        </span>
+
+        <div class="sb-code">
+            <strong>@@page "@NavPath"</strong>
+        </div>
+        <div class="sb-code">
+            <strong>@@page         "@DocPath"</strong>
+        </div>
+    </div>
+    <div>
+        <span class="oi oi-timer mr-2" aria-hidden="true"></span>
+        <span>
+            Meanwhile, you can explore all Blazor samples on this <a href="@BrowserPath" target="_blank">website</a>
+        </span>
+    </div>
+</div>*@
+
+@code {
+    
+    public string SampleUrl { get; set; }
+    public string NavPath { get; set; }
+    public string DocPath { get; set; }
+    public string BrowserPath { get; set; }
+
+    protected override void OnInitialized()
+    {
+        NavManager.LocationChanged += this.OnLocationChanged;
+    }
+
+    protected void UpdatePaths()
+    {
+        var baseUri = NavManager.BaseUri;
+        var pathUri = NavManager.Uri;
+        var route = "/" + pathUri.Replace(baseUri, "");
+        route = route.Replace("/samples", "");
+        this.DocPath = route;
+        this.NavPath = "/samples" + this.DocPath;
+        this.SampleUrl = pathUri.Replace("blazor-client", "blazor-client/samples");
+        this.BrowserPath = baseUri + "samples";
+        //Console.WriteLine("NotFound b=" + baseUri);
+        //Console.WriteLine("NotFound p=" + pathUri);
+        Console.WriteLine("SB missing " + pathUri);
+        //Console.WriteLine("NotFound d=" + this.DocPath);
+        StateHasChanged();
+    }
+
+    public void OnLocationChanged(object sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs arg)
+    {
+        UpdatePaths();
+
+        StateHasChanged();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            UpdatePaths();
+        }
+    }
+}

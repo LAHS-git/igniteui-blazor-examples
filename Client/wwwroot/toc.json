@@ -478,28 +478,6 @@
       ] 
     },
     {
-      "name": "Excel", 
-      "components": [ 
-        {
-          "name": "Excel Library", 
-          "samples": [ 
-            { "route": "/excel/excel-library-operations-on-workbooks", "name": "Operations On Workbooks", "showLink": false },
-            { "route": "/excel/excel-library/operations-on-workbooks", "name": "Operations On Workbooks", "showLink": true },
-            { "route": "/excel/excel-library-operations-on-worksheets", "name": "Operations On Worksheets", "showLink": false },
-            { "route": "/excel/excel-library/operations-on-worksheets", "name": "Operations On Worksheets", "showLink": true },
-            { "route": "/excel/excel-library-overview", "name": "Overview", "showLink": false },
-            { "route": "/excel/excel-library/overview", "name": "Overview", "showLink": true },
-            { "route": "/excel/excel-library-working-with-cells", "name": "Working With Cells", "showLink": false },
-            { "route": "/excel/excel-library/working-with-cells", "name": "Working With Cells", "showLink": true },
-            { "route": "/excel/excel-library-working-with-charts", "name": "Working With Charts", "showLink": false },
-            { "route": "/excel/excel-library/working-with-charts", "name": "Working With Charts", "showLink": true },
-            { "route": "/excel/excel-library-working-with-sparklines", "name": "Working With Sparklines", "showLink": false },
-            { "route": "/excel/excel-library/working-with-sparklines", "name": "Working With Sparklines", "showLink": true }
-          ] 
-        }
-      ] 
-    },
-    {
       "name": "Gauges", 
       "components": [ 
         {

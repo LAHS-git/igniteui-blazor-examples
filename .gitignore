@@ -23,6 +23,7 @@
 /samples/**/*.csproj.user
 
 # BROWSER
+/Client/output/*
 /tests
 /browser/**/*.csproj.user
 /browser/IgBlazorSamples.Gulp/Samples
